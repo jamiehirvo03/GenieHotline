@@ -3,72 +3,52 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class InteractionManager : MonoBehaviour
 {
-    private Transform highlight;
-    private Transform selection;
+    private Transform hoveredObj;
+
     private RaycastHit raycastHit;
 
-    [SerializeField] private Material highlightedMat;
+    [SerializeField] private Shader hovered;
+    private Shader storedShader;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (highlight != null)
-        {
-            highlight.GetComponent<MeshRenderer>().materials[1] = null;
-            highlight = null;
-        }
-
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
-        
+
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
         {
-            highlight = raycastHit.transform;
+            hoveredObj = raycastHit.transform;
 
-            if (highlight.CompareTag("Selectable") && highlight != selection)
+            if (hoveredObj.CompareTag("Selectable"))
             {
-                if (highlight.gameObject.GetComponent<MeshRenderer>().materials[1] != highlightedMat)
+                Debug.Log($"{hoveredObj.name} is hovered");
+
+                if (storedShader != hoveredObj.GetComponent<Renderer>().material.shader)
                 {
-                    Debug.Log($"{this.gameObject} was highlighted");
-                    //outlineMat.SetBool("OutlineEnabled", true);
+                    //store hovered object's default shader temporarily
+                    storedShader = hoveredObj.GetComponent<Renderer>().material.shader;
                 }
-                else
-                {
-                    highlight.gameObject.GetComponent<MeshRenderer>().materials[1] = highlightedMat;
-                }
+
+                //change hovered object's shader to highlight
+                hoveredObj.gameObject.GetComponent<Renderer>().material.shader = hovered;
             }
             else
             {
-                highlight = null;
+                Debug.Log("Hovered object is not selectable");
+
+                if (hoveredObj != null)
+                {
+                    //when an unselectable object is hovered, reset last hovered object's shader
+                    hoveredObj.gameObject.GetComponent<Renderer>().material.shader = storedShader;
+
+                    hoveredObj = null;
+                }
             }
         }
-
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        else
         {
-            if (highlight)
-            {
-                if (selection != null)
-                {
-                    selection.gameObject.GetComponent<MeshRenderer>().materials[1] = null;
-                }
-                selection = raycastHit.transform;
-                selection.gameObject.GetComponent<MeshRenderer>().materials[1] = highlightedMat;
-                highlight = null;
-            }
-            else
-            {
-                if (selection)
-                {
-                    selection.gameObject.GetComponent<MeshRenderer>().materials[1] = null;
-                    selection = null;
-                }
-            }
+            hoveredObj = null;
         }
-    }
-
-    private void ToggleHoverHighlight()
-    {
-
     }
 }
