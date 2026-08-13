@@ -5,50 +5,56 @@ using UnityEngine.InputSystem;
 
 public class InteractionManager : MonoBehaviour
 {
-    private Transform hoveredObj;
-
+    private GameObject hoveredObj;
     private RaycastHit raycastHit;
-
-    [SerializeField] private Shader hovered;
-    private Shader storedShader;
 
     private void Update()
     {
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
+        // if mouse is hovering over a gameObject (checking every frame)
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
         {
-            hoveredObj = raycastHit.transform;
-
-            if (hoveredObj.CompareTag("Selectable"))
+            if (raycastHit.transform.gameObject != null)
             {
-                Debug.Log($"{hoveredObj.name} is hovered");
-
-                if (storedShader != hoveredObj.GetComponent<Renderer>().material.shader)
+                if (raycastHit.transform.gameObject.CompareTag("Selectable"))
                 {
-                    //store hovered object's default shader temporarily
-                    storedShader = hoveredObj.GetComponent<Renderer>().material.shader;
+                    if (hoveredObj != null)
+                    {
+                        if (hoveredObj != raycastHit.transform.gameObject)
+                        {
+                            hoveredObj.GetComponent<Outline>().enabled = false;
+                        }
+                    }
+
+                    // store object that is being hovered
+                    hoveredObj = raycastHit.transform.gameObject;
+
+                    Debug.Log($"{hoveredObj.name} is hovered");
+
+                    //enable hovered objects highlight (first check that highlight component has been added in editor)
+                    if (hoveredObj.GetComponent<Outline>() != null)
+                    {
+                        hoveredObj.GetComponent<Outline>().enabled = true;
+                    }
                 }
-
-                //change hovered object's shader to highlight
-                hoveredObj.gameObject.GetComponent<Renderer>().material.shader = hovered;
-            }
-            else
-            {
-                Debug.Log("Hovered object is not selectable");
-
-                if (hoveredObj != null)
+                else
                 {
-                    //when an unselectable object is hovered, reset last hovered object's shader
-                    hoveredObj.gameObject.GetComponent<Renderer>().material.shader = storedShader;
+                    if (hoveredObj != null)
+                    {
+                        hoveredObj.GetComponent<Outline>().enabled = false;
 
-                    hoveredObj = null;
+                        hoveredObj = null;
+                    }
                 }
             }
         }
+
+       
+        // if hovered object is not tagged 'selectable'
         else
         {
-            hoveredObj = null;
+            Debug.Log("Hovered object is not selectable");
         }
     }
 }
