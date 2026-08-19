@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 public interface IInteractable
 {
@@ -12,8 +11,10 @@ public interface IInteractable
 
 public interface IHoldable
 {
+    public bool GetHeldStatus();
     public void Grab();
     public void Release();
+    public void ReturnHeldObject();
 }
 
 public class InteractionManager : MonoBehaviour
@@ -32,7 +33,7 @@ public class InteractionManager : MonoBehaviour
             if (raycastHit.transform.gameObject != null)
             {
                 // if hit object 'interactable'
-                if (raycastHit.transform.gameObject.CompareTag("Interactable"))
+                if (raycastHit.transform.gameObject.layer == LayerMask.NameToLayer("Interactable")) //raycastHit.transform.gameObject.CompareTag("Interactable"))
                 {
                     // if there is a stored object
                     if (hoveredObj != null)
