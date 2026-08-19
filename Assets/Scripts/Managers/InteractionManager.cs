@@ -1,4 +1,3 @@
-using UnityEditor.SpeedTree.Importer;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,6 +10,12 @@ public interface IInteractable
     public void SecondaryInteract();
 }
 
+public interface IHoldable
+{
+    public void Grab();
+    public void Release();
+}
+
 public class InteractionManager : MonoBehaviour
 {
     private GameObject hoveredObj;
@@ -18,7 +23,7 @@ public class InteractionManager : MonoBehaviour
 
     private void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//Mouse.current.position.ReadValue());
 
         // if mouse is hovering over a gameObject (checking every frame)
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
@@ -57,12 +62,12 @@ public class InteractionManager : MonoBehaviour
                         // change control labels
                         UIManager.GetInstance().ChangeLabelText(hoveredObj);
 
-                        if (InputManager.GetInstance().GetPrimaryInteractPressed())
+                        if (Input.GetMouseButtonDown(0))//InputManager.GetInstance().GetPrimaryInteractPressed())
                         {
                             hoveredObj.GetComponent<IInteractable>().PrimaryInteract();
                         }
 
-                        if (InputManager.GetInstance().GetSecondaryInteractPressed())
+                        if (Input.GetMouseButtonUp(1))//InputManager.GetInstance().GetSecondaryInteractPressed())
                         {
                             hoveredObj.GetComponent<IInteractable>().SecondaryInteract();
                         }
