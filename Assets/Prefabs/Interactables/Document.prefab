@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8055420324671094973}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: BoundaryPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,9 +46,9 @@ GameObject:
   - component: {fileID: 1624531192538068124}
   - component: {fileID: 563676532963671492}
   - component: {fileID: 3906867527753959455}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Document_Model
-  m_TagString: Document
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -62,7 +62,7 @@ Transform:
   m_GameObject: {fileID: 6060815622864812733}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.0005, z: 0}
   m_LocalScale: {x: 2, y: 0.001, z: 2.8284}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -225,17 +225,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a62dd193cf498b45b03eb5f3e9f1ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Holdable
-  useHoldClickControls: 0
   holdHeight: 1
-  layersToHit:
+  objectFollowingLayers:
     serializedVersion: 2
-    m_Bits: 192
-  followTime: 0.1
+    m_Bits: 64
   objectBoundaries:
   - {fileID: 5698680985163558953}
   - {fileID: 2508765441133210808}
   - {fileID: 2001046651741590448}
   - {fileID: 6407783407818304652}
+  placementValidityMask:
+    serializedVersion: 2
+    m_Bits: 192
+  meshObject: {fileID: 6060815622864812733}
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.1
 --- !u!1001 &1065047177089578926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -298,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5341367158111294040, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6595843897896350540, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Icon
@@ -310,7 +314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595843897896350540, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -384,7 +388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5341367158111294040, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6595843897896350540, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Icon
@@ -396,7 +400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595843897896350540, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -470,7 +474,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5341367158111294040, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6595843897896350540, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Icon
@@ -482,7 +486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595843897896350540, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -556,7 +560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5341367158111294040, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6595843897896350540, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Icon
@@ -568,7 +572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6595843897896350540, guid: afdcfe5077443bb4cb5ed5069cc08ed3, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

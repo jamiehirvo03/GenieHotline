@@ -6,97 +6,104 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-//    private static InputManager instance;
+    private static InputManager instance;
 
-//    private bool primaryInteractPressed = false;
-//    private bool secondaryInteractPressed = false;
-//    private Vector2 mousePos;
-//    private Vector2 scrollDelta;
-    
+    [SerializeField] private bool useHoldClickControls = false;
 
-//    private void Awake()
-//    {
-//        if (instance != null)
-//        {
-//            Debug.LogError("Found more than one InputManager in the scene.");
-//        }
+    //    private bool primaryInteractPressed = false;
+    //    private bool secondaryInteractPressed = false;
+    //    private Vector2 mousePos;
+    //    private Vector2 scrollDelta;
 
-//        instance = this;
-//    }
 
-//    public static InputManager GetInstance()
-//    {
-//        return instance;
-//    }
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogError("Found more than one InputManager in the scene.");
+        }
 
-//    public void PrimaryInteractPressed(InputAction.CallbackContext context)
-//    {
-//        if (context.performed)
-//        {
-//            primaryInteractPressed = true;
+        instance = this;
+    }
 
-//            UIManager.GetInstance().ChangePanelColor("primary", Color.gray4);
-//        }
-//        else if (context.canceled)
-//        {
-//            primaryInteractPressed = false;
+    public static InputManager GetInstance()
+    {
+        return instance;
+    }
 
-//            UIManager.GetInstance().ChangePanelColor("primary", Color.gray5);
-//        }
-//    }
+    public bool GetClickControlsStatus()
+    {
+        return useHoldClickControls;
+    }
 
-//    public void SecondaryInteractPressed(InputAction.CallbackContext context)
-//    {
-//        if (context.performed)
-//        {
-//            secondaryInteractPressed = true;
+    //    public void PrimaryInteractPressed(InputAction.CallbackContext context)
+    //    {
+    //        if (context.performed)
+    //        {
+    //            primaryInteractPressed = true;
 
-//            UIManager.GetInstance().ChangePanelColor("secondary", Color.gray4);
-//        }
-//        else if (context.canceled)
-//        {
-//            secondaryInteractPressed = false;
+    //            UIManager.GetInstance().ChangePanelColor("primary", Color.gray4);
+    //        }
+    //        else if (context.canceled)
+    //        {
+    //            primaryInteractPressed = false;
 
-//            UIManager.GetInstance().ChangePanelColor("secondary", Color.gray5);
-//        }
-//    }
+    //            UIManager.GetInstance().ChangePanelColor("primary", Color.gray5);
+    //        }
+    //    }
 
-//    public void OnMouseMove(InputAction.CallbackContext context)
-//    {
-//        mousePos = context.ReadValue<Vector3>();
-//    }
+    //    public void SecondaryInteractPressed(InputAction.CallbackContext context)
+    //    {
+    //        if (context.performed)
+    //        {
+    //            secondaryInteractPressed = true;
 
-//    public void OnScroll(InputAction.CallbackContext context)
-//    {
-//        scrollDelta = context.ReadValue<Vector2>();
-//    }
+    //            UIManager.GetInstance().ChangePanelColor("secondary", Color.gray4);
+    //        }
+    //        else if (context.canceled)
+    //        {
+    //            secondaryInteractPressed = false;
 
-//    //GET FUNCTIONS
+    //            UIManager.GetInstance().ChangePanelColor("secondary", Color.gray5);
+    //        }
+    //    }
 
-//    public Vector3 GetMousePos()
-//    {
-//        return mousePos;
-//    }
+    //    public void OnMouseMove(InputAction.CallbackContext context)
+    //    {
+    //        mousePos = context.ReadValue<Vector3>();
+    //    }
 
-//    public Vector2 GetScrollDelta()
-//    {
-//        return scrollDelta;
-//    }
+    //    public void OnScroll(InputAction.CallbackContext context)
+    //    {
+    //        scrollDelta = context.ReadValue<Vector2>();
+    //    }
 
-//    // for the below 'get' methods, getting it means also using it.
-//    // set it to false so that it can't be used again until actually pressed again.
-    
-//    public bool GetPrimaryInteractPressed()
-//    {
-//        bool result = primaryInteractPressed;
-//        primaryInteractPressed = false;
-//        return result;
-//    }
+    //    //GET FUNCTIONS
 
-//    public bool GetSecondaryInteractPressed()
-//    {
-//        bool result = secondaryInteractPressed;
-//        secondaryInteractPressed = false;
-//        return result;
-//    }
+    //    public Vector3 GetMousePos()
+    //    {
+    //        return mousePos;
+    //    }
+
+    //    public Vector2 GetScrollDelta()
+    //    {
+    //        return scrollDelta;
+    //    }
+
+    //    // for the below 'get' methods, getting it means also using it.
+    //    // set it to false so that it can't be used again until actually pressed again.
+
+    //    public bool GetPrimaryInteractPressed()
+    //    {
+    //        bool result = primaryInteractPressed;
+    //        primaryInteractPressed = false;
+    //        return result;
+    //    }
+
+    //    public bool GetSecondaryInteractPressed()
+    //    {
+    //        bool result = secondaryInteractPressed;
+    //        secondaryInteractPressed = false;
+    //        return result;
+    //    }
 }

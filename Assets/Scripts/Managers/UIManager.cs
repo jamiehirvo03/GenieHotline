@@ -32,6 +32,16 @@ public class UIManager : MonoBehaviour
         return instance;
     }
 
+    public string GetPrimaryLabel()
+    {
+        return primaryLabel.text;
+    }
+
+    public string GetSecondaryLabel()
+    {
+        return secondaryLabel.text;
+    }
+
     public void EnableControlPanel(bool status)
     {
         controlPanel.SetActive(status);

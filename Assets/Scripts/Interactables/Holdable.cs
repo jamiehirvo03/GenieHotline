@@ -1,26 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Transactions;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Holdable : MonoBehaviour, IHoldable
 {
-    [SerializeField] private bool useHoldClickControls = false; // will need to set this up later as project wide setting (in input manager)
-
     // HELD OBJECT MOVEMENT
     private bool isHeld = false;
 
     private Vector3 grabOriginPos;
     private Vector3 hoverPos;
     private Vector3 placementPos;
-    private float timeToMove = 0.1f; // FOR VERTICAL HEIGHT LERP ONLY
+    private float verticalMovementTime = 0.1f; // FOR VERTICAL HEIGHT LERP ONLY
     [SerializeField] private float holdHeight; // height above the surface you're hovering over
+    private Vector3 defaultOrientation;
 
     [SerializeField] private LayerMask objectFollowingLayers; // layers to be detected for moving the held object
-    [SerializeField] private float followTime;
-    private Vector3 velocity = new Vector3(0, 0, 0);
+    private Vector3 velocity = Vector3.zero; // has to be zero for smoothdamp as object always starts with no motion
+    private float followTime = 0.0001f;
 
     // PLACEMENT VALIDITY CHECKING
     [SerializeField] private List<Transform> objectBoundaries = new List<Transform>();
@@ -29,8 +27,8 @@ public class Holdable : MonoBehaviour, IHoldable
     private GameObject highestDocument;
 
     // INVALID PLACEMENT FLASHING
-    private Renderer objectRenderer;
     public GameObject meshObject;
+    private Renderer objectRenderer;
     private Color originalColor;
     [SerializeField] private Color flashColor = Color.red;
     [SerializeField] private float flashDuration = 0.1f;
@@ -49,6 +47,8 @@ public class Holdable : MonoBehaviour, IHoldable
     private void Start()
     {
         originalColor = objectRenderer.material.color;
+
+        defaultOrientation = transform.rotation.eulerAngles;
     }
 
     private void Update()
@@ -62,40 +62,51 @@ public class Holdable : MonoBehaviour, IHoldable
     public void Grab()
     {
         if (isFlashingDone)
-        {            
+        {
             isHeld = true;
+
+            //communicate with the interaction manager so that it stops looking for new things to hover while object is held
+            InteractionManager.GetInstance().PickUpItem(this.gameObject);
 
             // store position of the object before the grab incase the player tries to place it somewhere they can't (only used for holdclick controls)
             grabOriginPos = transform.position;
 
+            Vector3 heightAdjustedPos = new Vector3(transform.position.x, holdHeight, transform.position.z);
+
             // raise object to hold height
-            LerpObjectHeight(new Vector3(transform.position.x, holdHeight, transform.position.z));
-        } 
+            LerpObjectTransform(heightAdjustedPos, false); // using StartCoroutine(LerpObjectTransform(heightAdjustedPos)); makes the object flicker when picked up
+        }
     }
 
-    private IEnumerator LerpObjectHeight(Vector3 target)
+    private IEnumerator LerpObjectTransform(Vector3 targetPosition, bool isItemBeingReleased)
     {
-        Debug.Log($"Lerping object height to y = {target.y}");
+        Debug.Log($"Lerping object to position = {targetPosition}");
 
         Vector3 startPosition = transform.position;
+
         float elapsedTime = 0f;
 
-        while (elapsedTime < timeToMove)
+        while (elapsedTime < verticalMovementTime)
         {
             elapsedTime += Time.deltaTime;
+            float lerpTime = elapsedTime / verticalMovementTime;
 
-            float lerpTime = elapsedTime / timeToMove;
-
-            transform.position = Vector3.Lerp(startPosition, target, lerpTime);
+            transform.position = Vector3.Lerp(startPosition, targetPosition, lerpTime);
 
             yield return null;
         }
         // everything below this will happen once lerp is complete
 
-        transform.position = target; // snap position to target to fix weird numbers
+        transform.position = targetPosition; // snap position to target to fix weird numbers
         
         // clear current placementPos as it is no longer needed
         placementPos = Vector3.zero;
+
+        if (isItemBeingReleased)
+        {
+            // communicate with interaction manager when item released so it can begin searching for hovers again
+            InteractionManager.GetInstance().PutDownItem();
+        }
     }
 
     public void Release()
@@ -106,9 +117,9 @@ public class Holdable : MonoBehaviour, IHoldable
 
             if (placementPos != Vector3.zero)
             {
-                Debug.Log($"PlacementPos is {placementPos}");
+                //Debug.Log($"PlacementPos is {placementPos}");
 
-                StartCoroutine(LerpObjectHeight(placementPos));
+                StartCoroutine(LerpObjectTransform(placementPos, true));
 
                 isHeld = false;
             }
@@ -125,10 +136,6 @@ public class Holdable : MonoBehaviour, IHoldable
         {
             int validPoints = 0; // number of boundary points that are above a valid location
             int documentPoints = 0; // number of boundary points that are above a document
-
-            int highestHitHeight = 0;
-
-
 
             foreach (Transform currentBoundary in objectBoundaries)
             {
@@ -224,22 +231,22 @@ public class Holdable : MonoBehaviour, IHoldable
                 
                 Debug.Log("All points are valid, object being placed");
 
-                placementPos = new Vector3(this.transform.position.x, 5, this.transform.position.z);
-
-                Debug.Log($"PlacementPos: {placementPos}");
+                placementPos = new Vector3(transform.position.x, 5, this.transform.position.z);
 
                 // if atleast one boundary point's ray hit a document
                 if (documentPoints > 0)
                 {
                     // raise the y level of this placement
-                    placementPos = new Vector3(this.transform.position.x, highestHitHeight, this.transform.position.z);
+                    placementPos = new Vector3(transform.position.x, highestDocument.transform.position.y + 0.001f, this.transform.position.z);
                 }
+
+                //Debug.Log($"PlacementPos: {placementPos}");
             }
             else
             {
                 Debug.Log($"{this.gameObject.name} only has {validPoints}/{objectBoundaries.Count} valid boundary checks, it cannot be placed here");
 
-                if (useHoldClickControls)
+                if (InputManager.GetInstance().GetClickControlsStatus())
                 {
                     ReturnHeldObject();
                 }
@@ -293,6 +300,7 @@ public class Holdable : MonoBehaviour, IHoldable
             hoverPos = hit.point;
 
             Vector3 hoverAdjusted = new Vector3(hoverPos.x, hoverPos.y + holdHeight, hoverPos.z);
+
 
             transform.position = Vector3.SmoothDamp(transform.position, hoverAdjusted, ref velocity, followTime);
         }
