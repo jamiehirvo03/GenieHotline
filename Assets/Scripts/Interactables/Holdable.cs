@@ -289,7 +289,7 @@ public class Holdable : MonoBehaviour, IHoldable
 
     private void DragObject()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = Camera.main.ScreenPointToRay(InputManager.GetInstance().GetMousePos());
 
         //raycast to a position on the desk to find the location the held object should hover over
         if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, objectFollowingLayers))

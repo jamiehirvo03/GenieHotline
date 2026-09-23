@@ -1,8 +1,5 @@
 using UnityEngine;
-//using UnityEngine.InputSystem;
-//using UnityEngine.UI;
-//using TMPro;
-//using UnityEditor.ShaderGraph.Internal;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
@@ -10,11 +7,18 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private bool useHoldClickControls = false;
 
-    //    private bool primaryInteractPressed = false;
-    //    private bool secondaryInteractPressed = false;
-    //    private Vector2 mousePos;
-    //    private Vector2 scrollDelta;
-
+    // interaction inputs
+    private Vector2 mousePos;
+    private Vector2 scrollDelta;
+    private bool primaryInteractPressed = false;
+    private bool secondaryInteractPressed = false;
+    
+    // dialogue inputs
+    private bool continuePressed = false;
+    private bool choiceOnePressed = false;
+    private bool choiceTwoPressed = false;
+    private bool choiceThreePressed = false;
+    private bool choiceFourPressed = false;
 
     private void Awake()
     {
@@ -36,74 +40,169 @@ public class InputManager : MonoBehaviour
         return useHoldClickControls;
     }
 
-    //    public void PrimaryInteractPressed(InputAction.CallbackContext context)
-    //    {
-    //        if (context.performed)
-    //        {
-    //            primaryInteractPressed = true;
+    public void OnMouseMove(InputAction.CallbackContext context)
+    {
+        mousePos = context.ReadValue<Vector2>();
+    }
 
-    //            UIManager.GetInstance().ChangePanelColor("primary", Color.gray4);
-    //        }
-    //        else if (context.canceled)
-    //        {
-    //            primaryInteractPressed = false;
+    public void OnScroll(InputAction.CallbackContext context)
+    {
+        scrollDelta = context.ReadValue<Vector2>();
+    }
 
-    //            UIManager.GetInstance().ChangePanelColor("primary", Color.gray5);
-    //        }
-    //    }
+    public void PrimaryInteractPressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            primaryInteractPressed = true;
 
-    //    public void SecondaryInteractPressed(InputAction.CallbackContext context)
-    //    {
-    //        if (context.performed)
-    //        {
-    //            secondaryInteractPressed = true;
+            UIManager.GetInstance().ChangePanelColor("primary", Color.gray4);
+        }
+        else if (context.canceled)
+        {
+            primaryInteractPressed = false;
 
-    //            UIManager.GetInstance().ChangePanelColor("secondary", Color.gray4);
-    //        }
-    //        else if (context.canceled)
-    //        {
-    //            secondaryInteractPressed = false;
+            UIManager.GetInstance().ChangePanelColor("primary", Color.gray5);
+        }
+    }
 
-    //            UIManager.GetInstance().ChangePanelColor("secondary", Color.gray5);
-    //        }
-    //    }
+    public void SecondaryInteractPressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            secondaryInteractPressed = true;
 
-    //    public void OnMouseMove(InputAction.CallbackContext context)
-    //    {
-    //        mousePos = context.ReadValue<Vector3>();
-    //    }
+            UIManager.GetInstance().ChangePanelColor("secondary", Color.gray4);
+        }
+        else if (context.canceled)
+        {
+            secondaryInteractPressed = false;
 
-    //    public void OnScroll(InputAction.CallbackContext context)
-    //    {
-    //        scrollDelta = context.ReadValue<Vector2>();
-    //    }
+            UIManager.GetInstance().ChangePanelColor("secondary", Color.gray5);
+        }
+    }
 
-    //    //GET FUNCTIONS
+    public void ContinuePressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            continuePressed = true;
+        }
+        else if (context.canceled)
+        {
+            continuePressed = false;
+        }
+    }
 
-    //    public Vector3 GetMousePos()
-    //    {
-    //        return mousePos;
-    //    }
+    public void ChoiceOnePressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            choiceOnePressed = true;
+        }
+        else if (context.canceled)
+        {
+            choiceOnePressed = false;
+        }
+    }
 
-    //    public Vector2 GetScrollDelta()
-    //    {
-    //        return scrollDelta;
-    //    }
+    public void ChoiceTwoPressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            choiceTwoPressed = true;
+        }
+        else if (context.canceled)
+        {
+            choiceTwoPressed = false;
+        }
+    }
 
-    //    // for the below 'get' methods, getting it means also using it.
-    //    // set it to false so that it can't be used again until actually pressed again.
+    public void ChoiceThreePressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            choiceThreePressed = true;
+        }
+        else if (context.canceled)
+        {
+            choiceThreePressed = false;
+        }
+    }
 
-    //    public bool GetPrimaryInteractPressed()
-    //    {
-    //        bool result = primaryInteractPressed;
-    //        primaryInteractPressed = false;
-    //        return result;
-    //    }
+    public void ChoiceFourPressed(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            choiceFourPressed = true;
+        }
+        else if (context.canceled)
+        {
+            choiceFourPressed = false;
+        }
+    }
 
-    //    public bool GetSecondaryInteractPressed()
-    //    {
-    //        bool result = secondaryInteractPressed;
-    //        secondaryInteractPressed = false;
-    //        return result;
-    //    }
+    //GET FUNCTIONS
+
+    public Vector3 GetMousePos()
+    {
+        return mousePos;
+    }
+
+    public Vector2 GetScrollDelta()
+    {
+        return scrollDelta;
+    }
+
+    // for the below 'get' methods, getting it means also using it.
+    // set it to false so that it can't be used again until actually pressed again.
+
+    public bool GetPrimaryInteractPressed()
+    {
+        bool result = primaryInteractPressed;
+        primaryInteractPressed = false;
+        return result;
+    }
+
+    public bool GetSecondaryInteractPressed()
+    {
+        bool result = secondaryInteractPressed;
+        secondaryInteractPressed = false;
+        return result;
+    }
+
+    public bool GetContinuePressed()
+    {
+        bool result = continuePressed;
+        continuePressed = false;
+        return result;
+    }
+
+    public bool GetChoiceOnePressed()
+    {
+        bool result = choiceOnePressed;
+        choiceOnePressed = false;
+        return result;
+    }
+
+    public bool GetChoiceTwoPressed()
+    {
+        bool result = choiceTwoPressed;
+        choiceTwoPressed = false;
+        return result;
+    }
+
+    public bool GetChoiceThreePressed()
+    {
+        bool result = choiceThreePressed;
+        choiceThreePressed = false;
+        return result;
+    }
+
+    public bool GetChoiceFourPressed()
+    {
+        bool result = choiceFourPressed;
+        choiceFourPressed = false;
+        return result;
+    }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
-//using UnityEngine.InputSystem;
 using Ink.Runtime;
 using Ink.Parsed;
 using Story = Ink.Runtime.Story;
@@ -34,8 +33,8 @@ public class DialogueManager : MonoBehaviour
     public GameObject dialogueCharacter { get; private set; }
 
     // Constants for inky tags (character_emotion)
-    private const string PORTRAIT_TAG = "portrait";
-    [SerializeField] private Animator portraitAnimator;
+    //private const string PORTRAIT_TAG = "portrait";
+    //[SerializeField] private Animator portraitAnimator;
 
     private static DialogueManager instance;
     private void Awake()
@@ -55,7 +54,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        //EventManager.current.onExitDialogueMode += ExitDialogueMode;
+        EventManager.GetInstance().onExitDialogueMode += ExitDialogueMode;
 
         isDialoguePlaying = false;
         dialoguePanel.SetActive(false);
@@ -76,24 +75,21 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        //if (InputManager.GetInstance().GetSubmitPressed() && canContinueToNextLine)
-        //{
-        //    ContinueStory();
-        //}
+        if (InputManager.GetInstance().GetContinuePressed() && canContinueToNextLine)
+        {
+            ContinueStory();
+        }
     }
 
-    public void EnterDialogueMode(CallerQueue callerQueue, string knotName)
+    public void EnterDialogueMode(TextAsset currentCaller, string knotName)
     {
         isDialoguePlaying = true;
         dialoguePanel.SetActive(true);
         
         // Select the characters JSON file
-        //currentStory = new Story(callerQueue.inkJSON.text);
+        currentStory = new Story(currentCaller.text);
 
-        // Set the dialogue character
-        //dialogueCharacter = callerQueue.gameObject;
-
-        //EventManager.current.CallerChosen();
+        //EventManager.GetInstance().CallerChosen();
 
         // Choose the appropriate knot
         if (!knotName.Equals(""))
@@ -132,7 +128,7 @@ public class DialogueManager : MonoBehaviour
             }
             displayLineCoroutine = StartCoroutine(DisplayLine(currentStory.Continue()));
 
-            HandleTags(currentStory.currentTags);
+            //HandleTags(currentStory.currentTags);
         }
         else
         {
@@ -140,26 +136,27 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void HandleTags(List<string> currentTags)
-    {
-        // Loop through each tag and handle it accordingly
-        foreach (string tag in currentTags)
-        {
-            // Parse the tag
-            string[] splitTag = tag.Split(':');
-            if (splitTag.Length != 2)
-            {
-                Debug.LogError("Tag could not be parsed: " + tag);
-            }
-            string tagKey = splitTag[0].Trim();
-            string tagValue = splitTag[1].Trim();
+    // this function for handling ink tags could be useful if different character portraits are added later
+    //private void HandleTags(List<string> currentTags)
+    //{
+    //    // Loop through each tag and handle it accordingly
+    //    foreach (string tag in currentTags)
+    //    {
+    //        // Parse the tag
+    //        string[] splitTag = tag.Split(':');
+    //        if (splitTag.Length != 2)
+    //        {
+    //            Debug.LogError("Tag could not be parsed: " + tag);
+    //        }
+    //        string tagKey = splitTag[0].Trim();
+    //        string tagValue = splitTag[1].Trim();
 
-            if (tagKey == PORTRAIT_TAG)
-            {
-                portraitAnimator.Play(tagValue);
-            }
-        }
-    }
+    //        if (tagKey == PORTRAIT_TAG)
+    //        {
+    //            portraitAnimator.Play(tagValue);
+    //        }
+    //    }
+    //}
 
     private IEnumerator DisplayLine(string line)
     {
@@ -188,7 +185,6 @@ public class DialogueManager : MonoBehaviour
         DisplayChoices();
         
         // Continue icon will be enabled from displaychoices() if no choices are to be shown
-
         canContinueToNextLine = true;
     }
 
@@ -228,16 +224,16 @@ public class DialogueManager : MonoBehaviour
             continueIcon.SetActive(true);
         }
 
-        StartCoroutine(SelectFirstChoice());
+        //StartCoroutine(SelectFirstChoice());
     }
 
-    private IEnumerator SelectFirstChoice()
-    {
-        // Unity's event system requires the selection being cleared before the first choice can be selected by default
-        EventSystem.current.SetSelectedGameObject(null);
-        yield return new WaitForEndOfFrame();
-        EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
-    }
+    //private IEnumerator SelectFirstChoice()
+    //{
+    //    // Unity's event system requires the selection being cleared before the first choice can be selected by default
+    //    EventSystem.current.SetSelectedGameObject(null);
+    //    yield return new WaitForEndOfFrame();
+    //    EventSystem.current.SetSelectedGameObject(choices[0].gameObject);
+    //}
 
     public void MakeChoice(int choiceIndex)
     {

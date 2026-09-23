@@ -66,7 +66,7 @@ public class InteractionManager : MonoBehaviour
         {
             if (heldItem == null)
             {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);//Mouse.current.position.ReadValue());
+                Ray ray = Camera.main.ScreenPointToRay(InputManager.GetInstance().GetMousePos());//Mouse.current.position.ReadValue());
 
                 // if mouse raycast hitting any object without being obstructed by UI objects
                 if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
@@ -107,12 +107,12 @@ public class InteractionManager : MonoBehaviour
                                 // change control labels
                                 UIManager.GetInstance().ChangeLabelText(hoveredObj);
 
-                                if (Input.GetMouseButtonDown(0))//InputManager.GetInstance().GetPrimaryInteractPressed())
+                                if (InputManager.GetInstance().GetPrimaryInteractPressed())
                                 {
                                     hoveredObj.GetComponent<IInteractable>().PrimaryInteract();
                                 }
 
-                                if (Input.GetMouseButtonUp(1))//InputManager.GetInstance().GetSecondaryInteractPressed())
+                                if (InputManager.GetInstance().GetSecondaryInteractPressed())
                                 {
                                     hoveredObj.GetComponent<IInteractable>().SecondaryInteract();
                                 }
@@ -147,12 +147,12 @@ public class InteractionManager : MonoBehaviour
             {
                 Debug.Log("Regardless of mouse hover, current held object is ready for inputs");
 
-                if (Input.GetMouseButtonDown(0))//InputManager.GetInstance().GetPrimaryInteractPressed())
+                if (InputManager.GetInstance().GetPrimaryInteractPressed())
                 {
                     heldItem.GetComponent<IInteractable>().PrimaryInteract();
                 }
 
-                if (Input.GetMouseButtonUp(1))//InputManager.GetInstance().GetSecondaryInteractPressed())
+                if (InputManager.GetInstance().GetSecondaryInteractPressed())
                 {
                     heldItem.GetComponent<IInteractable>().SecondaryInteract();
                 }

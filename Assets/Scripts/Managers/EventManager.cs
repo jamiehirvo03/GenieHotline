@@ -1,16 +1,42 @@
+using System;
 using UnityEngine;
 
 public class EventManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private static EventManager instance;
+
+    private void Awake()
     {
-        
+        if (instance != null)
+        {
+            Debug.LogWarning("Found more than one Dialogue Manager in the scene");
+        }
+
+        instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public static EventManager GetInstance()
     {
-        
+        return instance;
     }
+
+    public event Action onEnterDialogueMode;
+    public void EnterDialogueMode()
+    {
+        if (onEnterDialogueMode != null)
+        {
+            onEnterDialogueMode();
+        }
+    }
+
+    public event Action onExitDialogueMode;
+    public void ExitDialogueMode()
+    {
+        if (onExitDialogueMode != null)
+        {
+            onExitDialogueMode();
+        }
+    }
+
+
 }
