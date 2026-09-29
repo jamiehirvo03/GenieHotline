@@ -239,6 +239,8 @@ public class DialogueManager : MonoBehaviour
     {
         if (canContinueToNextLine)
         {
+            Debug.Log($"Choice {choiceIndex} selected");
+
             currentStory.ChooseChoiceIndex(choiceIndex);
             //InputManager.GetInstance().RegisterSubmitPressed();
             ContinueStory();

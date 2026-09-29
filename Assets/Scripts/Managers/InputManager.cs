@@ -99,6 +99,8 @@ public class InputManager : MonoBehaviour
         if (context.performed)
         {
             choiceOnePressed = true;
+
+            DialogueManager.GetInstance().MakeChoice(0);
         }
         else if (context.canceled)
         {
@@ -111,6 +113,8 @@ public class InputManager : MonoBehaviour
         if (context.performed)
         {
             choiceTwoPressed = true;
+
+            DialogueManager.GetInstance().MakeChoice(1);
         }
         else if (context.canceled)
         {
@@ -123,6 +127,8 @@ public class InputManager : MonoBehaviour
         if (context.performed)
         {
             choiceThreePressed = true;
+
+            DialogueManager.GetInstance().MakeChoice(2);
         }
         else if (context.canceled)
         {
@@ -135,6 +141,8 @@ public class InputManager : MonoBehaviour
         if (context.performed)
         {
             choiceFourPressed = true;
+
+            DialogueManager.GetInstance().MakeChoice(3);
         }
         else if (context.canceled)
         {

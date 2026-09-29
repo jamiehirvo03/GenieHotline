@@ -118,6 +118,51 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Continue"",
+                    ""type"": ""Button"",
+                    ""id"": ""a0ac6f69-baa9-4b12-a909-d9704e556c54"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChoiceOne"",
+                    ""type"": ""Button"",
+                    ""id"": ""4539a983-491c-440d-8f1a-18ad6af8edae"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChoiceTwo"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ee6555d-ea5f-40a6-b20a-42aa957951cb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChoiceThree"",
+                    ""type"": ""Button"",
+                    ""id"": ""a3a1f522-29db-47fb-bdbe-0a87dab2b0c0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChoiceFour"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa4535de-ce94-455b-bd9d-cacd578c273f"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -153,6 +198,61 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""MousePos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71dfd717-4d52-4f2e-9e07-0df5346da8ef"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse&Keyboard"",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0014b42d-57e1-4f47-acea-d2913d185f7c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse&Keyboard"",
+                    ""action"": ""ChoiceOne"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c92a4e3-aa75-47ca-9f5d-33a75f690f73"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse&Keyboard"",
+                    ""action"": ""ChoiceTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb8b7288-60d5-4280-9e89-8267a1ae6ddc"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse&Keyboard"",
+                    ""action"": ""ChoiceThree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dda1c7ca-99f6-497c-8a0a-05cba8200dd4"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse&Keyboard"",
+                    ""action"": ""ChoiceFour"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -181,6 +281,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_DefaultMap_PrimaryInteract = m_DefaultMap.FindAction("PrimaryInteract", throwIfNotFound: true);
         m_DefaultMap_SecondaryInteract = m_DefaultMap.FindAction("SecondaryInteract", throwIfNotFound: true);
         m_DefaultMap_MousePos = m_DefaultMap.FindAction("MousePos", throwIfNotFound: true);
+        m_DefaultMap_Continue = m_DefaultMap.FindAction("Continue", throwIfNotFound: true);
+        m_DefaultMap_ChoiceOne = m_DefaultMap.FindAction("ChoiceOne", throwIfNotFound: true);
+        m_DefaultMap_ChoiceTwo = m_DefaultMap.FindAction("ChoiceTwo", throwIfNotFound: true);
+        m_DefaultMap_ChoiceThree = m_DefaultMap.FindAction("ChoiceThree", throwIfNotFound: true);
+        m_DefaultMap_ChoiceFour = m_DefaultMap.FindAction("ChoiceFour", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -264,6 +369,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_DefaultMap_PrimaryInteract;
     private readonly InputAction m_DefaultMap_SecondaryInteract;
     private readonly InputAction m_DefaultMap_MousePos;
+    private readonly InputAction m_DefaultMap_Continue;
+    private readonly InputAction m_DefaultMap_ChoiceOne;
+    private readonly InputAction m_DefaultMap_ChoiceTwo;
+    private readonly InputAction m_DefaultMap_ChoiceThree;
+    private readonly InputAction m_DefaultMap_ChoiceFour;
     /// <summary>
     /// Provides access to input actions defined in input action map "DefaultMap".
     /// </summary>
@@ -287,6 +397,26 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "DefaultMap/MousePos".
         /// </summary>
         public InputAction @MousePos => m_Wrapper.m_DefaultMap_MousePos;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultMap/Continue".
+        /// </summary>
+        public InputAction @Continue => m_Wrapper.m_DefaultMap_Continue;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultMap/ChoiceOne".
+        /// </summary>
+        public InputAction @ChoiceOne => m_Wrapper.m_DefaultMap_ChoiceOne;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultMap/ChoiceTwo".
+        /// </summary>
+        public InputAction @ChoiceTwo => m_Wrapper.m_DefaultMap_ChoiceTwo;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultMap/ChoiceThree".
+        /// </summary>
+        public InputAction @ChoiceThree => m_Wrapper.m_DefaultMap_ChoiceThree;
+        /// <summary>
+        /// Provides access to the underlying input action "DefaultMap/ChoiceFour".
+        /// </summary>
+        public InputAction @ChoiceFour => m_Wrapper.m_DefaultMap_ChoiceFour;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -322,6 +452,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MousePos.started += instance.OnMousePos;
             @MousePos.performed += instance.OnMousePos;
             @MousePos.canceled += instance.OnMousePos;
+            @Continue.started += instance.OnContinue;
+            @Continue.performed += instance.OnContinue;
+            @Continue.canceled += instance.OnContinue;
+            @ChoiceOne.started += instance.OnChoiceOne;
+            @ChoiceOne.performed += instance.OnChoiceOne;
+            @ChoiceOne.canceled += instance.OnChoiceOne;
+            @ChoiceTwo.started += instance.OnChoiceTwo;
+            @ChoiceTwo.performed += instance.OnChoiceTwo;
+            @ChoiceTwo.canceled += instance.OnChoiceTwo;
+            @ChoiceThree.started += instance.OnChoiceThree;
+            @ChoiceThree.performed += instance.OnChoiceThree;
+            @ChoiceThree.canceled += instance.OnChoiceThree;
+            @ChoiceFour.started += instance.OnChoiceFour;
+            @ChoiceFour.performed += instance.OnChoiceFour;
+            @ChoiceFour.canceled += instance.OnChoiceFour;
         }
 
         /// <summary>
@@ -342,6 +487,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MousePos.started -= instance.OnMousePos;
             @MousePos.performed -= instance.OnMousePos;
             @MousePos.canceled -= instance.OnMousePos;
+            @Continue.started -= instance.OnContinue;
+            @Continue.performed -= instance.OnContinue;
+            @Continue.canceled -= instance.OnContinue;
+            @ChoiceOne.started -= instance.OnChoiceOne;
+            @ChoiceOne.performed -= instance.OnChoiceOne;
+            @ChoiceOne.canceled -= instance.OnChoiceOne;
+            @ChoiceTwo.started -= instance.OnChoiceTwo;
+            @ChoiceTwo.performed -= instance.OnChoiceTwo;
+            @ChoiceTwo.canceled -= instance.OnChoiceTwo;
+            @ChoiceThree.started -= instance.OnChoiceThree;
+            @ChoiceThree.performed -= instance.OnChoiceThree;
+            @ChoiceThree.canceled -= instance.OnChoiceThree;
+            @ChoiceFour.started -= instance.OnChoiceFour;
+            @ChoiceFour.performed -= instance.OnChoiceFour;
+            @ChoiceFour.canceled -= instance.OnChoiceFour;
         }
 
         /// <summary>
@@ -416,5 +576,40 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMousePos(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Continue" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnContinue(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChoiceOne" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChoiceOne(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChoiceTwo" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChoiceTwo(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChoiceThree" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChoiceThree(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ChoiceFour" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnChoiceFour(InputAction.CallbackContext context);
     }
 }
