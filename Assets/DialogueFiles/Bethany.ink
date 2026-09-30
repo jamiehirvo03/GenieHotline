@@ -1,5 +1,5 @@
 === Introduction ===
-    Hello I'm Marcus calling to you on DAY ONE as a test! Press [SPACE] to continue to the next line.
+    Hello I'm Bethany calling to you on DAY ONE as a test! Press [SPACE] to continue to the next line.
         -> Questions
         
 === Questions ===

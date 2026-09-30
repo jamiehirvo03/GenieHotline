@@ -20,6 +20,15 @@ public class EventManager : MonoBehaviour
         return instance;
     }
 
+    public event Action onStartDay;
+    public void StartDay()
+    {
+        if (onStartDay != null)
+        {
+            onStartDay();
+        }
+    }
+
     public event Action onEnterDialogueMode;
     public void EnterDialogueMode()
     {

@@ -54,7 +54,7 @@ public class DialogueManager : MonoBehaviour
 
     private void Start()
     {
-        EventManager.GetInstance().onExitDialogueMode += ExitDialogueMode;
+        //EventManager.GetInstance().onExitDialogueMode += ExitDialogueMode;
 
         isDialoguePlaying = false;
         dialoguePanel.SetActive(false);
@@ -245,5 +245,11 @@ public class DialogueManager : MonoBehaviour
             //InputManager.GetInstance().RegisterSubmitPressed();
             ContinueStory();
         }
-    } 
+    }
+    
+    public void HangUp()
+    {
+        currentStory.ChoosePathString("hangUp");
+        ContinueStory();
+    }
 }
