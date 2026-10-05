@@ -44,6 +44,11 @@ public class InteractionManager : MonoBehaviour
         return instance;
     }
 
+    public GameObject GetHeldItemData()
+    {
+        return heldItem;
+    }
+
     public void PickUpItem(GameObject item)
     {
         // keep track of held item
