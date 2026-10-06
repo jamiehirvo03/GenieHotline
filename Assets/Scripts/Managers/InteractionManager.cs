@@ -126,7 +126,7 @@ public class InteractionManager : MonoBehaviour
                         // if hit object not 'interactable'
                         else
                         {
-                            Debug.Log("Hovered object is not interactable");
+                            //Debug.Log("Hovered object is not interactable");
 
                             // if previously hovered object is still stored
                             if (hoveredObj != null)

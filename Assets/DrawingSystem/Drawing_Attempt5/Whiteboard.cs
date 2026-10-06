@@ -14,7 +14,7 @@ public class Whiteboard : MonoBehaviour
     [Tooltip("Minimum distance between brush positions")]
     public float minBrushDistance = 2f;
 
-    public Material brushMaterial;
+    private Material brushMaterial;
 
     public Color backgroundColour;
     public float markerAlpha = 0.7f;
@@ -35,9 +35,9 @@ public class Whiteboard : MonoBehaviour
 
         public bool isEraser = false;
 
-        [HideInInspector] public Vector2 lastPosition; // last drawn position
-        [HideInInspector] public bool isFirstDraw = true; // flag for first draw
-        [HideInInspector] public bool isDrawing = false; // whether the brush is in contact
+        public Vector2 lastPosition; // last drawn position
+        public bool isFirstDraw = true; // flag for first draw
+        public bool isDrawing = false; // whether the brush is in contact
     }
 
     [Header("Add Brushes")]
@@ -100,6 +100,8 @@ public class Whiteboard : MonoBehaviour
 
         // raycast from the brush tip transform
         Ray ray = new Ray(brush.brushTransform.position, brush.brushTransform.forward);
+
+        Debug.DrawRay(brush.brushTransform.position, brush.brushTransform.forward);
 
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
         {

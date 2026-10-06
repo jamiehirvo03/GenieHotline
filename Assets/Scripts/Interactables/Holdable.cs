@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class Holdable : MonoBehaviour, IHoldable
 {
     // HELD OBJECT MOVEMENT
-    private bool isHeld = false;
+    [SerializeField] private bool isHeld = false;
 
     private Vector3 grabOriginPos;
     private Vector3 hoverPos;
