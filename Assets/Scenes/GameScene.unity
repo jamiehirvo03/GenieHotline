@@ -519,6 +519,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 169082062534531771, guid: b0fd93481e9a50446a38d9e67e80c051, type: 3}
+      propertyPath: tipOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169082062534531771, guid: b0fd93481e9a50446a38d9e67e80c051, type: 3}
       propertyPath: tipOrigin
       value: 
       objectReference: {fileID: 916215086}

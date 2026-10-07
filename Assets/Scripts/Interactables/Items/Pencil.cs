@@ -1,15 +1,18 @@
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Pencil : MonoBehaviour, IInteractable
 {
     private string primaryAction = "";
     private string secondaryAction = "Pick Up";
 
-    private float holdHeight;
     [SerializeField] private GameObject tipOrigin;
-    [SerializeField] private float tipOffset = 0.5f;
-    private bool isDrawing = false;
+    [SerializeField] private float tipOffset;
+    
+    public bool isDrawing = false;
+    private float holdHeight;
+
 
     public string GetPrimaryAction()
     {
@@ -23,10 +26,22 @@ public class Pencil : MonoBehaviour, IInteractable
 
     public void PrimaryInteract()
     {
-        if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
+        if (GetComponent<IHoldable>().GetHeldStatus())
         {
             // add code for primary action when held (draw)
-            isDrawing = !isDrawing;
+
+            if (!isDrawing)
+            {
+                StartDrawing();
+
+                GetComponent<Holdable>().holdHeight = 0.5f;
+            }
+            else
+            {
+                StopDrawing();
+
+                GetComponent<Holdable>().holdHeight = 1;
+            }   
         }
     }
 
@@ -34,16 +49,16 @@ public class Pencil : MonoBehaviour, IInteractable
     {
         //Debug.Log($"{primaryAction} was pressed");
 
-        if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
+        if (GetComponent<IHoldable>().GetHeldStatus())
         {
-            gameObject.GetComponent<IHoldable>().Release();
+            GetComponent<IHoldable>().Release();
 
             primaryAction = "";
             secondaryAction = "Pick Up";
         }
         else
         {
-            gameObject.GetComponent<IHoldable>().Grab();
+            GetComponent<IHoldable>().Grab();
 
             primaryAction = "Draw (Hold)";
             secondaryAction = "Put Down";
@@ -52,32 +67,27 @@ public class Pencil : MonoBehaviour, IInteractable
         }
     }
 
-    private void Update()
+    private void StartDrawing()
     {
-        if (isDrawing)
-        {
-            Ray ray = new Ray(tipOrigin.transform.position, tipOrigin.transform.forward);
-            Debug.DrawRay(tipOrigin.transform.position, tipOrigin.transform.forward);
+        Ray ray = new Ray(tipOrigin.transform.position, tipOrigin.transform.forward);
+        Debug.DrawRay(tipOrigin.transform.position, tipOrigin.transform.forward);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 1))
-            {
-                if (hit.collider.gameObject)
-                {
-                    Vector3 adjustedPos = new Vector3(transform.position.x, hit.point.y + tipOffset, transform.position.z);
-
-                    if (transform.position != adjustedPos)
-                    {
-                        transform.position = Vector3.Lerp(transform.position, adjustedPos, 0.5f);
-                    }
-                }
-            }
-        }
-        if (gameObject.GetComponent<IHoldable>().GetHeldStatus() && !isDrawing)
+        if (Physics.Raycast(ray, out RaycastHit hit, 1))
         {
-            if (transform.position.y != holdHeight)
-            {
-                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, holdHeight, transform.position.z), 0.5f);
-            }
+            Vector3 adjustedPos = new Vector3(transform.position.x, hit.point.y + tipOffset, transform.position.z);
+
+            StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, transform.eulerAngles, 0.1f, false));
+
+            isDrawing = true;
         }
+    }
+
+    private void StopDrawing()
+    {
+        isDrawing = false;
+
+        Vector3 adjustedPos = new Vector3(transform.position.x, holdHeight, transform.position.z);
+
+        StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, transform.eulerAngles, 0.1f, false));
     }
 }

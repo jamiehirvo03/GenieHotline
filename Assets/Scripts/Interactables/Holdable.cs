@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class Holdable : MonoBehaviour, IHoldable
 {
@@ -10,15 +11,15 @@ public class Holdable : MonoBehaviour, IHoldable
     [SerializeField] private bool isHeld = false;
 
     private Vector3 grabOriginPos;
-    private Vector3 hoverPos;
+    private Vector3 followPos;
     private Vector3 placementPos;
-    private float verticalMovementTime = 0.1f; // FOR VERTICAL HEIGHT LERP ONLY
-    [SerializeField] private float holdHeight; // height above the surface you're hovering over
 
+    public bool isLerping = false;
+    public float holdHeight; // height above the surface you're hovering over
     [SerializeField] private bool isRotatedWhenHeld;
     [SerializeField] private float rotationSpeed;
-    [SerializeField] private Vector3 defaultOrientation = Vector3.forward;
-    [SerializeField] private Vector3 heldOrientation = Vector3.up;
+    [SerializeField] private Vector3 defaultOrientation;
+    [SerializeField] private Vector3 heldOrientation;
 
     [SerializeField] private LayerMask objectFollowingLayers; // layers to be detected for moving the held object
     private Vector3 velocity = Vector3.zero; // has to be zero for smoothdamp as object always starts with no motion
@@ -76,7 +77,7 @@ public class Holdable : MonoBehaviour, IHoldable
             Vector3 heightAdjustedPos = new Vector3(transform.position.x, holdHeight, transform.position.z);
 
             // raise object to hold height
-            LerpObjectPosition(heightAdjustedPos, false); // using StartCoroutine(LerpObjectTransform(heightAdjustedPos)); makes the object flicker when picked up
+            LerpObjectTransform(heightAdjustedPos, heldOrientation, 0.1f, false); // using StartCoroutine(LerpObjectTransform(heightAdjustedPos)); makes the object flicker when picked up
 
             if (isRotatedWhenHeld)
             {
@@ -85,18 +86,20 @@ public class Holdable : MonoBehaviour, IHoldable
         }
     }
 
-    private IEnumerator LerpObjectPosition(Vector3 targetPosition, bool isItemBeingReleased)
+    public IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime, bool isItemBeingReleased)
     {
         Debug.Log($"Lerping object to position = {targetPosition}");
+
+        isLerping = true;
 
         Vector3 startPosition = transform.position;
 
         float elapsedTime = 0f;
 
-        while (elapsedTime < verticalMovementTime)
+        while (elapsedTime < transformTime)
         {
             elapsedTime += Time.deltaTime;
-            float lerpTime = elapsedTime / verticalMovementTime;
+            float lerpTime = elapsedTime / transformTime;
 
             transform.position = Vector3.Lerp(startPosition, targetPosition, lerpTime);
             
@@ -115,6 +118,8 @@ public class Holdable : MonoBehaviour, IHoldable
             // communicate with interaction manager when item released so it can begin searching for hovers again
             InteractionManager.GetInstance().PutDownItem();
         }
+
+        isLerping = false;
     }
 
     private void RotateObject(Vector3 targetRotation)
@@ -132,7 +137,7 @@ public class Holdable : MonoBehaviour, IHoldable
             {
                 //Debug.Log($"PlacementPos is {placementPos}");
 
-                StartCoroutine(LerpObjectPosition(placementPos, true));
+                StartCoroutine(LerpObjectTransform(placementPos, defaultOrientation, 0.1f, true));
 
                 RotateObject(defaultOrientation);
 
@@ -312,10 +317,9 @@ public class Holdable : MonoBehaviour, IHoldable
             Debug.DrawLine(Camera.main.transform.position, hit.point, Color.green);
             Debug.DrawRay(hit.point, hit.normal * 2f, Color.red);
 
-            hoverPos = hit.point;
+            followPos = hit.point;
 
-            Vector3 hoverAdjusted = new Vector3(hoverPos.x, hoverPos.y + holdHeight, hoverPos.z);
-
+            Vector3 hoverAdjusted = new Vector3(followPos.x, followPos.y + holdHeight, followPos.z);
 
             transform.position = Vector3.SmoothDamp(transform.position, hoverAdjusted, ref velocity, followTime);
         }
