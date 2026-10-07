@@ -23,6 +23,8 @@ public class Whiteboard : MonoBehaviour
     [Tooltip("Set false to use a MeshCollider for 3D objects")]
     public bool useBoxCollider = true;
 
+    public bool showBrushRays = false;
+
     // define a brush class to hold properties for each brush
     [System.Serializable]
     public class BrushSettings
@@ -101,7 +103,7 @@ public class Whiteboard : MonoBehaviour
         // raycast from the brush tip transform
         Ray ray = new Ray(brush.brushTransform.position, brush.brushTransform.forward);
 
-        Debug.DrawRay(brush.brushTransform.position, brush.brushTransform.forward);
+        if (showBrushRays) Debug.DrawRay(brush.brushTransform.position, brush.brushTransform.forward, Color.orange);
 
         if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
         {

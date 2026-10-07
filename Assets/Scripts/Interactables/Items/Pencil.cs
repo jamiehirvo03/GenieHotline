@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class Pencil : MonoBehaviour, IInteractable
 {
-    private string primaryAction = "Pick Up";
-    private string secondaryAction = "";
+    private string primaryAction = "";
+    private string secondaryAction = "Pick Up";
+
+    private float holdHeight;
+    [SerializeField] private GameObject tipOrigin;
+    [SerializeField] private float tipOffset = 0.5f;
+    private bool isDrawing = false;
 
     public string GetPrimaryAction()
     {
@@ -18,51 +23,61 @@ public class Pencil : MonoBehaviour, IInteractable
 
     public void PrimaryInteract()
     {
+        if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
+        {
+            // add code for primary action when held (draw)
+            isDrawing = !isDrawing;
+        }
+    }
+
+    public void SecondaryInteract()
+    {
         //Debug.Log($"{primaryAction} was pressed");
 
         if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
         {
             gameObject.GetComponent<IHoldable>().Release();
 
-            primaryAction = "Pick Up";
+            primaryAction = "";
+            secondaryAction = "Pick Up";
         }
         else
         {
             gameObject.GetComponent<IHoldable>().Grab();
 
-            primaryAction = "Put Down";
+            primaryAction = "Draw (Hold)";
+            secondaryAction = "Put Down";
+
+            holdHeight = transform.position.y;
         }
     }
 
-    public void SecondaryInteract()
+    private void Update()
     {
-        if (secondaryAction == "")
+        if (isDrawing)
         {
-            //Debug.Log("SecondaryInteract was pressed but there is no action assigned");
-        }
-        else
-        {
-            //Debug.Log($"{secondaryAction} pressed");
-        }
+            Ray ray = new Ray(tipOrigin.transform.position, tipOrigin.transform.forward);
+            Debug.DrawRay(tipOrigin.transform.position, tipOrigin.transform.forward);
 
-        if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
-        {
-            // add code for secondary action when held (mark paper)
-            
-            // check the status of the checkbox you're hovering over 
-            //if (gameObject.GetComponent<IInteractable>().GetCheckboxStatus())
-            //{
-                // if the checkbox is already marked
-                //secondaryAction = "Erase";
-            //}
-            //else
-            //{
-                // if the checkbox is empty
-                secondaryAction = "Sign";
-            //}
+            if (Physics.Raycast(ray, out RaycastHit hit, 1))
+            {
+                if (hit.collider.gameObject)
+                {
+                    Vector3 adjustedPos = new Vector3(transform.position.x, hit.point.y + tipOffset, transform.position.z);
+
+                    if (transform.position != adjustedPos)
+                    {
+                        transform.position = Vector3.Lerp(transform.position, adjustedPos, 0.5f);
+                    }
+                }
+            }
         }
+        if (gameObject.GetComponent<IHoldable>().GetHeldStatus() && !isDrawing)
         {
-            secondaryAction = "";
+            if (transform.position.y != holdHeight)
+            {
+                transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, holdHeight, transform.position.z), 0.5f);
+            }
         }
     }
 }

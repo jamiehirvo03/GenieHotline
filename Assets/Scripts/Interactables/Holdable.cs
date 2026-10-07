@@ -14,7 +14,11 @@ public class Holdable : MonoBehaviour, IHoldable
     private Vector3 placementPos;
     private float verticalMovementTime = 0.1f; // FOR VERTICAL HEIGHT LERP ONLY
     [SerializeField] private float holdHeight; // height above the surface you're hovering over
-    private Vector3 defaultOrientation;
+
+    [SerializeField] private bool isRotatedWhenHeld;
+    [SerializeField] private float rotationSpeed;
+    [SerializeField] private Vector3 defaultOrientation = Vector3.forward;
+    [SerializeField] private Vector3 heldOrientation = Vector3.up;
 
     [SerializeField] private LayerMask objectFollowingLayers; // layers to be detected for moving the held object
     private Vector3 velocity = Vector3.zero; // has to be zero for smoothdamp as object always starts with no motion
@@ -47,8 +51,6 @@ public class Holdable : MonoBehaviour, IHoldable
     private void Start()
     {
         originalColor = objectRenderer.material.color;
-
-        defaultOrientation = transform.rotation.eulerAngles;
     }
 
     private void Update()
@@ -74,11 +76,16 @@ public class Holdable : MonoBehaviour, IHoldable
             Vector3 heightAdjustedPos = new Vector3(transform.position.x, holdHeight, transform.position.z);
 
             // raise object to hold height
-            LerpObjectTransform(heightAdjustedPos, false); // using StartCoroutine(LerpObjectTransform(heightAdjustedPos)); makes the object flicker when picked up
+            LerpObjectPosition(heightAdjustedPos, false); // using StartCoroutine(LerpObjectTransform(heightAdjustedPos)); makes the object flicker when picked up
+
+            if (isRotatedWhenHeld)
+            {
+                RotateObject(heldOrientation);
+            }
         }
     }
 
-    private IEnumerator LerpObjectTransform(Vector3 targetPosition, bool isItemBeingReleased)
+    private IEnumerator LerpObjectPosition(Vector3 targetPosition, bool isItemBeingReleased)
     {
         Debug.Log($"Lerping object to position = {targetPosition}");
 
@@ -92,13 +99,14 @@ public class Holdable : MonoBehaviour, IHoldable
             float lerpTime = elapsedTime / verticalMovementTime;
 
             transform.position = Vector3.Lerp(startPosition, targetPosition, lerpTime);
+            
 
             yield return null;
         }
         // everything below this will happen once lerp is complete
 
         transform.position = targetPosition; // snap position to target to fix weird numbers
-        
+
         // clear current placementPos as it is no longer needed
         placementPos = Vector3.zero;
 
@@ -107,6 +115,11 @@ public class Holdable : MonoBehaviour, IHoldable
             // communicate with interaction manager when item released so it can begin searching for hovers again
             InteractionManager.GetInstance().PutDownItem();
         }
+    }
+
+    private void RotateObject(Vector3 targetRotation)
+    {
+        this.gameObject.transform.rotation = Quaternion.Euler(targetRotation);
     }
 
     public void Release()
@@ -119,7 +132,9 @@ public class Holdable : MonoBehaviour, IHoldable
             {
                 //Debug.Log($"PlacementPos is {placementPos}");
 
-                StartCoroutine(LerpObjectTransform(placementPos, true));
+                StartCoroutine(LerpObjectPosition(placementPos, true));
+
+                RotateObject(defaultOrientation);
 
                 isHeld = false;
             }
