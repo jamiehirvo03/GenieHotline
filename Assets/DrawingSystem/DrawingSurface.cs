@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Whiteboard : MonoBehaviour
+public class DrawingSurface : MonoBehaviour
 {
     [Tooltip("The RenderTexture to draw on")]
     public RenderTexture renderTexture;
