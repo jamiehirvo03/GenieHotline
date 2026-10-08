@@ -33,13 +33,11 @@ public class Pencil : MonoBehaviour, IInteractable
             if (!isDrawing)
             {
                 StartDrawing();
-
                 GetComponent<Holdable>().holdHeight = 0.5f;
             }
             else
             {
                 StopDrawing();
-
                 GetComponent<Holdable>().holdHeight = 1;
             }   
         }
@@ -51,6 +49,9 @@ public class Pencil : MonoBehaviour, IInteractable
 
         if (GetComponent<IHoldable>().GetHeldStatus())
         {
+            StopDrawing();
+            GetComponent<Holdable>().holdHeight = 1;
+
             GetComponent<IHoldable>().Release();
 
             primaryAction = "";
@@ -76,7 +77,7 @@ public class Pencil : MonoBehaviour, IInteractable
         {
             Vector3 adjustedPos = new Vector3(transform.position.x, hit.point.y + tipOffset, transform.position.z);
 
-            StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, transform.eulerAngles, 0.1f, false));
+            StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, 0.1f, false));
 
             isDrawing = true;
         }
@@ -88,6 +89,6 @@ public class Pencil : MonoBehaviour, IInteractable
 
         Vector3 adjustedPos = new Vector3(transform.position.x, holdHeight, transform.position.z);
 
-        StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, transform.eulerAngles, 0.1f, false));
+        StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, 0.1f, false));
     }
 }

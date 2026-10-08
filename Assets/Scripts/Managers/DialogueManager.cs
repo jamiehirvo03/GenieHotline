@@ -7,6 +7,7 @@ using Ink.Runtime;
 using Ink.Parsed;
 using Story = Ink.Runtime.Story;
 using Choice = Ink.Runtime.Choice;
+using Unity.VisualScripting;
 
 
 
@@ -31,6 +32,8 @@ public class DialogueManager : MonoBehaviour
 
     private bool canContinueToNextLine = false;
     public GameObject dialogueCharacter { get; private set; }
+
+    private bool isDialogueCloseInProgress = false;
 
     // Constants for inky tags (character_emotion)
     //private const string PORTRAIT_TAG = "portrait";
@@ -78,6 +81,11 @@ public class DialogueManager : MonoBehaviour
         if (InputManager.GetInstance().GetContinuePressed() && canContinueToNextLine)
         {
             ContinueStory();
+        }
+
+        if (isDialogueCloseInProgress && InputManager.GetInstance().GetContinuePressed())
+        {
+            StopAllCoroutines();
         }
     }
 
@@ -251,5 +259,18 @@ public class DialogueManager : MonoBehaviour
     {
         currentStory.ChoosePathString("hangUp");
         ContinueStory();
+
+        StartCoroutine(WaitForDialogueClose());
+    }
+
+    private IEnumerator WaitForDialogueClose()
+    {
+        isDialogueCloseInProgress = true;
+
+        yield return new WaitForSeconds(3f);
+
+        ContinueStory();
+
+        isDialogueCloseInProgress = false;
     }
 }

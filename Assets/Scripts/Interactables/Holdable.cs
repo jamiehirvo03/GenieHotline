@@ -77,7 +77,7 @@ public class Holdable : MonoBehaviour, IHoldable
             Vector3 heightAdjustedPos = new Vector3(transform.position.x, holdHeight, transform.position.z);
 
             // raise object to hold height
-            LerpObjectTransform(heightAdjustedPos, heldOrientation, 0.1f, false); // using StartCoroutine(LerpObjectTransform(heightAdjustedPos)); makes the object flicker when picked up
+            LerpObjectTransform(heightAdjustedPos, 0.1f, false); // using StartCoroutine(LerpObjectTransform(heightAdjustedPos)); makes the object flicker when picked up
 
             if (isRotatedWhenHeld)
             {
@@ -86,7 +86,7 @@ public class Holdable : MonoBehaviour, IHoldable
         }
     }
 
-    public IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime, bool isItemBeingReleased)
+    public IEnumerator LerpObjectTransform(Vector3 targetPosition, float transformTime, bool isItemBeingReleased)
     {
         Debug.Log($"Lerping object to position = {targetPosition}");
 
@@ -137,7 +137,7 @@ public class Holdable : MonoBehaviour, IHoldable
             {
                 //Debug.Log($"PlacementPos is {placementPos}");
 
-                StartCoroutine(LerpObjectTransform(placementPos, defaultOrientation, 0.1f, true));
+                StartCoroutine(LerpObjectTransform(placementPos, 0.1f, true));
 
                 RotateObject(defaultOrientation);
 

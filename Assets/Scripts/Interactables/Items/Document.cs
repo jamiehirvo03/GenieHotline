@@ -1,12 +1,17 @@
 using UnityEngine;
-using static DocumentField;
+using static Checkbox;
 
 public class Document : MonoBehaviour, IInteractable
 {
     private string primaryAction = "Pick Up";
     private string secondaryAction = "";
 
-    // Document fields
+    // Caller details
+    [SerializeField] private string callerName;
+    [SerializeField] private int callerAge;
+    [SerializeField] private string callerOccupation;
+
+    // Choice fields
     [SerializeField] private bool financialGain;
     [SerializeField] private bool itemManifestation;
     [SerializeField] private bool sensationManiupulation;
@@ -55,36 +60,70 @@ public class Document : MonoBehaviour, IInteractable
         }     
     }
 
-    public void SetFieldValue(FieldType selectedType)
+    public void TickCheckbox(CheckboxType checkboxType)
     {
-        switch (selectedType)
+        switch (checkboxType)
         {
-            case FieldType.financialGain:
+            case CheckboxType.financialGain:
                 financialGain = true;
                 break;
 
-            case FieldType.itemManifestation:
+            case CheckboxType.itemManifestation:
                 itemManifestation = true;
                 break;
 
-            case FieldType.sensationManipulation:
+            case CheckboxType.sensationManipulation:
                 sensationManiupulation = true;
                 break;
 
-            case FieldType.changeOfHeart:
+            case CheckboxType.changeOfHeart:
                 changeOfHeart = true;
                 break;
 
-            case FieldType.bodilyHarm:
+            case CheckboxType.bodilyHarm:
                 bodilyHarm = true;
                 break;
 
-            case FieldType.death:
+            case CheckboxType.death:
                 death = true;
                 break;
 
-            case FieldType.other:
+            case CheckboxType.other:
                 other = true;
+                break;
+        }
+    }
+
+    public void ClearCheckbox(CheckboxType checkboxType)
+    {
+        switch (checkboxType)
+        {
+            case CheckboxType.financialGain:
+                financialGain = false;
+                break;
+
+            case CheckboxType.itemManifestation:
+                itemManifestation = false;
+                break;
+
+            case CheckboxType.sensationManipulation:
+                sensationManiupulation = false;
+                break;
+
+            case CheckboxType.changeOfHeart:
+                changeOfHeart = false;
+                break;
+
+            case CheckboxType.bodilyHarm:
+                bodilyHarm = false;
+                break;
+
+            case CheckboxType.death:
+                death = false;
+                break;
+
+            case CheckboxType.other:
+                other = false;
                 break;
         }
     }

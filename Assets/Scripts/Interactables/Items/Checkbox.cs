@@ -1,12 +1,13 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class DocumentField : MonoBehaviour
+public class Checkbox : MonoBehaviour
 {
     private Document document;
 
-    public enum FieldType
+    public enum CheckboxType
     {
+        // wish details
         financialGain,
         itemManifestation,
         sensationManipulation,
@@ -15,20 +16,23 @@ public class DocumentField : MonoBehaviour
         death,
         fateReversal,
         other,
+
+        // consequences
+
     }
 
-    public FieldType selectedType;
+    public CheckboxType selectedType;
 
     private void OnEnable()
     {
-        document = GetComponent<Document>();
+        document = GetComponentInParent<Document>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("PencilTip"))
         {
-            document.SetFieldValue(selectedType);
+            document.TickCheckbox(selectedType);
         }
     }
 }
