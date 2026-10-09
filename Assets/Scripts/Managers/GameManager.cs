@@ -1,31 +1,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Ink.Parsed;
+using Unity.VisualScripting;
+using System.Runtime.CompilerServices;
 
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
+    [System.Serializable]
+    public class Callers
+    {
+        public int dayNumber;
+        public TextAsset callerJSON;
+        public string callerName;
+        public int callerAge;
+        public string callerOccupation;
+    }
+    [Header("Add Callers")] public List<Callers> callers = new List<Callers>();
+
     // caller queue
     private int currentDay;
-    private List<TextAsset> currentDayPool;
-
-    [SerializeField] private List<TextAsset> dayOneCallers = new List<TextAsset>();
-    [SerializeField] private List<TextAsset> dayTwoCallers = new List<TextAsset>();
-    [SerializeField] private List<TextAsset> dayThreeCallers = new List<TextAsset>();
-    [SerializeField] private List<TextAsset> dayFourCallers = new List<TextAsset>();
-    [SerializeField] private List<TextAsset> dayFiveCallers = new List<TextAsset>();
-
     [HideInInspector] public bool callersInQueue = false;
-    private List<TextAsset> callerQueue;
+    private List<Callers> callerQueue = new List<Callers>();
     private int queuePosition;
 
     [SerializeField] private List<GameObject> phoneIndicators = new List<GameObject>();
     [SerializeField] private Material indicatorOff;
     [SerializeField] private Material indicatorOn;
 
-    private List<TextAsset> callerHistory = new List<TextAsset>();
+    private List<Callers> callerHistory = new List<Callers>();
+
+    [SerializeField] private GameObject documentPrefab;
+    [SerializeField] private Transform pileLocation;
+    [SerializeField] private List<GameObject> documents = new List<GameObject>();
 
     // progression
     private float chaosLevel;
@@ -52,14 +61,46 @@ public class GameManager : MonoBehaviour
 
         SelectCallers();
         UpdateIndicators();
+        SpawnDocuments();
         queuePosition = 0;
         callersInQueue = true;
 
         Debug.Log($"Day {dayNumber} started");
     }
 
+    public void SelectCallers()
+    {
+
+        for (int i = 0; i < callers.Count; i++)
+        {
+            if (callers[i].dayNumber == currentDay)
+            {
+                Debug.Log($"{callers[i].callerName}");
+                callerQueue.Add(callers[i]);
+            }
+        }
+        RandomizeQueue();
+    }
+
+    private void RandomizeQueue()
+    {
+        //// clear previous queue first
+        //if (callerQueue != null && !callersInQueue)
+        //{
+        //    callerQueue.Clear();
+        //}
+
+        for (int i = 0; i < callerQueue.Count; i++)
+        {
+            int r = (int)(Random.value * (callerQueue.Count - i));
+            Callers tempVar = callerQueue[r];
+            callerQueue[r] = callerQueue[i];
+            callerQueue[i] = tempVar;
+        }
+    }
+
     private void UpdateIndicators()
-    {        
+    {
         for (int i = 0; i < callerQueue.Count; i++)
         {
             if (callerQueue[i] == null)
@@ -75,51 +116,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SelectCallers()
+    private void SpawnDocuments()
     {
-        switch (currentDay)
-        {
-            case 1:
-                currentDayPool = new List<TextAsset>(dayOneCallers);
-
-                break;
-            case 2:
-                currentDayPool = new List<TextAsset>(dayTwoCallers);
-
-                break;
-            case 3:
-                currentDayPool = new List<TextAsset>(dayThreeCallers);
-
-                break;
-            case 4:
-                currentDayPool = new List<TextAsset>(dayFourCallers);
-
-                break;
-            case 5:
-                currentDayPool = new List<TextAsset>(dayFiveCallers);
-
-                break;
-        }
-
-        RandomizeQueue();
-    }
-    
-    private void RandomizeQueue()
-    {
-        // clear previous queue first
-        if (callerQueue != null && callerQueue != currentDayPool)
-        {
-            callerQueue.Clear();
-        }
-
-        callerQueue = new List<TextAsset>(currentDayPool);
-        
         for (int i = 0; i < callerQueue.Count; i++)
         {
-            int r = (int)(Random.value * (callerQueue.Count - i));
-            TextAsset tempVar = callerQueue[r];
-            callerQueue[r] = callerQueue[i];
-            callerQueue[i] = tempVar;
+            // add a slight vertical offset based on the current loop index so that subsequent objects create a pile
+            Vector3 spawnPosition = new Vector3(pileLocation.position.x, (pileLocation.position.y + (0.05f * i)), pileLocation.position.z);
+
+            GameObject newInstance = Instantiate(documentPrefab, spawnPosition, Quaternion.identity);
+
+            documents.Add(newInstance);
+
+            documents[i].GetComponent<Document>().SetCallerDetails(callerQueue[i].callerName, callerQueue[i].callerAge, callerQueue[i].callerOccupation);
         }
     }
 
@@ -131,7 +139,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            DialogueManager.GetInstance().EnterDialogueMode(callerQueue[queuePosition], "Introduction");
+            TextAsset currentCallerJSON = callerQueue[queuePosition].callerJSON;
+
+            DialogueManager.GetInstance().EnterDialogueMode(currentCallerJSON, "Introduction");
         }   
     }
 

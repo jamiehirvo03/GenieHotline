@@ -13,7 +13,7 @@ public class Checkbox : MonoBehaviour
         itemManifestation,
         sensationManipulation,
         changeOfHeart,
-        bodilyHarm,
+        injury,
         death,
         fateReversal,
         other,
@@ -22,7 +22,7 @@ public class Checkbox : MonoBehaviour
                                                                    //players should bare minimum be aiming for a balance of '0' but entering the negative allows for bonus pay or a quota
         minorInconvenience,
         dayRuiner,
-        injury,
+        bodilyHarm,
         familyDrama,
         legalScandal,
         badLuckCharm,

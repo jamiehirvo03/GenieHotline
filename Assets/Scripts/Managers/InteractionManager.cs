@@ -25,6 +25,7 @@ public class InteractionManager : MonoBehaviour
 {
     private static InteractionManager instance;
 
+    [SerializeField] private LayerMask interactableLayer;
     private GameObject hoveredObj;
     private RaycastHit raycastHit;
 
@@ -76,7 +77,7 @@ public class InteractionManager : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(InputManager.GetInstance().GetMousePos());//Mouse.current.position.ReadValue());
 
                 // if mouse raycast hitting any object without being obstructed by UI objects
-                if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit))
+                if (!EventSystem.current.IsPointerOverGameObject() && Physics.Raycast(ray, out raycastHit, interactableLayer))
                 {
                     // if raycast hits any object
                     if (raycastHit.transform.gameObject != null)

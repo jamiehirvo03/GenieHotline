@@ -60,6 +60,13 @@ public class Document : MonoBehaviour, IInteractable
         }     
     }
 
+    public void SetCallerDetails(string name, int age, string occupation)
+    {
+        callerName = name;
+        callerAge = age;
+        callerOccupation = occupation;
+    }
+
     public void TickCheckbox(CheckboxType checkboxType)
     {
         switch (checkboxType)

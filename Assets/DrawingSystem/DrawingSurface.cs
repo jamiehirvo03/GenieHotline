@@ -24,13 +24,14 @@ public class DrawingSurface : MonoBehaviour
     public bool useBoxCollider = true;
 
     public bool showBrushRays = false;
+    [SerializeField] private LayerMask drawingLayer;
 
     // define a brush class to hold properties for each brush
     [System.Serializable]
     public class BrushSettings
     {
-        public Holdable brushHoldable; // ref for 'Holdable' script of brush item
-        public Transform brushTransform; // transform of brush item pivot
+        [HideInInspector] public Holdable brushHoldable; // ref for 'Holdable' script of brush item
+        [HideInInspector] public Transform brushTransform; // transform of brush item pivot
         public Color colour = Color.black;
         public int sizeX = 20; // brush width in pixels
         public int sizeY = 20; // brush height in pixels
@@ -57,9 +58,15 @@ public class DrawingSurface : MonoBehaviour
         // set the background colour
         GL.Clear(true, true, backgroundColour);
 
+        // retrieve brushes from DrawingManager script (can no longer set them here due to prefabs)
+        brushes[0].brushHoldable = DrawingManager.GetInstance().GetBrushes().pencilHoldable;
+        brushes[0].brushTransform = DrawingManager.GetInstance().GetBrushes().pencilTip;
+        brushes[1].brushHoldable = DrawingManager.GetInstance().GetBrushes().eraserHoldable;
+        brushes[1].brushTransform = DrawingManager.GetInstance().GetBrushes().eraserTip;
+
         // set the brush colour to match the backgroundColour if it is an eraser
         foreach (BrushSettings brush in brushes)
-        {
+        {            
             // set the alpha level of the markers
             brush.colour.a = markerAlpha;
 
@@ -105,7 +112,7 @@ public class DrawingSurface : MonoBehaviour
 
         if (showBrushRays) Debug.DrawRay(brush.brushTransform.position, brush.brushTransform.forward, Color.orange);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance))
+        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, drawingLayer))
         {
             // if the raycast from the brush is hitting this gameObject which is the board/page
             if (hit.collider.gameObject == gameObject)

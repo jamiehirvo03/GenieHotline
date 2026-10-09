@@ -151,10 +151,13 @@ MonoBehaviour:
   renderTexture: {fileID: 8400000, guid: 23dd6c04767f1104b88da4b23d7a1a0a, type: 2}
   maxDistance: 0.014
   minBrushDistance: 2
-  brushMaterial: {fileID: 0}
   backgroundColour: {r: 1, g: 1, b: 1, a: 0.39215687}
   markerAlpha: 1
   useBoxCollider: 1
+  showBrushRays: 0
+  drawingLayer:
+    serializedVersion: 2
+    m_Bits: 512
   brushes:
   - brushHoldable: {fileID: 0}
     brushTransform: {fileID: 0}
