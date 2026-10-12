@@ -257,7 +257,7 @@ public class Holdable : MonoBehaviour, IHoldable
                 if (documentPoints > 0)
                 {
                     // raise the y level of this placement
-                    placementPos = new Vector3(transform.position.x, highestDocument.transform.position.y + 0.001f, this.transform.position.z);
+                    placementPos = new Vector3(transform.position.x, highestDocument.transform.position.y + 0.005f, this.transform.position.z);
                 }
 
                 //Debug.Log($"PlacementPos: {placementPos}");

@@ -37,11 +37,13 @@ public class Checkbox : MonoBehaviour
         document = GetComponentInParent<Document>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("PencilTip"))
+        if (other.gameObject.CompareTag("PencilTip"))
         {
             document.TickCheckbox(selectedType);
+
+            Debug.Log($"{selectedType}");
         }
     }
 }

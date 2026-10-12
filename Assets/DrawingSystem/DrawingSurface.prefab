@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad3018c8b623154983c65ea072e5e9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Whiteboard
-  renderTexture: {fileID: 8400000, guid: 23dd6c04767f1104b88da4b23d7a1a0a, type: 2}
+  renderTextureTemplate: {fileID: 8400000, guid: 23dd6c04767f1104b88da4b23d7a1a0a, type: 2}
   maxDistance: 0.014
   minBrushDistance: 2
   backgroundColour: {r: 1, g: 1, b: 1, a: 0.39215687}

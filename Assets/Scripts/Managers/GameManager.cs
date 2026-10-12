@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviour
             documents.Add(newInstance);
 
             documents[i].GetComponent<Document>().SetCallerDetails(callerQueue[i].callerName, callerQueue[i].callerAge, callerQueue[i].callerOccupation);
+
         }
     }
 

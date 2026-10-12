@@ -6,7 +6,8 @@ using UnityEngine;
 public class DrawingSurface : MonoBehaviour
 {
     [Tooltip("The RenderTexture to draw on")]
-    public RenderTexture renderTexture;
+    [SerializeField] private RenderTexture renderTextureTemplate;
+    private RenderTexture renderTextureInstance;
 
     [Header("BrushSettings")]
     [Tooltip("Max distance for brush detection")]
@@ -51,10 +52,17 @@ public class DrawingSurface : MonoBehaviour
     {
         // initialize the brush material with a simple shader
         brushMaterial = new Material(Shader.Find("Hidden/Internal-Colored"));
+
+        // create new instance of RenderTexture template
+        renderTextureInstance = Instantiate(renderTextureTemplate);
+
         // set the RenderTexture as the main texture of the object's material
-        GetComponent<Renderer>().material.mainTexture = renderTexture;
+        GetComponent<Renderer>().material.mainTexture = renderTextureInstance;
+        
         // clear the RenderTexture at the start
-        RenderTexture.active = renderTexture;
+        RenderTexture.active = renderTextureInstance;
+
+
         // set the background colour
         GL.Clear(true, true, backgroundColour);
 
@@ -77,7 +85,6 @@ public class DrawingSurface : MonoBehaviour
         }
         RenderTexture.active = null;
     }
-
     /*running in update gives a marker smear breakup effect.. in URP its recommended to run in RenderPipelineManager.endCameraRendering or
      RenderPipelineManager.endFrameRendering, these are call backs, this will give sharp lines that don't look as much like a marker. For SRP its recommended to run
      in OnPostRender(), the same result..you can play with that and try adding noise etc but I was not able to find something that looked better than just
@@ -87,7 +94,7 @@ public class DrawingSurface : MonoBehaviour
     void Update()
     {
         // ensure the RenderTexture is active for drawing
-        RenderTexture.active = renderTexture;
+        RenderTexture.active = renderTextureInstance;
 
         // draw each brush on the texture
         foreach (var brush in brushes)
@@ -144,8 +151,8 @@ public class DrawingSurface : MonoBehaviour
                 }
 
                 // convert UV coordinates to texture space
-                int x = (int)(uv.x * renderTexture.width);
-                int y = (int)(uv.y * renderTexture.height);
+                int x = (int)(uv.x * renderTextureInstance.width);
+                int y = (int)(uv.y * renderTextureInstance.height);
                 Vector2 currentPosition = new Vector2(x, y);
 
                 // only draw when we need to by comparing current position to the left
@@ -171,8 +178,8 @@ public class DrawingSurface : MonoBehaviour
                 float deltaX = Mathf.Abs(currentPosition.x - brush.lastPosition.x);
                 float deltaY = Mathf.Abs(currentPosition.y - brush.lastPosition.y);
 
-                bool crossesHorizontalEdge = deltaX > renderTexture.width / 16; // crosses left-right edge
-                bool crossesVerticalEdge = deltaY > renderTexture.height / 16; // crosses top-bottom edge
+                bool crossesHorizontalEdge = deltaX > renderTextureInstance.width / 16; // crosses left-right edge
+                bool crossesVerticalEdge = deltaY > renderTextureInstance.height / 16; // crosses top-bottom edge
 
                 if (crossesHorizontalEdge || crossesVerticalEdge)
                 {
@@ -206,7 +213,7 @@ public class DrawingSurface : MonoBehaviour
     private void DrawAtPosition(Vector2 position, Color colour, float sizeX, float sizeY, float rotationAngle)
     {
         GL.PushMatrix();
-        GL.LoadPixelMatrix(0, renderTexture.width, renderTexture.height, 0);
+        GL.LoadPixelMatrix(0, renderTextureInstance.width, renderTextureInstance.height, 0);
 
         brushMaterial.SetPass(0);
 
