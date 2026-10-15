@@ -1043,6 +1043,9 @@ MonoBehaviour:
   callerName: 
   callerAge: 0
   callerOccupation: 
+  callerNameText: {fileID: 3338444333395468852}
+  callerAgeText: {fileID: 7234863418104187467}
+  callerOccupationText: {fileID: 6896790740654025402}
   financialGain: 0
   itemManifestation: 0
   sensationManiupulation: 0

@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 using static Checkbox;
 
 public class Document : MonoBehaviour, IInteractable
@@ -10,6 +11,10 @@ public class Document : MonoBehaviour, IInteractable
     [SerializeField] private string callerName;
     [SerializeField] private int callerAge;
     [SerializeField] private string callerOccupation;
+
+    [SerializeField] private TextMeshProUGUI callerNameText;
+    [SerializeField] private TextMeshProUGUI callerAgeText;
+    [SerializeField] private TextMeshProUGUI callerOccupationText;
 
     // Choice fields
     [SerializeField] private bool financialGain;
@@ -65,6 +70,10 @@ public class Document : MonoBehaviour, IInteractable
         callerName = name;
         callerAge = age;
         callerOccupation = occupation;
+
+        callerNameText.text = callerName;
+        callerAgeText.text = callerAge.ToString();
+        callerOccupationText.text = callerOccupation;
     }
 
     public void TickCheckbox(CheckboxType checkboxType)
