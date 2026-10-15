@@ -1815,6 +1815,10 @@ PrefabInstance:
       propertyPath: selectedType
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: de02422ed63530447ab16f9b52512d1b, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.20000002
@@ -1857,7 +1861,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (5)
+      value: Death
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -1881,6 +1885,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2260007483710326302}
     m_Modifications:
+    - target: {fileID: 1205609986945429634, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: selectedType
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9d04eb05f07e8484ebe5dfa9b50c1f41, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6
@@ -1923,7 +1935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox
+      value: Inconvenience
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -1951,6 +1963,10 @@ PrefabInstance:
       propertyPath: selectedType
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: be752962503009949ba022bd43b71abe, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.20000002
@@ -1993,7 +2009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (2)
+      value: SensationManipulation
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2021,6 +2037,10 @@ PrefabInstance:
       propertyPath: selectedType
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f526e1c77d5e2bd4e9622e9ab1f8bea1, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.20000002
@@ -2063,7 +2083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (6)
+      value: FateAvoidance
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2091,6 +2111,10 @@ PrefabInstance:
       propertyPath: selectedType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fd08fbf10c56c394885c76182e511f9b, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.20000002
@@ -2133,7 +2157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (1)
+      value: ItemManifestation
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2303,6 +2327,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2260007483710326302}
     m_Modifications:
+    - target: {fileID: 1205609986945429634, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: selectedType
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: aed560371ac42cd46a3e0ff64c4e8c84, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.20000002
@@ -2345,7 +2377,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (5)
+      value: BadLuckCharm
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2369,6 +2401,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2260007483710326302}
     m_Modifications:
+    - target: {fileID: 1205609986945429634, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: selectedType
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5e5766234e907804e9b28a194e3563f0, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.20000002
@@ -2411,7 +2451,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (6)
+      value: Hexed
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2435,6 +2475,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2260007483710326302}
     m_Modifications:
+    - target: {fileID: 1205609986945429634, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: selectedType
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ddd9435ff76f59c4d9cae2da7033d84c, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.20000002
@@ -2477,7 +2525,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (2)
+      value: BodilyHarm
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2501,6 +2549,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2260007483710326302}
     m_Modifications:
+    - target: {fileID: 1205609986945429634, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: selectedType
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 43b61b27e12dafc478de6c04f29abae1, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6
@@ -2543,7 +2599,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (3)
+      value: FamilyConflict
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2653,6 +2709,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2260007483710326302}
     m_Modifications:
+    - target: {fileID: 1205609986945429634, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: selectedType
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5cb92aeda845ddb4b8b5af806b1a6d55, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6
@@ -2695,7 +2759,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (7)
+      value: Calamity
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2723,6 +2787,10 @@ PrefabInstance:
       propertyPath: selectedType
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3c453c38570ce464abe2b78132f6431a, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6
@@ -2765,7 +2833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (3)
+      value: ChangeOfHeart
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2789,6 +2857,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2260007483710326302}
     m_Modifications:
+    - target: {fileID: 1205609986945429634, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: selectedType
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 69e880c91979181479a41acd9e6d1bb7, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6
@@ -2831,7 +2907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (4)
+      value: LegalRepercussions
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2859,6 +2935,10 @@ PrefabInstance:
       propertyPath: selectedType
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 32d1ffe6dc094a94f9a60284ec9dfed0, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.6
@@ -2901,7 +2981,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (7)
+      value: Other
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -2929,6 +3009,10 @@ PrefabInstance:
       propertyPath: selectedType
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 731e74f4f4d56614f9f485f1a5cc316f, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6
@@ -2971,7 +3055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (4)
+      value: Injury
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -3167,6 +3251,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2260007483710326302}
     m_Modifications:
+    - target: {fileID: 1205609986945429634, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: selectedType
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 90bc045d6a332d54999c0b39b34d5d2b, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.20000002
@@ -3209,7 +3301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox (1)
+      value: DayRuiner
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
@@ -3233,6 +3325,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1550629750410759574}
     m_Modifications:
+    - target: {fileID: 5280665414949821694, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 29e6abee0550a0443947c9323dbbc6f8, type: 3}
     - target: {fileID: 7473101851445059228, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.6
@@ -3275,7 +3371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Name
-      value: Checkbox
+      value: FinancialGain
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer

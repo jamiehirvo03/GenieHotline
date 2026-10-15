@@ -3,6 +3,7 @@ using UnityEngine;
 using Ink.Parsed;
 using Unity.VisualScripting;
 using System.Runtime.CompilerServices;
+using UnityEngine.UI;
 
 
 public class GameManager : MonoBehaviour
@@ -40,6 +41,8 @@ public class GameManager : MonoBehaviour
     private float chaosLevel;
     private float geneBucks;
 
+    [SerializeField] private GameObject submitButton;
+
     private void Awake()
     {
         if (instance != null)
@@ -64,6 +67,8 @@ public class GameManager : MonoBehaviour
         SpawnDocuments();
         queuePosition = 0;
         callersInQueue = true;
+
+        submitButton.SetActive(false);
 
         Debug.Log($"Day {dayNumber} started");
     }
@@ -167,7 +172,14 @@ public class GameManager : MonoBehaviour
             Debug.Log("Caller queue is cleared for the day!");
 
             callersInQueue = false;
+
+            submitButton.SetActive(true);
         }
+    }
+
+    public void EndDay()
+    {
+        Debug.Log($"Day {currentDay} has ended");
     }
 
     private void GoToShop()
