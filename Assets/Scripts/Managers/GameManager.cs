@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
 
+    // caller info
     [System.Serializable]
     public class Callers
     {
@@ -27,19 +28,25 @@ public class GameManager : MonoBehaviour
     private List<Callers> callerQueue = new List<Callers>();
     private int queuePosition;
 
+    private List<Callers> callerHistory = new List<Callers>();
+
+    [Header("Phone")]
     [SerializeField] private List<GameObject> phoneIndicators = new List<GameObject>();
     [SerializeField] private Material indicatorOff;
     [SerializeField] private Material indicatorOn;
 
-    private List<Callers> callerHistory = new List<Callers>();
-
+    [Header("Documents")]
     [SerializeField] private GameObject documentPrefab;
     [SerializeField] private Transform pileLocation;
     [SerializeField] private List<GameObject> documents = new List<GameObject>();
 
-    // progression
+    [Header("Progression")]
     private float chaosLevel;
     private float geneBucks;
+
+    [Header("Camera")]
+    [SerializeField] private Transform officeCam;
+    [SerializeField] private Transform shopCam;
 
     [SerializeField] private GameObject submitButton;
 

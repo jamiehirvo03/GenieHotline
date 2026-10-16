@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using static Checkbox;
+using System.Runtime.CompilerServices;
 
 public class Document : MonoBehaviour, IInteractable
 {
@@ -16,14 +17,21 @@ public class Document : MonoBehaviour, IInteractable
     [SerializeField] private TextMeshProUGUI callerAgeText;
     [SerializeField] private TextMeshProUGUI callerOccupationText;
 
-    // Choice fields
-    [SerializeField] private bool financialGain;
-    [SerializeField] private bool itemManifestation;
-    [SerializeField] private bool sensationManiupulation;
-    [SerializeField] private bool changeOfHeart;
-    [SerializeField] private bool bodilyHarm;
+    // Wishes
+    [SerializeField] private bool material;
+    [SerializeField] private bool knowledge;
+    [SerializeField] private bool harm;
+    [SerializeField] private bool heart;
+    [SerializeField] private bool enhancement;
+    [SerializeField] private bool fate;
+
+    // Consequences
+    [SerializeField] private bool inconvenience;
+    [SerializeField] private bool dayRuiner;
+    [SerializeField] private bool familyConflict;
+    [SerializeField] private bool legalRepercussions;
+    [SerializeField] private bool hexed;
     [SerializeField] private bool death;
-    [SerializeField] private bool other;
  
     public string GetPrimaryAction()
     {
@@ -76,71 +84,60 @@ public class Document : MonoBehaviour, IInteractable
         callerOccupationText.text = callerOccupation;
     }
 
-    public void TickCheckbox(CheckboxType checkboxType)
+    public void CheckboxStatus(CheckboxType checkboxType, bool status)
     {
         switch (checkboxType)
         {
-            case CheckboxType.financialGain:
-                financialGain = true;
+            // wishes 
+            case CheckboxType.material:
+                material = status;
                 break;
 
-            case CheckboxType.itemManifestation:
-                itemManifestation = true;
+            case CheckboxType.knowledge:
+                knowledge = status;
                 break;
 
-            case CheckboxType.sensationManipulation:
-                sensationManiupulation = true;
+            case CheckboxType.heart:
+                heart = status;
                 break;
 
-            case CheckboxType.changeOfHeart:
-                changeOfHeart = true;
+            case CheckboxType.harm:
+                harm = status;
                 break;
 
-            case CheckboxType.bodilyHarm:
-                bodilyHarm = true;
+            case CheckboxType.enhancement:
+                enhancement = status;
                 break;
 
-            case CheckboxType.death:
-                death = true;
+            case CheckboxType.fate:
+                fate = status;
                 break;
 
-            case CheckboxType.other:
-                other = true;
-                break;
-        }
-    }
-
-    public void ClearCheckbox(CheckboxType checkboxType)
-    {
-        switch (checkboxType)
-        {
-            case CheckboxType.financialGain:
-                financialGain = false;
+            // consequences
+            case CheckboxType.inconvenience:
+                inconvenience = status;
                 break;
 
-            case CheckboxType.itemManifestation:
-                itemManifestation = false;
+            case CheckboxType.dayRuiner:
+                dayRuiner = status;
                 break;
 
-            case CheckboxType.sensationManipulation:
-                sensationManiupulation = false;
+            case CheckboxType.familyConflict:
+                familyConflict = status;
                 break;
 
-            case CheckboxType.changeOfHeart:
-                changeOfHeart = false;
+            case CheckboxType.legalRepercussions:
+                legalRepercussions = status;
                 break;
 
-            case CheckboxType.bodilyHarm:
-                bodilyHarm = false;
+            case CheckboxType.hexed:
+                hexed = status;
                 break;
 
             case CheckboxType.death:
-                death = false;
+                death = status;
                 break;
 
-            case CheckboxType.other:
-                other = false;
-                break;
         }
     }
 }
