@@ -322,6 +322,7 @@ public class Holdable : MonoBehaviour, IHoldable
             Vector3 hoverAdjusted = new Vector3(followPos.x, followPos.y + holdHeight, followPos.z);
 
             transform.position = Vector3.SmoothDamp(transform.position, hoverAdjusted, ref velocity, followTime);
+
         }
     }
 }

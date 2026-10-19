@@ -245,8 +245,13 @@ public class DrawingSurface : MonoBehaviour
             GL.Vertex3(position.x + rotatedX, position.y + rotatedY, 0);
         }
 
-        // populated the pixels
+        // populate the pixels
         GL.End();
         GL.PopMatrix();
     }
+
+    //private void ClearCheckbox(Transform checkbox)
+    //{
+    //    DrawAtPosition(checkbox.position, backgroundColour, 5);
+    //}
 }

@@ -69,7 +69,7 @@ public class PhoneUnit : MonoBehaviour, IInteractable
     private void AnswerPhone()
     {
         GameManager.GetInstance().AnswerPhone();
-        StartCoroutine(LerpObjectPos(activePosition, activeOrientation, 1f));
+        StartCoroutine(LerpObjectTransform(activePosition, activeOrientation, 1f));
         
         isActive = true;
     }
@@ -77,12 +77,12 @@ public class PhoneUnit : MonoBehaviour, IInteractable
     private void HangUpPhone()
     {
         GameManager.GetInstance().HangUpPhone();
-        StartCoroutine(LerpObjectPos(defaultPosition, defaultOrientation, 1f));
+        StartCoroutine(LerpObjectTransform(defaultPosition, defaultOrientation, 1f));
 
         isActive = false;
     }
 
-    private IEnumerator LerpObjectPos(Vector3 targetPosition, Vector3 targetRotation, float transformTime)
+    private IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime)
     {
         Debug.Log($"Lerping object to position = {targetPosition}");
 

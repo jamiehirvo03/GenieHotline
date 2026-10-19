@@ -1,3 +1,4 @@
+using System.Security;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -37,21 +38,27 @@ public class Checkbox : MonoBehaviour
     {
         if (other.gameObject.CompareTag("PencilTip"))
         {
-            // set appropriate checkbox to true
-            document.CheckboxStatus(selectedType, true);
-
-            Debug.Log($"{selectedType} set to TRUE");
+            UpdateDocument(true);
         }
 
         if (other.gameObject.CompareTag("EraserTip"))
         {
-            // set appropriate checkbox to false
-            document.CheckboxStatus(selectedType, false);
+            UpdateDocument(false);
 
             // if any part of the checkbox is erased, clear the whole area
-
-
-            Debug.Log($"{selectedType} set to FALSE");
+            ClearBoxArea();
         }
+    }
+
+    private void UpdateDocument(bool status)
+    {
+        document.CheckboxStatus(selectedType, status);
+
+        Debug.Log($"{selectedType} set to {status}");
+    }
+
+    private void ClearBoxArea()
+    {
+
     }
 }

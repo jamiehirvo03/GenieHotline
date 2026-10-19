@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using static Checkbox;
-using System.Runtime.CompilerServices;
+using System.Collections;
 
 public class Document : MonoBehaviour, IInteractable
 {
@@ -139,5 +139,31 @@ public class Document : MonoBehaviour, IInteractable
                 break;
 
         }
+    }
+
+    private IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime)
+    {
+        Debug.Log($"Lerping object to position = {targetPosition}");
+
+        Vector3 startPosition = transform.localPosition;
+        Quaternion startRotation = transform.localRotation;
+        Quaternion targetQuaternion = Quaternion.Euler(targetRotation);
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < transformTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float lerpTime = elapsedTime / transformTime;
+
+            transform.localPosition = Vector3.Lerp(startPosition, targetPosition, lerpTime);
+
+            transform.localRotation = Quaternion.Lerp(startRotation, targetQuaternion, lerpTime);
+
+            yield return null;
+        }
+        // everything below this will happen once lerp is complete
+
+        transform.localPosition = targetPosition; // snap position to target to fix weird numbers
     }
 }
