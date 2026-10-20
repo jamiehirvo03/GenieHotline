@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
         {
             TextAsset currentCallerJSON = callerQueue[queuePosition].callerJSON;
 
-            DialogueManager.GetInstance().EnterDialogueMode(currentCallerJSON, "Introduction");
+            DialogueManager.GetInstance().EnterDialogueMode(currentCallerJSON, "introduction");
         }   
     }
 

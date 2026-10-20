@@ -26,6 +26,7 @@ public class DrawingSurface : MonoBehaviour
 
     public bool showBrushRays = false;
     [SerializeField] private LayerMask drawingLayer;
+    [SerializeField] private LayerMask checkboxLayer;
 
     // define a brush class to hold properties for each brush
     [System.Serializable]
@@ -119,10 +120,10 @@ public class DrawingSurface : MonoBehaviour
 
         if (showBrushRays) Debug.DrawRay(brush.brushTransform.position, brush.brushTransform.forward, Color.orange);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, maxDistance, drawingLayer))
+        if (Physics.Raycast(ray, out RaycastHit drawingHit, maxDistance, drawingLayer))
         {
             // if the raycast from the brush is hitting this gameObject which is the board/page
-            if (hit.collider.gameObject == gameObject)
+            if (drawingHit.collider.gameObject == gameObject)
             {
                 Vector2 uv;
 
@@ -137,7 +138,7 @@ public class DrawingSurface : MonoBehaviour
                     }
 
                     // calculate the local hit point and normalize to UV
-                    Vector3 localHitPoint = transform.InverseTransformPoint(hit.point); // convert hit point to local space
+                    Vector3 localHitPoint = transform.InverseTransformPoint(drawingHit.point); // convert hit point to local space
                     uv = new Vector2(
                         (localHitPoint.x / boxCollider.size.x) + 0.5f,          // normalize X position
                         1.0f - ((localHitPoint.y / boxCollider.size.y) + 0.5f)  // normalize and flip Y position
@@ -146,7 +147,7 @@ public class DrawingSurface : MonoBehaviour
                 else
                 {
                     // using MeshCollider
-                    uv = hit.textureCoord;
+                    uv = drawingHit.textureCoord;
                     uv.y = 1.0f - uv.y; // flip Y-axis
                 }
 
@@ -203,6 +204,10 @@ public class DrawingSurface : MonoBehaviour
                 brush.lastPosition = currentPosition; // update the last drawn position
             }
         }
+        if (Physics.Raycast(ray, out RaycastHit checkboxHit, maxDistance, checkboxLayer))
+        {
+            ClearCheckbox(checkboxHit.transform);
+        }
         else
         {
             // stop drawing when the brush is no longer in contact
@@ -250,8 +255,10 @@ public class DrawingSurface : MonoBehaviour
         GL.PopMatrix();
     }
 
-    //private void ClearCheckbox(Transform checkbox)
-    //{
-    //    DrawAtPosition(checkbox.position, backgroundColour, 5);
-    //}
+    private void ClearCheckbox(Transform checkbox)
+    {
+        DrawAtPosition(checkbox.position, backgroundColour, 5, 5, 0);
+
+        Debug.Log($"{checkbox.gameObject.name} was cleared");
+    }
 }

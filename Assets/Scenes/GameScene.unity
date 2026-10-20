@@ -1138,13 +1138,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.39554545, y: 0, z: 0, w: 0.9184464}
-  m_LocalPosition: {x: 0, y: 13.4, z: -0.75}
+  m_LocalRotation: {x: 0.48671654, y: 0, z: 0, w: 0.87355995}
+  m_LocalPosition: {x: 0, y: 13.4, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 46.6, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 58.25, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2912,6 +2912,8 @@ MonoBehaviour:
   documentPrefab: {fileID: 6656709305493715028, guid: 8b6ef79756ffae64abc0919b19f7ac00, type: 3}
   pileLocation: {fileID: 1028486993}
   documents: []
+  officeCam: {fileID: 0}
+  shopCam: {fileID: 0}
   submitButton: {fileID: 365495393}
 --- !u!1 &1062453226
 GameObject:

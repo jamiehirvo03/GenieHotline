@@ -291,7 +291,6 @@ public class Holdable : MonoBehaviour, IHoldable
         Flash();
     }
 
-
     private void Flash()
     {
         StopAllCoroutines();
