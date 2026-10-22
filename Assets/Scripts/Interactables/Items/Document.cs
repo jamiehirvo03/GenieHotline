@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using static Checkbox;
 using System.Collections;
+using System.Security;
 
 public class Document : MonoBehaviour, IInteractable
 {

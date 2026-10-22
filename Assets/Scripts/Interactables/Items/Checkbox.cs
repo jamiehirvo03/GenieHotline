@@ -34,31 +34,10 @@ public class Checkbox : MonoBehaviour
         document = GetComponentInParent<Document>();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("PencilTip"))
-        {
-            UpdateDocument(true);
-        }
-
-        if (other.gameObject.CompareTag("EraserTip"))
-        {
-            UpdateDocument(false);
-
-            // if any part of the checkbox is erased, clear the whole area
-            ClearBoxArea();
-        }
-    }
-
-    private void UpdateDocument(bool status)
+    public void UpdateDocument(bool status)
     {
         document.CheckboxStatus(selectedType, status);
 
         Debug.Log($"{selectedType} set to {status}");
-    }
-
-    private void ClearBoxArea()
-    {
-
     }
 }

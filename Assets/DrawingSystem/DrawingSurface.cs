@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TerrainTools;
 
 public class DrawingSurface : MonoBehaviour
 {
@@ -59,7 +60,7 @@ public class DrawingSurface : MonoBehaviour
 
         // set the RenderTexture as the main texture of the object's material
         GetComponent<Renderer>().material.mainTexture = renderTextureInstance;
-        
+
         // clear the RenderTexture at the start
         RenderTexture.active = renderTextureInstance;
 
@@ -75,7 +76,7 @@ public class DrawingSurface : MonoBehaviour
 
         // set the brush colour to match the backgroundColour if it is an eraser
         foreach (BrushSettings brush in brushes)
-        {            
+        {
             // set the alpha level of the markers
             brush.colour.a = markerAlpha;
 
@@ -192,7 +193,7 @@ public class DrawingSurface : MonoBehaviour
                     // interpolate between the last position and the current position
                     float distance = Vector2.Distance(currentPosition, brush.lastPosition);
                     int steps = Mathf.CeilToInt(distance / minBrushDistance);
-                    
+
                     for (int i = 1; i <= steps; i++)
                     {
                         Vector2 interpolatedPosition = Vector2.Lerp(brush.lastPosition, currentPosition, i / (float)steps);
@@ -206,7 +207,14 @@ public class DrawingSurface : MonoBehaviour
         }
         if (Physics.Raycast(ray, out RaycastHit checkboxHit, maxDistance, checkboxLayer))
         {
-            ClearCheckbox(checkboxHit.transform);
+            if (brush.isEraser)
+            {
+                ClearCheckbox(checkboxHit);
+            }
+            else
+            {
+                MarkCheckbox(checkboxHit);
+            }
         }
         else
         {
@@ -241,7 +249,7 @@ public class DrawingSurface : MonoBehaviour
 
         // rotate each vertex to match the brush rotation,
         // this is so you can have a brush that is wide and thin and the paint will match the rotation
-        for (int i = 0;  i < vertices.Length; i++)
+        for (int i = 0; i < vertices.Length; i++)
         {
             float rotatedX = vertices[i].x * cos + vertices[i].y * sin; // positive Y-axis rotation
             float rotatedY = -vertices[i].x * sin + vertices[i].y * cos; // inverted sine for clockwise rotation
@@ -255,10 +263,48 @@ public class DrawingSurface : MonoBehaviour
         GL.PopMatrix();
     }
 
-    private void ClearCheckbox(Transform checkbox)
+    private void MarkCheckbox(RaycastHit checkboxHit)
     {
-        DrawAtPosition(checkbox.position, backgroundColour, 5, 5, 0);
+        Debug.Log($"{checkboxHit.collider.gameObject.name} was marked");
+        checkboxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(true);
+    }
 
-        Debug.Log($"{checkbox.gameObject.name} was cleared");
+    private void ClearCheckbox(RaycastHit checkboxHit)
+    {
+        Debug.Log($"{checkboxHit.collider.gameObject.name} was cleared");
+        checkboxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(false);
+
+        Vector2 uv;
+
+        if (useBoxCollider)
+        {
+            // using BoxCollider
+            BoxCollider boxCollider = GetComponent<BoxCollider>();
+            if (boxCollider == null)
+            {
+                Debug.LogError("No BoxCollider found on this GameObject");
+                return;
+            }
+
+            // calculate the local hit point and normalize to UV
+            Vector3 localHitPoint = transform.InverseTransformPoint(checkboxHit.collider.transform.position); // convert hit point to local space
+            uv = new Vector2(
+                (localHitPoint.x / boxCollider.size.x) + 0.5f,          // normalize x position
+                1.0f - ((localHitPoint.y / boxCollider.size.y) + 0.5f)  // normalize and flip Y position
+                );
+        }
+        else
+        {
+            // using MeshCollider
+            uv = checkboxHit.textureCoord;
+            uv.y = 1.0f - uv.y; // flip Y-axis
+        }
+
+        // convert UV coordinates to texture space
+        int x = (int)(uv.x * renderTextureInstance.width);
+        int y = (int)(uv.y * renderTextureInstance.height);
+        Vector2 checkboxPosition = new Vector2(x, y);
+
+        DrawAtPosition(checkboxPosition, backgroundColour, 75, 75, 0);
     }
 }

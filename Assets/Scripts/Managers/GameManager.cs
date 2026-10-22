@@ -19,6 +19,14 @@ public class GameManager : MonoBehaviour
         public string callerName;
         public int callerAge;
         public string callerOccupation;
+
+        // answers
+        public bool material;
+        public bool knowledge;
+        public bool heart;
+        public bool harm;
+        public bool enhancement;
+        public bool fate;
     }
     [Header("Add Callers")] public List<Callers> callers = new List<Callers>();
 
@@ -182,6 +190,11 @@ public class GameManager : MonoBehaviour
 
             submitButton.SetActive(true);
         }
+    }
+
+    public void SubmitDocuments()
+    {
+
     }
 
     public void EndDay()
