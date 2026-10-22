@@ -25,9 +25,16 @@ public class Checkbox : MonoBehaviour
         legalRepercussions,
         hexed,
         death,
+
+        // verdict
+        approved,
+        denied,
     }
 
     public CheckboxType selectedType;
+
+    [SerializeField] private Material approvedMat;
+    [SerializeField] private Material deniedMat;
 
     private void OnEnable()
     {
@@ -39,5 +46,14 @@ public class Checkbox : MonoBehaviour
         document.CheckboxStatus(selectedType, status);
 
         Debug.Log($"{selectedType} set to {status}");
+
+        if (selectedType == CheckboxType.approved)
+        {
+            gameObject.GetComponent<Renderer>().material = approvedMat;
+        }
+        if (selectedType == CheckboxType.denied)
+        {
+            gameObject.GetComponent<Renderer>().material = deniedMat;
+        }
     }
 }

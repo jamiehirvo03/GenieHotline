@@ -92,7 +92,10 @@ public class InteractionManager : MonoBehaviour
                                 if (hoveredObj != raycastHit.transform.gameObject)
                                 {
                                     //  disable stored object outline
-                                    hoveredObj.GetComponent<Outline>().enabled = false;
+                                    if (hoveredObj.GetComponent<Outline>() != null)
+                                    {
+                                        hoveredObj.GetComponent<Outline>().enabled = false;
+                                    }
                                 }
                             }
 
@@ -135,7 +138,10 @@ public class InteractionManager : MonoBehaviour
                             if (hoveredObj != null)
                             {
                                 // disable stored object outline
-                                hoveredObj.GetComponent<Outline>().enabled = false;
+                                if (hoveredObj.GetComponent<Outline>() != null)
+                                {
+                                    hoveredObj.GetComponent<Outline>().enabled = false;
+                                }
 
                                 //clear control labels
                                 UIManager.GetInstance().EnableControlPanel(false);

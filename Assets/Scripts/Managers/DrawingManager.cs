@@ -6,8 +6,15 @@ public class DrawingManager : MonoBehaviour
 
     [SerializeField] private Holdable pencilParent;
     [SerializeField] private Transform pencilTipOrigin;
+
     [SerializeField] private Holdable eraserParent;
     [SerializeField] private Transform eraserTipOrigin;
+
+    [SerializeField] private Holdable approvedStampParent;
+    [SerializeField] private Transform approvedStampOrigin;
+
+    [SerializeField] private Holdable deniedStampParent;
+    [SerializeField] private Transform deniedStampOrigin;
 
     private void Awake()
     {
@@ -24,8 +31,8 @@ public class DrawingManager : MonoBehaviour
         return instance;
     }
 
-    public (Holdable pencilHoldable, Transform pencilTip, Holdable eraserHoldable, Transform eraserTip) GetBrushes()
+    public (Holdable pencilHoldable, Transform pencilTip, Holdable eraserHoldable, Transform eraserTip, Holdable approvedStampParent, Transform approvedStampOrigin, Holdable deniedStampParent, Transform deniedStampOrigin) GetBrushes()
     {
-        return (pencilParent, pencilTipOrigin, eraserParent, eraserTipOrigin);
+        return (pencilParent, pencilTipOrigin, eraserParent, eraserTipOrigin, approvedStampParent, approvedStampOrigin, deniedStampParent, deniedStampOrigin);
     }
 }

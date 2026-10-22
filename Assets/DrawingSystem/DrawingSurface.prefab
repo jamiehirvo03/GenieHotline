@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 3414167796095103633}
   - component: {fileID: 704943025127694921}
   - component: {fileID: 7214362669833646519}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: DrawingSurface
-  m_TagString: Interactable
+  m_TagString: Document
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 5.003, z: 5.25}
-  m_LocalScale: {x: 1.98, y: 2.81, z: 1}
+  m_LocalScale: {x: 2.0004, y: 2.8278997, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -134,8 +134,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.99999696, y: 1.0000001, z: 0.039338097}
-  m_Center: {x: 0, y: -1.5147464e-18, z: -0.005134134}
+  m_Size: {x: 0.99999696, y: 1.0000001, z: 0.0075}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7214362669833646519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Whiteboard
   renderTextureTemplate: {fileID: 8400000, guid: 23dd6c04767f1104b88da4b23d7a1a0a, type: 2}
-  maxDistance: 0.014
-  minBrushDistance: 2
+  maxDistance: 0.2
+  minBrushDistance: 0.5
   backgroundColour: {r: 1, g: 1, b: 1, a: 0.39215687}
   markerAlpha: 1
   useBoxCollider: 1
@@ -158,13 +158,51 @@ MonoBehaviour:
   drawingLayer:
     serializedVersion: 2
     m_Bits: 512
+  checkboxLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   brushes:
   - brushHoldable: {fileID: 0}
     brushTransform: {fileID: 0}
     colour: {r: 0, g: 0, b: 0, a: 0}
-    sizeX: 2
-    sizeY: 7
+    sizeX: 3
+    sizeY: 3
     isEraser: 0
+    isApprovedStamp: 0
+    isDeniedStamp: 0
+    lastPosition: {x: 0, y: 0}
+    isFirstDraw: 0
+    isDrawing: 0
+  - brushHoldable: {fileID: 0}
+    brushTransform: {fileID: 0}
+    colour: {r: 0, g: 0, b: 0, a: 0}
+    sizeX: 50
+    sizeY: 50
+    isEraser: 1
+    isApprovedStamp: 0
+    isDeniedStamp: 0
+    lastPosition: {x: 0, y: 0}
+    isFirstDraw: 0
+    isDrawing: 0
+  - brushHoldable: {fileID: 0}
+    brushTransform: {fileID: 0}
+    colour: {r: 0.1254902, g: 0.43529415, b: 0.14901961, a: 0}
+    sizeX: 200
+    sizeY: 100
+    isEraser: 0
+    isApprovedStamp: 1
+    isDeniedStamp: 0
+    lastPosition: {x: 0, y: 0}
+    isFirstDraw: 0
+    isDrawing: 0
+  - brushHoldable: {fileID: 0}
+    brushTransform: {fileID: 0}
+    colour: {r: 0.49411768, g: 0.11764707, b: 0.12941177, a: 0}
+    sizeX: 200
+    sizeY: 100
+    isEraser: 0
+    isApprovedStamp: 0
+    isDeniedStamp: 1
     lastPosition: {x: 0, y: 0}
     isFirstDraw: 0
     isDrawing: 0

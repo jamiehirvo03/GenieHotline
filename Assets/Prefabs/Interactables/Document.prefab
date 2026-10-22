@@ -1054,6 +1054,8 @@ MonoBehaviour:
   legalRepercussions: 0
   hexed: 0
   death: 0
+  isApproved: 0
+  isDenied: 0
 --- !u!114 &766982382848461628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2223,14 +2225,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 2672692583538657727}
     m_Modifications:
     - target: {fileID: 241447484684107929, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.0004
-      objectReference: {fileID: 0}
-    - target: {fileID: 241447484684107929, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.8278997
-      objectReference: {fileID: 0}
-    - target: {fileID: 241447484684107929, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -2270,89 +2264,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 704943025127694921, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: m_Size.z
-      value: 0.0075
-      objectReference: {fileID: 0}
-    - target: {fileID: 704943025127694921, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: m_Center.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 704943025127694921, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: m_Center.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2163007484627728562, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
       propertyPath: m_Name
       value: DrawingSurface
-      objectReference: {fileID: 0}
-    - target: {fileID: 2163007484627728562, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 2163007484627728562, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: m_TagString
-      value: Document
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: maxDistance
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: brushMaterial
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: minBrushDistance
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: backgroundColour.a
-      value: 0.39215687
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: backgroundColour.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: backgroundColour.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: backgroundColour.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: brushes.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: checkboxLayer.m_Bits
-      value: 1024
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: brushes.Array.data[0].sizeX
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: brushes.Array.data[0].sizeY
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: brushes.Array.data[1].sizeX
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: brushes.Array.data[1].sizeY
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: brushes.Array.data[0].colour.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7214362669833646519, guid: e8f3f711b3275e34cb634ecc47ddcf14, type: 3}
-      propertyPath: brushes.Array.data[1].isEraser
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3204,6 +3118,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2672692583538657727}
     m_Modifications:
+    - target: {fileID: 29519432036801435, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1205609986945429634, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: selectedType
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5273349264343898328, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5273349264343898328, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -3262,7 +3188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_Layer
-      value: 2
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7627123719265510325, guid: 323822e0d58fe3c41b8672c3e653e8a5, type: 3}
       propertyPath: m_IsActive

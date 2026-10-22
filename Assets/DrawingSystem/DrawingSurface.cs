@@ -10,6 +10,8 @@ public class DrawingSurface : MonoBehaviour
     [SerializeField] private RenderTexture renderTextureTemplate;
     private RenderTexture renderTextureInstance;
 
+    private bool isDrawingLocked = false;
+
     [Header("BrushSettings")]
     [Tooltip("Max distance for brush detection")]
     public float maxDistance = 0.2f;
@@ -40,6 +42,8 @@ public class DrawingSurface : MonoBehaviour
         public int sizeY = 20; // brush height in pixels
 
         public bool isEraser = false;
+        public bool isApprovedStamp = false;
+        public bool isDeniedStamp = false;
 
         public Vector2 lastPosition; // last drawn position
         public bool isFirstDraw = true; // flag for first draw
@@ -95,21 +99,24 @@ public class DrawingSurface : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ensure the RenderTexture is active for drawing
-        RenderTexture.active = renderTextureInstance;
-
-        // draw each brush on the texture
-        foreach (var brush in brushes)
+        if (!isDrawingLocked)
         {
-            // check if the brush is being held to only run functions for the brush being used
-            if (brush.brushHoldable && brush.brushHoldable.GetHeldStatus())
-            {
-                DrawBrushOnTexture(brush);
-            }
-        }
+            // ensure the RenderTexture is active for drawing
+            RenderTexture.active = renderTextureInstance;
 
-        // deactivate the RenderTexture after drawing
-        RenderTexture.active = null;
+            // draw each brush on the texture
+            foreach (var brush in brushes)
+            {
+                // check if the brush is being held to only run functions for the brush being used
+                if (brush.brushHoldable && brush.brushHoldable.GetHeldStatus())
+                {
+                    DrawBrushOnTexture(brush);
+                }
+            }
+
+            // deactivate the RenderTexture after drawing
+            RenderTexture.active = null;
+        }
     }
 
     private void DrawBrushOnTexture(BrushSettings brush)
@@ -211,6 +218,22 @@ public class DrawingSurface : MonoBehaviour
             {
                 ClearCheckbox(checkboxHit);
             }
+            if (brush.isApprovedStamp)
+            {
+                // mark document as stamped to lock further markings
+                StampDocument();
+
+                // mark checkbox in document scripts
+                MarkCheckbox(checkboxHit);
+            }
+            if (brush.isDeniedStamp)
+            {
+                // mark document as stamped to lock further markings
+                StampDocument();
+                
+                // mark checkbox in document script
+                MarkCheckbox(checkboxHit);
+            }
             else
             {
                 MarkCheckbox(checkboxHit);
@@ -267,6 +290,11 @@ public class DrawingSurface : MonoBehaviour
     {
         Debug.Log($"{checkboxHit.collider.gameObject.name} was marked");
         checkboxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(true);
+    }
+
+    private void StampDocument()
+    {
+        isDrawingLocked = true;
     }
 
     private void ClearCheckbox(RaycastHit checkboxHit)

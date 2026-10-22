@@ -6,8 +6,8 @@ using System.Security;
 
 public class Document : MonoBehaviour, IInteractable
 {
-    private string primaryAction = "Pick Up";
-    private string secondaryAction = "";
+    private string primaryAction = "";
+    private string secondaryAction = "Pick Up";
 
     // Caller details
     [SerializeField] private string callerName;
@@ -33,6 +33,10 @@ public class Document : MonoBehaviour, IInteractable
     [SerializeField] private bool legalRepercussions;
     [SerializeField] private bool hexed;
     [SerializeField] private bool death;
+
+    // Verdict
+    [SerializeField] private bool isApproved;
+    [SerializeField] private bool isDenied;
  
     public string GetPrimaryAction()
     {
@@ -46,24 +50,6 @@ public class Document : MonoBehaviour, IInteractable
 
     public void PrimaryInteract()
     {
-        //Debug.Log($"{primaryAction} was pressed");
-
-        if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
-        {
-            gameObject.GetComponent<IHoldable>().Release();
-
-            primaryAction = "Pick Up";
-        }
-        else
-        {
-            gameObject.GetComponent<IHoldable>().Grab();
-
-            primaryAction = "Put Down";
-        }
-    }
-
-    public void SecondaryInteract()
-    {
         if (secondaryAction == "")
         {
             //Debug.Log("SecondaryInteract was pressed but there is no action assigned");
@@ -71,7 +57,25 @@ public class Document : MonoBehaviour, IInteractable
         else
         {
             //Debug.Log($"{secondaryAction} pressed");
-        }     
+        }
+    }
+
+    public void SecondaryInteract()
+    {
+        //Debug.Log($"{primaryAction} was pressed");
+
+        if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
+        {
+            gameObject.GetComponent<IHoldable>().Release();
+
+            secondaryAction = "Pick Up";
+        }
+        else
+        {
+            gameObject.GetComponent<IHoldable>().Grab();
+
+            secondaryAction = "Put Down";
+        }
     }
 
     public void SetCallerDetails(string name, int age, string occupation)
@@ -139,6 +143,16 @@ public class Document : MonoBehaviour, IInteractable
                 death = status;
                 break;
 
+            case CheckboxType.approved:
+                isApproved = status;
+
+
+                break;
+
+            case CheckboxType.denied:
+                isDenied = status;
+
+                break;
         }
     }
 

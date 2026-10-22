@@ -11,6 +11,7 @@ TagManager:
   - Pencil
   - Eraser
   - PencilTip
+  - Page
   layers:
   - Default
   - TransparentFX

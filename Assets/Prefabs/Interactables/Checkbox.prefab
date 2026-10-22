@@ -286,3 +286,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DocumentField
   selectedType: 0
+  approvedMat: {fileID: 2100000, guid: 834e2da58b4e01f44be0569bbc2ab2e9, type: 2}
+  deniedMat: {fileID: 2100000, guid: df831f6bbed015d46bd7adfd3278a16f, type: 2}

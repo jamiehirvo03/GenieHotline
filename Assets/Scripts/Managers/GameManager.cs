@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
         public bool harm;
         public bool enhancement;
         public bool fate;
+
+        public GameObject callerForm;
     }
     [Header("Add Callers")] public List<Callers> callers = new List<Callers>();
 
@@ -45,8 +47,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Documents")]
     [SerializeField] private GameObject documentPrefab;
+    
     [SerializeField] private Transform pileLocation;
-    [SerializeField] private List<GameObject> documents = new List<GameObject>();
+    [SerializeField] private List<GameObject> currentDocuments = new List<GameObject>();
 
     [Header("Progression")]
     private float chaosLevel;
@@ -82,6 +85,7 @@ public class GameManager : MonoBehaviour
         SpawnDocuments();
         queuePosition = 0;
         callersInQueue = true;
+        callerHistory.Clear();
 
         submitButton.SetActive(false);
 
@@ -144,11 +148,14 @@ public class GameManager : MonoBehaviour
             Vector3 spawnPosition = new Vector3(pileLocation.position.x, (pileLocation.position.y + (0.05f * i)), pileLocation.position.z);
 
             GameObject newInstance = Instantiate(documentPrefab, spawnPosition, Quaternion.identity);
+            newInstance.name = $"Document({callerQueue[i].callerName})";
 
-            documents.Add(newInstance);
+            currentDocuments.Add(newInstance);
 
-            documents[i].GetComponent<Document>().SetCallerDetails(callerQueue[i].callerName, callerQueue[i].callerAge, callerQueue[i].callerOccupation);
+            currentDocuments[i].GetComponent<Document>().SetCallerDetails(callerQueue[i].callerName, callerQueue[i].callerAge, callerQueue[i].callerOccupation);
 
+            // attach the newly created document object to the recently added caller in queue
+            callerQueue[i].callerForm = newInstance;
         }
     }
 
@@ -194,10 +201,23 @@ public class GameManager : MonoBehaviour
 
     public void SubmitDocuments()
     {
+        // check submitted documents for the day
+        for (int i = 0; i < currentDocuments.Count; i++)
+        {
+            // find right form GameObject to check
+            GameObject formToCheck = currentDocuments[i].GetComponent<Callers>().callerForm;
+
+            // go through 'answer' bools to check if document is correct
+
+        }
+    }
+
+    private void CheckFormAnswers()
+    {
 
     }
 
-    public void EndDay()
+    private void EndDay()
     {
         Debug.Log($"Day {currentDay} has ended");
     }
