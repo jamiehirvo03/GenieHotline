@@ -19,6 +19,7 @@ public interface IHoldable
     public void Release();
     public void ReturnHeldObject();
     public IEnumerator LerpObjectTransform(Vector3 targetPosition, float transformTime, bool isItemBeingReleased);
+    public void SetFollowStatus(bool status);
 }
 
 public class InteractionManager : MonoBehaviour

@@ -19,12 +19,12 @@ public class Document : MonoBehaviour, IInteractable
     [SerializeField] private TextMeshProUGUI callerOccupationText;
 
     // Wishes
-    [SerializeField] private bool material;
-    [SerializeField] private bool knowledge;
-    [SerializeField] private bool harm;
-    [SerializeField] private bool heart;
-    [SerializeField] private bool enhancement;
-    [SerializeField] private bool fate;
+    public bool material;
+    public bool knowledge;
+    public bool heart;
+    public bool harm;
+    public bool enhancement;
+    public bool fate;
 
     // Consequences
     [SerializeField] private bool inconvenience;
@@ -142,18 +142,17 @@ public class Document : MonoBehaviour, IInteractable
             case CheckboxType.death:
                 death = status;
                 break;
-
-            case CheckboxType.approved:
-                isApproved = status;
-
-
-                break;
-
-            case CheckboxType.denied:
-                isDenied = status;
-
-                break;
         }
+    }
+
+    public void ApproveDocument()
+    {
+        isApproved = true;
+    }
+
+    public void DenyDocument()
+    {
+        isDenied = true;
     }
 
     private IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime)

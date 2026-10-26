@@ -27,8 +27,7 @@ public class Checkbox : MonoBehaviour
         death,
 
         // verdict
-        approved,
-        denied,
+        stampField,
     }
 
     public CheckboxType selectedType;
@@ -47,13 +46,18 @@ public class Checkbox : MonoBehaviour
 
         Debug.Log($"{selectedType} set to {status}");
 
-        if (selectedType == CheckboxType.approved)
+        if (selectedType == CheckboxType.stampField)
         {
-            gameObject.GetComponent<Renderer>().material = approvedMat;
-        }
-        if (selectedType == CheckboxType.denied)
-        {
-            gameObject.GetComponent<Renderer>().material = deniedMat;
+            if (status)
+            {
+                document.ApproveDocument();
+                GetComponent<Renderer>().material = approvedMat;
+            }
+            else
+            {
+                document.DenyDocument();
+                GetComponent<Renderer>().material = deniedMat;
+            }
         }
     }
 }

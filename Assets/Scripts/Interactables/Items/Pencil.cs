@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +13,9 @@ public class Pencil : MonoBehaviour, IInteractable
     
     public bool isDrawing = false;
     private float holdHeight;
+
+    [SerializeField] private bool isStamp = false;
+    private bool stampInMotion = false;
 
 
     public string GetPrimaryAction()
@@ -28,18 +32,26 @@ public class Pencil : MonoBehaviour, IInteractable
     {
         if (GetComponent<IHoldable>().GetHeldStatus())
         {
-            // add code for primary action when held (draw)
-
-            if (!isDrawing)
+            // check if pencil is a stamp
+            if (isStamp && !stampInMotion)
             {
-                StartDrawing();
-                GetComponent<Holdable>().holdHeight = 0.5f;
+                StartCoroutine(StampMotion());
             }
             else
             {
-                StopDrawing();
-                GetComponent<Holdable>().holdHeight = 1;
-            }   
+                // add code for primary action when held (draw)
+
+                if (!isDrawing)
+                {
+                    StartDrawing();
+                    GetComponent<Holdable>().holdHeight = 0.5f;
+                }
+                else
+                {
+                    StopDrawing();
+                    GetComponent<Holdable>().holdHeight = 1;
+                }
+            }
         }
     }
 
@@ -61,7 +73,16 @@ public class Pencil : MonoBehaviour, IInteractable
         {
             GetComponent<IHoldable>().Grab();
 
-            primaryAction = "Draw (Hold)";
+            
+            if (isStamp)
+            {
+                primaryAction = "Stamp";
+            }
+            else
+            {
+                primaryAction = "Draw (Hold)";
+            }
+            
             secondaryAction = "Put Down";
 
             holdHeight = transform.position.y;
@@ -90,5 +111,45 @@ public class Pencil : MonoBehaviour, IInteractable
         Vector3 adjustedPos = new Vector3(transform.position.x, holdHeight, transform.position.z);
 
         StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, 0.1f, false));
+    }
+
+    private IEnumerator StampMotion()
+    {
+        stampInMotion = true;
+
+        Vector3 startPosition = transform.position;
+        Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+
+        yield return StartCoroutine(LerpPosition(lowerPosition, 0.25f));
+
+        yield return new WaitForSeconds(0.01f);
+
+        yield return StartCoroutine(LerpPosition(startPosition, 0.25f));
+
+        yield return new WaitForSeconds(0.01f);
+
+        stampInMotion = false;
+    }
+
+    private IEnumerator LerpPosition(Vector3 targetPosition, float time)
+    {
+        GetComponent<IHoldable>().SetFollowStatus(false);
+
+        float elapsedTime = 0;
+
+        Vector3 startPosition = transform.position;
+
+        while (elapsedTime < time)
+        {
+            elapsedTime += Time.deltaTime;
+
+            transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / time);
+
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+
+        GetComponent<IHoldable>().SetFollowStatus(true);
     }
 }

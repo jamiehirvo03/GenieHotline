@@ -75,8 +75,15 @@ public class DrawingSurface : MonoBehaviour
         // retrieve brushes from DrawingManager script (can no longer set them here due to prefabs)
         brushes[0].brushHoldable = DrawingManager.GetInstance().GetBrushes().pencilHoldable;
         brushes[0].brushTransform = DrawingManager.GetInstance().GetBrushes().pencilTip;
+
         brushes[1].brushHoldable = DrawingManager.GetInstance().GetBrushes().eraserHoldable;
         brushes[1].brushTransform = DrawingManager.GetInstance().GetBrushes().eraserTip;
+
+        brushes[2].brushHoldable = DrawingManager.GetInstance().GetBrushes().approvedStampHoldable;
+        brushes[2].brushTransform = DrawingManager.GetInstance().GetBrushes().approvedStampTip;
+
+        brushes[3].brushHoldable = DrawingManager.GetInstance().GetBrushes().deniedStampHoldable;
+        brushes[3].brushTransform = DrawingManager.GetInstance().GetBrushes().deniedStampTip;
 
         // set the brush colour to match the backgroundColour if it is an eraser
         foreach (BrushSettings brush in brushes)
@@ -220,19 +227,13 @@ public class DrawingSurface : MonoBehaviour
             }
             if (brush.isApprovedStamp)
             {
-                // mark document as stamped to lock further markings
-                StampDocument();
-
                 // mark checkbox in document scripts
-                MarkCheckbox(checkboxHit);
+                StampDocument(checkboxHit, true);
             }
             if (brush.isDeniedStamp)
             {
-                // mark document as stamped to lock further markings
-                StampDocument();
-                
                 // mark checkbox in document script
-                MarkCheckbox(checkboxHit);
+                StampDocument(checkboxHit, false);                
             }
             else
             {
@@ -292,9 +293,19 @@ public class DrawingSurface : MonoBehaviour
         checkboxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(true);
     }
 
-    private void StampDocument()
+    private void StampDocument(RaycastHit stampBoxHit, bool isApproved)
     {
+        // lock future drawing on this drawingSurface
         isDrawingLocked = true;
+
+        if (isApproved)
+        {
+            stampBoxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(true);
+        }
+        else
+        {
+            stampBoxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(false);
+        }
     }
 
     private void ClearCheckbox(RaycastHit checkboxHit)

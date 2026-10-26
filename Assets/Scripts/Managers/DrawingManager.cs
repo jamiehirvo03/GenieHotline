@@ -31,7 +31,7 @@ public class DrawingManager : MonoBehaviour
         return instance;
     }
 
-    public (Holdable pencilHoldable, Transform pencilTip, Holdable eraserHoldable, Transform eraserTip, Holdable approvedStampParent, Transform approvedStampOrigin, Holdable deniedStampParent, Transform deniedStampOrigin) GetBrushes()
+    public (Holdable pencilHoldable, Transform pencilTip, Holdable eraserHoldable, Transform eraserTip, Holdable approvedStampHoldable, Transform approvedStampTip, Holdable deniedStampHoldable, Transform deniedStampTip) GetBrushes()
     {
         return (pencilParent, pencilTipOrigin, eraserParent, eraserTipOrigin, approvedStampParent, approvedStampOrigin, deniedStampParent, deniedStampOrigin);
     }

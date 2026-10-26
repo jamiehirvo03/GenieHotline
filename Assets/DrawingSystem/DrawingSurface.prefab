@@ -187,8 +187,8 @@ MonoBehaviour:
   - brushHoldable: {fileID: 0}
     brushTransform: {fileID: 0}
     colour: {r: 0.1254902, g: 0.43529415, b: 0.14901961, a: 0}
-    sizeX: 200
-    sizeY: 100
+    sizeX: 0
+    sizeY: 0
     isEraser: 0
     isApprovedStamp: 1
     isDeniedStamp: 0
@@ -198,8 +198,8 @@ MonoBehaviour:
   - brushHoldable: {fileID: 0}
     brushTransform: {fileID: 0}
     colour: {r: 0.49411768, g: 0.11764707, b: 0.12941177, a: 0}
-    sizeX: 200
-    sizeY: 100
+    sizeX: 0
+    sizeY: 0
     isEraser: 0
     isApprovedStamp: 0
     isDeniedStamp: 1

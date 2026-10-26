@@ -24,6 +24,7 @@ public class Holdable : MonoBehaviour, IHoldable
     [SerializeField] private LayerMask objectFollowingLayers; // layers to be detected for moving the held object
     private Vector3 velocity = Vector3.zero; // has to be zero for smoothdamp as object always starts with no motion
     private float followTime = 0.0001f;
+    private bool canFollow = true;
 
     // PLACEMENT VALIDITY CHECKING
     [SerializeField] private List<Transform> objectBoundaries = new List<Transform>();
@@ -56,7 +57,7 @@ public class Holdable : MonoBehaviour, IHoldable
 
     private void Update()
     {
-        if (isHeld)
+        if (isHeld && canFollow)
         {
             DragObject();
         }
@@ -304,6 +305,11 @@ public class Holdable : MonoBehaviour, IHoldable
         yield return new WaitForSeconds(flashDuration);
 
         objectRenderer.material.color = originalColor;
+    }
+
+    public void SetFollowStatus(bool status)
+    {
+        canFollow = status;
     }
 
     private void DragObject()

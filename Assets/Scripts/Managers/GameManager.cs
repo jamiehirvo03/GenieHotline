@@ -52,6 +52,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> currentDocuments = new List<GameObject>();
 
     [Header("Progression")]
+    private float points;
+    private float strikes;
+    private bool strikeGivenToday;
+
     private float chaosLevel;
     private float geneBucks;
 
@@ -86,6 +90,8 @@ public class GameManager : MonoBehaviour
         queuePosition = 0;
         callersInQueue = true;
         callerHistory.Clear();
+
+        strikeGivenToday = false;
 
         submitButton.SetActive(false);
 
@@ -205,10 +211,72 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < currentDocuments.Count; i++)
         {
             // find right form GameObject to check
-            GameObject formToCheck = currentDocuments[i].GetComponent<Callers>().callerForm;
+            Document formToCheck = currentDocuments[i].GetComponent<Callers>().callerForm.GetComponent<Document>();
 
             // go through 'answer' bools to check if document is correct
+            
+            if (currentDocuments[i].GetComponent<Callers>().material == formToCheck.material)
+            {
+                points = points + 5;
+            }
+            else
+            {
+                GiveStrike();
+            }
 
+            if (currentDocuments[i].GetComponent<Callers>().knowledge == formToCheck.knowledge)
+            {
+                points = points + 5;
+            }
+            else
+            {
+                GiveStrike();
+            }
+
+            if (currentDocuments[i].GetComponent<Callers>().heart == formToCheck.heart)
+            {
+                points = points + 5;
+            }
+            else
+            {
+                GiveStrike();
+            }
+
+            if (currentDocuments[i].GetComponent<Callers>().harm == formToCheck.harm)
+            {
+                points = points + 5;
+            }
+            else
+            {
+                GiveStrike();
+            }
+
+            if (currentDocuments[i].GetComponent<Callers>().enhancement == formToCheck.enhancement)
+            {
+                points = points + 5;
+            }
+            else
+            {
+                GiveStrike();
+            }
+
+            if (currentDocuments[i].GetComponent<Callers>().fate == formToCheck.fate)
+            {
+                points = points + 5;
+            }
+            else
+            {
+                GiveStrike();
+            }
+        }
+    }
+
+    private void GiveStrike()
+    {
+        if (!strikeGivenToday)
+        {
+            strikes++;
+            strikeGivenToday = true;
         }
     }
 
