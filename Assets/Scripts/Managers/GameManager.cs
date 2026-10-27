@@ -60,8 +60,8 @@ public class GameManager : MonoBehaviour
     private float geneBucks;
 
     [Header("Camera")]
-    [SerializeField] private Transform officeCam;
-    [SerializeField] private Transform shopCam;
+    [SerializeField] private Transform defaultCamTransform;
+    [SerializeField] private Transform endOfDayCamTransform;
 
     [SerializeField] private GameObject submitButton;
 
@@ -84,16 +84,18 @@ public class GameManager : MonoBehaviour
     {
         currentDay = dayNumber;
 
-        SelectCallers();
-        UpdateIndicators();
-        SpawnDocuments();
+        // reset day-dependant variables
         queuePosition = 0;
         callersInQueue = true;
         callerHistory.Clear();
-
         strikeGivenToday = false;
 
         submitButton.SetActive(false);
+
+        // setup new day
+        SelectCallers();
+        UpdateIndicators();
+        SpawnDocuments();
 
         Debug.Log($"Day {dayNumber} started");
     }
@@ -207,6 +209,22 @@ public class GameManager : MonoBehaviour
 
     public void SubmitDocuments()
     {
+        CheckFormAnswers();
+
+        EndDay();
+    }
+
+    private void GiveStrike()
+    {
+        if (!strikeGivenToday)
+        {
+            strikes++;
+            strikeGivenToday = true;
+        }
+    }
+
+    private void CheckFormAnswers()
+    {
         // check submitted documents for the day
         for (int i = 0; i < currentDocuments.Count; i++)
         {
@@ -214,7 +232,7 @@ public class GameManager : MonoBehaviour
             Document formToCheck = currentDocuments[i].GetComponent<Callers>().callerForm.GetComponent<Document>();
 
             // go through 'answer' bools to check if document is correct
-            
+
             if (currentDocuments[i].GetComponent<Callers>().material == formToCheck.material)
             {
                 points = points + 5;
@@ -271,23 +289,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void GiveStrike()
-    {
-        if (!strikeGivenToday)
-        {
-            strikes++;
-            strikeGivenToday = true;
-        }
-    }
-
-    private void CheckFormAnswers()
-    {
-
-    }
-
     private void EndDay()
     {
         Debug.Log($"Day {currentDay} has ended");
+
+        // show end-of-day screen
+        CameraManager.GetInstance().MoveCamera(endOfDayCamTransform);
+
+
     }
 
     private void GoToShop()

@@ -40,13 +40,13 @@ public class Checkbox : MonoBehaviour
         document = GetComponentInParent<Document>();
     }
 
-    public void UpdateDocument(bool status)
+    public void UpdateDocument(bool wasStamped, bool status)
     {
         document.CheckboxStatus(selectedType, status);
 
         Debug.Log($"{selectedType} set to {status}");
 
-        if (selectedType == CheckboxType.stampField)
+        if (selectedType == CheckboxType.stampField && wasStamped)
         {
             if (status)
             {

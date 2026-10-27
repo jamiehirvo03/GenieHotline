@@ -114,7 +114,7 @@ public class InteractionManager : MonoBehaviour
                                 Debug.Log("Outline enabled");
 
                                 // show control labels
-                                UIManager.GetInstance().EnableControlPanel(true);
+                                UIManager.GetInstance().EnableControlLabels(true);
 
                                 // change control labels
                                 UIManager.GetInstance().ChangeLabelText(hoveredObj);
@@ -145,7 +145,7 @@ public class InteractionManager : MonoBehaviour
                                 }
 
                                 //clear control labels
-                                UIManager.GetInstance().EnableControlPanel(false);
+                                UIManager.GetInstance().EnableControlLabels(false);
 
                                 // clear stored object
                                 hoveredObj = null;

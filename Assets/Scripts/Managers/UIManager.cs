@@ -6,11 +6,26 @@ public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
 
-    [SerializeField] private GameObject controlPanel;
+    // general game UI
+    [SerializeField] private GameObject gameHUD;
+
+    [SerializeField] private GameObject debugPanel;
     [SerializeField] private GameObject primaryPanel;
     [SerializeField] private TextMeshProUGUI primaryLabel;
     [SerializeField] private GameObject secondaryPanel;
     [SerializeField] private TextMeshProUGUI secondaryLabel;
+
+    // end of day report UI
+    [SerializeField] private GameObject endOfDayReportPanel;
+
+    [SerializeField] private TextMeshProUGUI dayReportHeader;
+    [SerializeField] private TextMeshProUGUI wishesApproved;
+    [SerializeField] private TextMeshProUGUI wishesDenied;
+    [SerializeField] private TextMeshProUGUI mistakesMade;
+    [SerializeField] private TextMeshProUGUI strikesCount;
+    [SerializeField] private TextMeshProUGUI pointsEarnt;
+    [SerializeField] private TextMeshProUGUI pointsBalance;
+    
 
     private void Awake()
     {
@@ -24,7 +39,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        controlPanel.SetActive(false);
+        debugPanel.SetActive(false);
     }
 
     public static UIManager GetInstance()
@@ -42,9 +57,36 @@ public class UIManager : MonoBehaviour
         return secondaryLabel.text;
     }
 
-    public void EnableControlPanel(bool status)
+    public void SetGameHUDStatus(bool status)
     {
-        controlPanel.SetActive(status);
+        gameHUD.SetActive(status);
+    }
+
+    public void SetEndOfDayScreenStatus(bool status)
+    {
+        // if end-of-day screen enabled
+        if (status)
+        {
+            // set new report variables
+
+        }
+        // if end-of-day screen disabled
+        else
+        {
+            // clear old report variables
+
+        }
+    }
+
+    public void EnableDebugPanel(bool status)
+    {
+        debugPanel.SetActive(status);
+    }
+
+    public void EnableControlLabels(bool status)
+    {
+        primaryPanel.SetActive(status);
+        secondaryPanel.SetActive(status);
     }
 
     public void ChangePanelColor(string panel, Color panelColor)

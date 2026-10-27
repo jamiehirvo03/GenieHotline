@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,11 +7,11 @@ using UnityEngine.TerrainTools;
 
 public class DrawingSurface : MonoBehaviour
 {
+    private Document document;
+    
     [Tooltip("The RenderTexture to draw on")]
     [SerializeField] private RenderTexture renderTextureTemplate;
     private RenderTexture renderTextureInstance;
-
-    private bool isDrawingLocked = false;
 
     [Header("BrushSettings")]
     [Tooltip("Max distance for brush detection")]
@@ -41,6 +42,7 @@ public class DrawingSurface : MonoBehaviour
         public int sizeX = 20; // brush width in pixels
         public int sizeY = 20; // brush height in pixels
 
+        public bool isPencil = false;
         public bool isEraser = false;
         public bool isApprovedStamp = false;
         public bool isDeniedStamp = false;
@@ -52,6 +54,11 @@ public class DrawingSurface : MonoBehaviour
 
     [Header("Add Brushes")]
     public List<BrushSettings> brushes = new List<BrushSettings>(); // list to hold multiple brushes
+
+    private void Awake()
+    {
+        document = GetComponentInParent<Document>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -106,7 +113,7 @@ public class DrawingSurface : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDrawingLocked)
+        if (!document.GetLockedStatus())
         {
             // ensure the RenderTexture is active for drawing
             RenderTexture.active = renderTextureInstance;
@@ -219,8 +226,13 @@ public class DrawingSurface : MonoBehaviour
                 brush.lastPosition = currentPosition; // update the last drawn position
             }
         }
-        if (Physics.Raycast(ray, out RaycastHit checkboxHit, maxDistance, checkboxLayer))
+        // checkbox hit detection
+        if (Physics.Raycast(ray, out RaycastHit checkboxHit, maxDistance, checkboxLayer) && !document.GetLockedStatus())
         {
+            if (brush.isPencil)
+            {
+                MarkCheckbox(checkboxHit);
+            }
             if (brush.isEraser)
             {
                 ClearCheckbox(checkboxHit);
@@ -234,10 +246,6 @@ public class DrawingSurface : MonoBehaviour
             {
                 // mark checkbox in document script
                 StampDocument(checkboxHit, false);                
-            }
-            else
-            {
-                MarkCheckbox(checkboxHit);
             }
         }
         else
@@ -290,28 +298,25 @@ public class DrawingSurface : MonoBehaviour
     private void MarkCheckbox(RaycastHit checkboxHit)
     {
         Debug.Log($"{checkboxHit.collider.gameObject.name} was marked");
-        checkboxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(true);
+        checkboxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(false, true);
     }
 
     private void StampDocument(RaycastHit stampBoxHit, bool isApproved)
     {
-        // lock future drawing on this drawingSurface
-        isDrawingLocked = true;
-
         if (isApproved)
         {
-            stampBoxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(true);
+            stampBoxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(true, true);
         }
         else
         {
-            stampBoxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(false);
+            stampBoxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(true, false);
         }
     }
 
     private void ClearCheckbox(RaycastHit checkboxHit)
     {
         Debug.Log($"{checkboxHit.collider.gameObject.name} was cleared");
-        checkboxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(false);
+        checkboxHit.collider.gameObject.GetComponent<Checkbox>().UpdateDocument(false, false);
 
         Vector2 uv;
 

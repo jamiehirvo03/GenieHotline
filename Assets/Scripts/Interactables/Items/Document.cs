@@ -3,6 +3,7 @@ using TMPro;
 using static Checkbox;
 using System.Collections;
 using System.Security;
+using System.Runtime.CompilerServices;
 
 public class Document : MonoBehaviour, IInteractable
 {
@@ -37,6 +38,7 @@ public class Document : MonoBehaviour, IInteractable
     // Verdict
     [SerializeField] private bool isApproved;
     [SerializeField] private bool isDenied;
+    [SerializeField] private bool isLocked;
  
     public string GetPrimaryAction()
     {
@@ -46,6 +48,11 @@ public class Document : MonoBehaviour, IInteractable
     public string GetSecondaryAction()
     {
         return secondaryAction;
+    }
+
+    public bool GetLockedStatus()
+    {
+        return isLocked;
     }
 
     public void PrimaryInteract()
@@ -148,12 +155,20 @@ public class Document : MonoBehaviour, IInteractable
     public void ApproveDocument()
     {
         isApproved = true;
+        isLocked = true;
+
+        Debug.Log($"{gameObject.name} locked");
     }
 
     public void DenyDocument()
     {
         isDenied = true;
+        isLocked = true;
+
+        Debug.Log($"{gameObject.name} locked");
     }
+
+    
 
     private IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime)
     {
