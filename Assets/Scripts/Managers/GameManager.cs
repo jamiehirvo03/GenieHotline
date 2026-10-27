@@ -28,7 +28,17 @@ public class GameManager : MonoBehaviour
         public bool enhancement;
         public bool fate;
 
+        // verditc
+        public bool canBeGranted;
+
         public GameObject callerForm;
+
+        public Document GetCallerDocument()
+        {
+            return callerForm.GetComponent<Document>();
+        }
+
+        public bool hasHungUp = false;
     }
     [Header("Add Callers")] public List<Callers> callers = new List<Callers>();
 
@@ -36,6 +46,7 @@ public class GameManager : MonoBehaviour
     private int currentDay;
     [HideInInspector] public bool callersInQueue = false;
     private List<Callers> callerQueue = new List<Callers>();
+    private List<Callers> currentDayCallers = new List<Callers>();
     private int queuePosition;
 
     private List<Callers> callerHistory = new List<Callers>();
@@ -50,14 +61,36 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private Transform pileLocation;
     [SerializeField] private List<GameObject> currentDocuments = new List<GameObject>();
+    [SerializeField] private List<Callers> currentCallers = new List<Callers>();
 
-    [Header("Progression")]
-    private float points;
-    private float strikes;
+    [Header("Progression/Scoring")]
+    // persistive 
+    private int strikesCount;
+    private int chaosLevel;
+    private int geneBucksBalance;
+
+    // quotas
+    [SerializeField] private int dayOneQuota = 1;
+    [SerializeField] private int dayTwoQuota = 2;
+    [SerializeField] private int dayThreeQuota = 2;
+    [SerializeField] private int dayFourQuota = 3;
+    [SerializeField] private int dayFiveQuota = 4;
+
+    // point awards
+    [SerializeField] private int correctDetail = 5;
+    [SerializeField] private int quotaBonus = 50;
+    [SerializeField] private float flawlessBonus = 2f;
+    
+
+    // daily resets
+    private int currentDayQuota;
+    private int wishesApproved;
+    private int wishesDenied;
+    private int mistakesMade;
+    private bool wasQuotaMet;
     private bool strikeGivenToday;
-
-    private float chaosLevel;
-    private float geneBucks;
+    private int score;
+    private int geneBucksEarnt;
 
     [Header("Camera")]
     [SerializeField] private Transform defaultCamTransform;
@@ -87,10 +120,39 @@ public class GameManager : MonoBehaviour
         // reset day-dependant variables
         queuePosition = 0;
         callersInQueue = true;
-        callerHistory.Clear();
-        strikeGivenToday = false;
-
+        currentDayCallers.Clear();
+        
         submitButton.SetActive(false);
+
+        wishesApproved = 0;
+        wishesDenied = 0;
+        mistakesMade = 0;
+        wasQuotaMet = false;
+        strikeGivenToday = false;
+        score = 0;
+        geneBucksEarnt = 0;
+
+        if (currentDay == 1)
+        {
+            currentDayQuota = dayOneQuota;
+        }
+        if (currentDay == 2)
+        {
+            currentDayQuota = dayTwoQuota;
+        }
+        if (currentDay == 3)
+        {
+            currentDayQuota = dayThreeQuota;
+        }
+        if (currentDay == 4)
+        {
+            currentDayQuota = dayFourQuota;
+        }
+        if (currentDay == 5)
+        {
+            currentDayQuota = dayFiveQuota;
+        }
+
 
         // setup new day
         SelectCallers();
@@ -109,6 +171,8 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log($"{callers[i].callerName}");
                 callerQueue.Add(callers[i]);
+
+                currentDayCallers.Add(callers[i]);
             }
         }
         RandomizeQueue();
@@ -135,7 +199,7 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < callerQueue.Count; i++)
         {
-            if (callerQueue[i] == null)
+            if (callerQueue[i].hasHungUp)
             {
                 // if queue position empty set the respective indicator to off
                 phoneIndicators[i].GetComponent<Renderer>().material = indicatorOff;
@@ -162,6 +226,8 @@ public class GameManager : MonoBehaviour
 
             currentDocuments[i].GetComponent<Document>().SetCallerDetails(callerQueue[i].callerName, callerQueue[i].callerAge, callerQueue[i].callerOccupation);
 
+            currentCallers.Add(callerQueue[i]);
+
             // attach the newly created document object to the recently added caller in queue
             callerQueue[i].callerForm = newInstance;
         }
@@ -187,7 +253,7 @@ public class GameManager : MonoBehaviour
 
         callerHistory.Add(callerQueue[queuePosition]);
 
-        callerQueue[queuePosition] = null;
+        callerQueue[queuePosition].hasHungUp = true;
 
         UpdateIndicators();
 
@@ -211,6 +277,9 @@ public class GameManager : MonoBehaviour
     {
         CheckFormAnswers();
 
+        CalculateScore();
+        CalculateBucks();
+
         EndDay();
     }
 
@@ -218,7 +287,7 @@ public class GameManager : MonoBehaviour
     {
         if (!strikeGivenToday)
         {
-            strikes++;
+            strikesCount++;
             strikeGivenToday = true;
         }
     }
@@ -226,66 +295,136 @@ public class GameManager : MonoBehaviour
     private void CheckFormAnswers()
     {
         // check submitted documents for the day
-        for (int i = 0; i < currentDocuments.Count; i++)
+        for (int i = 0; i < currentDayCallers.Count; i++)
         {
             // find right form GameObject to check
-            Document formToCheck = currentDocuments[i].GetComponent<Callers>().callerForm.GetComponent<Document>();
+            Document formToCheck = currentDayCallers[i].callerForm.GetComponent<Document>();
 
-            // go through 'answer' bools to check if document is correct
-
-            if (currentDocuments[i].GetComponent<Callers>().material == formToCheck.material)
+            // go through 'answer' bools to check if checkboxes are correct (only need to check and award points for the correct answers)
+            if (currentDayCallers[i].material)
             {
-                points = points + 5;
+                if (formToCheck.material == currentDayCallers[i].material)
+                {
+                    score =  + correctDetail;
+                }
+                else
+                {
+                    GiveStrike();
+                    mistakesMade++;
+                }
+            }
+            if (currentDayCallers[i].knowledge)
+            {
+                if (formToCheck.knowledge == currentDayCallers[i].knowledge)
+                {
+                    score = score + correctDetail;
+                }
+                else
+                {
+                    GiveStrike();
+                    mistakesMade++;
+                }
+            }
+            if (currentDayCallers[i].heart)
+            {
+                if (formToCheck.heart == currentDayCallers[i].heart)
+                {
+                    score = score + correctDetail;
+                }
+                else
+                {
+                    GiveStrike();
+                    mistakesMade++;
+                }
+            }
+            if (currentDayCallers[i].harm)
+            {
+                if (formToCheck.harm == currentDayCallers[i].harm)
+                {
+                    score = score + correctDetail;
+                }
+                else
+                {
+                    GiveStrike();
+                    mistakesMade++;
+                }
+            }
+            if (currentDayCallers[i].enhancement)
+            {
+                if (formToCheck.enhancement == currentDayCallers[i].enhancement)
+                {
+                    score = score + correctDetail;
+                }
+                else
+                {
+                    GiveStrike();
+                    mistakesMade++;
+                }
+            }
+            if (currentDayCallers[i].fate)
+            {
+                if (formToCheck.fate == currentDayCallers[i].fate)
+                {
+                    score = score + correctDetail;
+                }
+                else
+                {
+                    GiveStrike();
+                    mistakesMade++;
+                }
+            }
+
+            // check form approval status
+            if (currentDayCallers[i].canBeGranted)
+            {
+                if (formToCheck.isApproved)
+                {
+                    wishesApproved++;
+                }
+                else if (formToCheck.isDenied)
+                {
+                    wishesDenied++;
+
+                    GiveStrike();
+                    mistakesMade++;
+                }
             }
             else
             {
-                GiveStrike();
-            }
+                if (formToCheck.isApproved)
+                {
+                    wishesApproved++;
 
-            if (currentDocuments[i].GetComponent<Callers>().knowledge == formToCheck.knowledge)
-            {
-                points = points + 5;
+                    GiveStrike();
+                    mistakesMade++;
+                }
+                else if (formToCheck.isDenied)
+                {
+                    wishesDenied++;
+                }
             }
-            else
-            {
-                GiveStrike();
-            }
+        }
+    }
 
-            if (currentDocuments[i].GetComponent<Callers>().heart == formToCheck.heart)
-            {
-                points = points + 5;
-            }
-            else
-            {
-                GiveStrike();
-            }
+    private void CalculateScore()
+    {
+        if (wishesApproved >= currentDayQuota)
+        {
+            wasQuotaMet = true;
+            score = score + quotaBonus;
+        }
+    }
 
-            if (currentDocuments[i].GetComponent<Callers>().harm == formToCheck.harm)
-            {
-                points = points + 5;
-            }
-            else
-            {
-                GiveStrike();
-            }
+    private void CalculateBucks()
+    {
+        // if day was flawless
+        if (!strikeGivenToday)
+        {
+            float adjustedScore = score;
+            adjustedScore *= flawlessBonus;
 
-            if (currentDocuments[i].GetComponent<Callers>().enhancement == formToCheck.enhancement)
-            {
-                points = points + 5;
-            }
-            else
-            {
-                GiveStrike();
-            }
-
-            if (currentDocuments[i].GetComponent<Callers>().fate == formToCheck.fate)
-            {
-                points = points + 5;
-            }
-            else
-            {
-                GiveStrike();
-            }
+            geneBucksEarnt = (int)adjustedScore;
+            geneBucksBalance += geneBucksEarnt;
         }
     }
 
@@ -295,8 +434,7 @@ public class GameManager : MonoBehaviour
 
         // show end-of-day screen
         CameraManager.GetInstance().MoveCamera(endOfDayCamTransform);
-
-
+        UIManager.GetInstance().SetEndOfDayScreen(true, currentDay, wishesApproved, wishesDenied, wasQuotaMet, mistakesMade, strikesCount, geneBucksEarnt, geneBucksBalance);
     }
 
     private void GoToShop()

@@ -36,8 +36,8 @@ public class Document : MonoBehaviour, IInteractable
     [SerializeField] private bool death;
 
     // Verdict
-    [SerializeField] private bool isApproved;
-    [SerializeField] private bool isDenied;
+    public bool isApproved;
+    public bool isDenied;
     [SerializeField] private bool isLocked;
  
     public string GetPrimaryAction()

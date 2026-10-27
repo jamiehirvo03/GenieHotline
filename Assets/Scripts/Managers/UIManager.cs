@@ -6,7 +6,7 @@ public class UIManager : MonoBehaviour
 {
     private static UIManager instance;
 
-    // general game UI
+    [Header("General Game UI")]
     [SerializeField] private GameObject gameHUD;
 
     [SerializeField] private GameObject debugPanel;
@@ -15,17 +15,27 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject secondaryPanel;
     [SerializeField] private TextMeshProUGUI secondaryLabel;
 
-    // end of day report UI
+    [Header("End-Of-Day Report UI")]
     [SerializeField] private GameObject endOfDayReportPanel;
 
     [SerializeField] private TextMeshProUGUI dayReportHeader;
     [SerializeField] private TextMeshProUGUI wishesApproved;
     [SerializeField] private TextMeshProUGUI wishesDenied;
     [SerializeField] private TextMeshProUGUI mistakesMade;
-    [SerializeField] private TextMeshProUGUI strikesCount;
-    [SerializeField] private TextMeshProUGUI pointsEarnt;
-    [SerializeField] private TextMeshProUGUI pointsBalance;
-    
+    [SerializeField] private Image strikesCounter;
+    [SerializeField] private TextMeshProUGUI geneBucksEarned;
+    [SerializeField] private TextMeshProUGUI geneBucksBalance;
+
+    [SerializeField] private Image quotaBox;
+    [SerializeField] private Sprite quotaMetTick;
+    [SerializeField] private Sprite quotaNoTick;
+    [SerializeField] private bool dayQuotaMet = false;
+
+    [SerializeField] private Sprite zeroStrikes;
+    [SerializeField] private Sprite oneStrike;
+    [SerializeField] private Sprite twoStrikes;
+    [SerializeField] private Sprite threeStrikes;
+
 
     private void Awake()
     {
@@ -40,6 +50,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         debugPanel.SetActive(false);
+        endOfDayReportPanel.SetActive(false);
+        gameHUD.SetActive(true);
     }
 
     public static UIManager GetInstance()
@@ -57,24 +69,62 @@ public class UIManager : MonoBehaviour
         return secondaryLabel.text;
     }
 
-    public void SetGameHUDStatus(bool status)
+    public void SetGameHUD(bool status)
     {
         gameHUD.SetActive(status);
     }
 
-    public void SetEndOfDayScreenStatus(bool status)
+    public void SetEndOfDayScreen(bool status, int dayNumber, int approved, int denied, bool quotaMet, int mistakes, int strikes, int newBucks, int totalBucks)
     {
         // if end-of-day screen enabled
         if (status)
         {
-            // set new report variables
+            // enable end-of-day report screen
+            endOfDayReportPanel.SetActive(true);
 
+            // set new report variables
+            dayReportHeader.text = $"Day {dayNumber} Complete!";
+            wishesApproved.text = $"{approved}";
+            wishesDenied.text = $"{denied}";
+            mistakesMade.text = $"{mistakes}";
+
+            if (strikes < 0)
+            {
+                Debug.LogError("Strikes count is in the negative!");
+            }
+            if (strikes == 0)
+            {
+                strikesCounter.sprite = zeroStrikes;
+            }
+            if (strikes == 1)
+            {
+                strikesCounter.sprite = oneStrike;
+            }
+            if (strikes == 2)
+            {
+                strikesCounter.sprite = twoStrikes;
+            }
+            if (strikes == 3)
+            {
+                strikesCounter.sprite = threeStrikes;
+            }
+            if (quotaMet)
+            {
+                quotaBox.sprite = quotaMetTick;
+            }
+            else
+            {
+                quotaBox.sprite = quotaNoTick;
+            }
+
+            geneBucksEarned.text = $"{newBucks}";
+            geneBucksBalance.text = $"{totalBucks}";
         }
         // if end-of-day screen disabled
         else
         {
-            // clear old report variables
-
+            // disable end-of-day report screen
+            endOfDayReportPanel.SetActive(false);
         }
     }
 
