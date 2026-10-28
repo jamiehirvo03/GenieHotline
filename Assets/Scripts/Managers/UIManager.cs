@@ -7,14 +7,19 @@ public class UIManager : MonoBehaviour
     private static UIManager instance;
 
     [Header("General Game UI")]
-    [SerializeField] private GameObject gameHUD;
+    [SerializeField] private GameObject gameplayUI;
+    [SerializeField] private GameObject barHUD;
 
+    [SerializeField] private GameObject debugMenuToggle;
     [SerializeField] private GameObject debugPanel;
+
     [SerializeField] private GameObject primaryPanel;
     [SerializeField] private TextMeshProUGUI primaryLabel;
     [SerializeField] private GameObject secondaryPanel;
     [SerializeField] private TextMeshProUGUI secondaryLabel;
 
+    [SerializeField] private TextMeshProUGUI currentItem;
+ 
     [Header("End-Of-Day Report UI")]
     [SerializeField] private GameObject endOfDayReportPanel;
 
@@ -29,7 +34,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image quotaBox;
     [SerializeField] private Sprite quotaMetTick;
     [SerializeField] private Sprite quotaNoTick;
-    [SerializeField] private bool dayQuotaMet = false;
 
     [SerializeField] private Sprite zeroStrikes;
     [SerializeField] private Sprite oneStrike;
@@ -49,9 +53,17 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        debugMenuToggle.SetActive(false);
         debugPanel.SetActive(false);
         endOfDayReportPanel.SetActive(false);
-        gameHUD.SetActive(true);
+        gameplayUI.SetActive(true);
+
+        EnableControlLabels(false);
+
+        if (GameManager.GetInstance().debugMode)
+        {
+            debugMenuToggle.SetActive(true);
+        }
     }
 
     public static UIManager GetInstance()
@@ -71,7 +83,7 @@ public class UIManager : MonoBehaviour
 
     public void SetGameHUD(bool status)
     {
-        gameHUD.SetActive(status);
+        barHUD.SetActive(status);
     }
 
     public void SetEndOfDayScreen(bool status, int dayNumber, int approved, int denied, bool quotaMet, int mistakes, int strikes, int newBucks, int totalBucks)
@@ -81,6 +93,11 @@ public class UIManager : MonoBehaviour
         {
             // enable end-of-day report screen
             endOfDayReportPanel.SetActive(true);
+
+            // disable gameplay UI
+            gameplayUI.SetActive(false);
+            // disable dialogue UI (dialogue UI is kept in DialogueManager)
+            DialogueManager.GetInstance().ExitDialogueMode();
 
             // set new report variables
             dayReportHeader.text = $"Day {dayNumber} Complete!";
@@ -137,6 +154,8 @@ public class UIManager : MonoBehaviour
     {
         primaryPanel.SetActive(status);
         secondaryPanel.SetActive(status);
+
+        currentItem.gameObject.SetActive(status);
     }
 
     public void ChangePanelColor(string panel, Color panelColor)
@@ -156,6 +175,24 @@ public class UIManager : MonoBehaviour
         primaryLabel.text = interactable.GetComponent<IInteractable>().GetPrimaryAction();
 
         secondaryLabel.text = interactable.GetComponent<IInteractable>().GetSecondaryAction();
+
+        currentItem.text = interactable.gameObject.name;
     }
 
+    //public void ToggleDebugWindow()
+    //{
+    //    DebugWindow.gameObject.SetActive(!DebugWindow.gameObject.activeSelf);
+    //}
+
+    public void SelectDay(int dayNumber)
+    {
+        //EventManager.GetInstance().StartDay();
+
+        GameManager.GetInstance().StartDay(dayNumber);
+    }
+
+    public void BackToMenu()
+    {
+        SceneLoader.ChangeScene(SceneLoader.Scene.MainMenu);
+    }
 }

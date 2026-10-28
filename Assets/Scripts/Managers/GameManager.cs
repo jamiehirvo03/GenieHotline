@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ink.Parsed;
@@ -9,6 +10,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
+
+    public bool debugMode;
 
     // caller info
     [System.Serializable]
@@ -66,7 +69,7 @@ public class GameManager : MonoBehaviour
     [Header("Progression/Scoring")]
     // persistive 
     private int strikesCount;
-    private int chaosLevel;
+    private int chaosIndex;
     private int geneBucksBalance;
 
     // quotas
@@ -111,6 +114,14 @@ public class GameManager : MonoBehaviour
     public static GameManager GetInstance()
     {
         return instance;
+    }
+
+    private void Start()
+    {
+        // before starting day, do a check on the persistent data script for last saved day number.
+
+        // start day
+        StartDay(1);
     }
 
     public void StartDay(int dayNumber)
@@ -261,7 +272,7 @@ public class GameManager : MonoBehaviour
         {
             queuePosition++;
 
-            Debug.Log($"Moving on to next caller: {callerQueue[queuePosition]}");
+            Debug.Log($"Moving on to next caller: {currentDayCallers[queuePosition]}");
         }
         else
         {
@@ -434,27 +445,13 @@ public class GameManager : MonoBehaviour
 
         // show end-of-day screen
         CameraManager.GetInstance().MoveCamera(endOfDayCamTransform);
+
         UIManager.GetInstance().SetEndOfDayScreen(true, currentDay, wishesApproved, wishesDenied, wasQuotaMet, mistakesMade, strikesCount, geneBucksEarnt, geneBucksBalance);
-    }
-
-    private void GoToShop()
-    {
-        // load available shop items in their positions with matching name/price tags
-
-        // switch to shop camera/move main camera to shop position
-
     }
 
     private void BuyItem()
     {
 
-    }
-
-    private void ReturnToOffice()
-    {
-        // switch back to office camera/move main camera back to office position
-
-        // unload shop items/fx when not needed
     }
 
     private void PlayCinematic(string cinematicName)

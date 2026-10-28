@@ -8,7 +8,7 @@ public class CameraManager : MonoBehaviour
     // camera
     private Camera activeCamera;
 
-    [SerializeField] private float transitionSpeed;
+    public float transitionTime;
 
     private void Awake()
     {
@@ -29,7 +29,8 @@ public class CameraManager : MonoBehaviour
 
     public void MoveCamera(Transform targetTransform)
     {
-        StartCoroutine(LerpObjectTransform(targetTransform.position, targetTransform.eulerAngles, transitionSpeed));
+        StopAllCoroutines();
+        StartCoroutine(LerpObjectTransform(targetTransform.position, targetTransform.eulerAngles, transitionTime));
     }
 
     private IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime)
@@ -56,6 +57,5 @@ public class CameraManager : MonoBehaviour
         // everything below this will happen once lerp is complete
 
         activeCamera.transform.localPosition = targetPosition; // snap position to target to fix weird numbers
-
     }
 }

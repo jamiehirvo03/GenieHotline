@@ -28,15 +28,5 @@ public class DebugManager : MonoBehaviour
         return instance;
     }
 
-    public void ToggleWindow()
-    {
-        DebugWindow.gameObject.SetActive(!DebugWindow.gameObject.activeSelf);
-    }
 
-    public void SelectDay(int dayNumber)
-    {
-        //EventManager.GetInstance().StartDay();
-
-        GameManager.GetInstance().StartDay(dayNumber);
-    }
 }
