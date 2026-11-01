@@ -1056,6 +1056,7 @@ MonoBehaviour:
   death: 0
   isApproved: 0
   isDenied: 0
+  isLocked: 0
 --- !u!114 &766982382848461628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,11 +1071,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Holdable
   isHeld: 0
   isLerping: 0
-  holdHeight: 3
-  isRotatedWhenHeld: 0
+  holdHeight: 5
+  isRotatedWhenHeld: 1
   rotationSpeed: 0
   defaultOrientation: {x: 0, y: 0, z: 0}
-  heldOrientation: {x: 0, y: 0, z: 0}
+  heldOrientation: {x: -35, y: 0, z: 0}
   objectFollowingLayers:
     serializedVersion: 2
     m_Bits: 64

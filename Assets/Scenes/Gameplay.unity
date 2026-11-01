@@ -8761,8 +8761,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7748808905175152586, guid: 0b63e2fe85cf64a41bb0885d140ca18e, type: 3}
+      propertyPath: holdHeight
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7748808905175152586, guid: 0b63e2fe85cf64a41bb0885d140ca18e, type: 3}
       propertyPath: heldOrientation.x
-      value: 0
+      value: -35
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
