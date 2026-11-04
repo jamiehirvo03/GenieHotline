@@ -42,6 +42,13 @@ public class Checkbox : MonoBehaviour
 
     public void UpdateDocument(bool wasStamped, bool status)
     {
+        if (OcclusionCheck())
+        {
+            Debug.Log($"Occlusion detected! Ignoring checkbox change for {GetComponentInParent<Document>().gameObject.name} ({gameObject.name})");
+
+            return;
+        }
+
         document.CheckboxStatus(selectedType, status);
 
         Debug.Log($"{selectedType} set to {status}");
@@ -58,6 +65,25 @@ public class Checkbox : MonoBehaviour
                 document.DenyDocument();
                 GetComponent<Renderer>().material = deniedMat;
             }
+        }
+    }
+
+    private bool OcclusionCheck()
+    {
+        if (Physics.Raycast(transform.position, Vector3.up, out RaycastHit hit, 1))
+        {
+            if (hit.collider.gameObject.CompareTag("Document"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
         }
     }
 }

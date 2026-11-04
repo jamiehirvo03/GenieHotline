@@ -13,6 +13,7 @@ public class Pencil : MonoBehaviour, IInteractable
     
     public bool isDrawing = false;
     private float holdHeight;
+    [SerializeField] private float drawingHeight = 0.5f;
 
     [SerializeField] private bool isStamp = false;
     private bool stampInMotion = false;
@@ -44,7 +45,7 @@ public class Pencil : MonoBehaviour, IInteractable
                 if (!isDrawing)
                 {
                     StartDrawing();
-                    GetComponent<Holdable>().holdHeight = 0.5f;
+                    GetComponent<Holdable>().holdHeight = drawingHeight;
                 }
                 else
                 {
@@ -118,13 +119,13 @@ public class Pencil : MonoBehaviour, IInteractable
         stampInMotion = true;
 
         Vector3 startPosition = transform.position;
-        Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+        Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - drawingHeight, transform.position.z);
 
-        yield return StartCoroutine(LerpPosition(lowerPosition, 0.25f));
+        yield return StartCoroutine(LerpPosition(lowerPosition, 0.1f));
 
         yield return new WaitForSeconds(0.01f);
 
-        yield return StartCoroutine(LerpPosition(startPosition, 0.25f));
+        yield return StartCoroutine(LerpPosition(startPosition, 0.1f));
 
         yield return new WaitForSeconds(0.01f);
 
