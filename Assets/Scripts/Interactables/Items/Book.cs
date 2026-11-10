@@ -22,6 +22,11 @@ public class Book : MonoBehaviour, IInteractable
     private BoxCollider boxCollider;
     [SerializeField] private Vector3 bookClosedColliderSize;
     [SerializeField] private Vector3 bookOpenColliderSize;
+
+    [SerializeField] private Vector3 restingPosition;
+    [SerializeField] private Vector3 restingRotation;
+    [SerializeField] private Vector3 activePosition;
+    [SerializeField] private Vector3 activeRotation;
     
 
     [SerializeField] private List<Texture> pages = new List<Texture>();
