@@ -12,6 +12,7 @@ TagManager:
   - Eraser
   - PencilTip
   - Page
+  - Equipment
   layers:
   - Default
   - TransparentFX

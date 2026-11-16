@@ -44,13 +44,17 @@ public class Pencil : MonoBehaviour, IInteractable
 
                 if (!isDrawing)
                 {
-                    StartDrawing();
                     GetComponent<Holdable>().holdHeight = drawingHeight;
+                    StartDrawing();
+
+                    primaryAction = "Stop Drawing";
                 }
                 else
                 {
-                    StopDrawing();
                     GetComponent<Holdable>().holdHeight = 1;
+                    StopDrawing();
+
+                    primaryAction = "Start Drawing";
                 }
             }
         }
@@ -81,7 +85,7 @@ public class Pencil : MonoBehaviour, IInteractable
             }
             else
             {
-                primaryAction = "Draw (Hold)";
+                primaryAction = "Start Drawing";
             }
             
             secondaryAction = "Put Down";
@@ -99,7 +103,9 @@ public class Pencil : MonoBehaviour, IInteractable
         {
             Vector3 adjustedPos = new Vector3(transform.position.x, hit.point.y + tipOffset, transform.position.z);
 
-            StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, 0.1f, false));
+            Debug.Log($"Current Drawing Height: {adjustedPos.y}");
+
+            StartCoroutine(LerpPosition(adjustedPos, 0.1f, true));
 
             isDrawing = true;
         }
@@ -107,11 +113,13 @@ public class Pencil : MonoBehaviour, IInteractable
 
     private void StopDrawing()
     {
+        Vector3 adjustedPos = new Vector3(transform.position.x, 6, transform.position.z);
+
+        //StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, transform.rotation.eulerAngles, 0.1f, false));
+
+        StartCoroutine(LerpPosition(adjustedPos, 0.1f, true));
+
         isDrawing = false;
-
-        Vector3 adjustedPos = new Vector3(transform.position.x, holdHeight, transform.position.z);
-
-        StartCoroutine(GetComponent<IHoldable>().LerpObjectTransform(adjustedPos, 0.1f, false));
     }
 
     private IEnumerator StampMotion()
@@ -121,24 +129,26 @@ public class Pencil : MonoBehaviour, IInteractable
         Vector3 startPosition = transform.position;
         Vector3 lowerPosition = new Vector3(transform.position.x, transform.position.y - drawingHeight, transform.position.z);
 
-        yield return StartCoroutine(LerpPosition(lowerPosition, 0.1f));
+        yield return StartCoroutine(LerpPosition(lowerPosition, 0.1f, false));
 
         yield return new WaitForSeconds(0.01f);
 
-        yield return StartCoroutine(LerpPosition(startPosition, 0.1f));
+        yield return StartCoroutine(LerpPosition(startPosition, 0.1f, true));
 
         yield return new WaitForSeconds(0.01f);
 
         stampInMotion = false;
     }
 
-    private IEnumerator LerpPosition(Vector3 targetPosition, float time)
+    private IEnumerator LerpPosition(Vector3 targetPosition, float time, bool canFollow)
     {
-        GetComponent<IHoldable>().SetFollowStatus(false);
+        GetComponent<IHoldable>().SetFollowStatus(canFollow);
 
         float elapsedTime = 0;
 
         Vector3 startPosition = transform.position;
+
+        Debug.Log($"Lerp start pos: {startPosition}, target pos: {targetPosition}");
 
         while (elapsedTime < time)
         {
@@ -148,6 +158,7 @@ public class Pencil : MonoBehaviour, IInteractable
 
             yield return null;
         }
+        Debug.Log($"Lerp end pos: {transform.position}");
 
         transform.position = targetPosition;
 

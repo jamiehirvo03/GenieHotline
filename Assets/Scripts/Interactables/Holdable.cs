@@ -16,7 +16,7 @@ public class Holdable : MonoBehaviour, IHoldable
 
     public bool isLerping = false;
     public float holdHeight; // height above the surface you're hovering over
-    [SerializeField] private bool isRotatedWhenHeld;
+    //[SerializeField] private bool isRotatedWhenHeld;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Vector3 defaultOrientation;
     [SerializeField] private Vector3 heldOrientation;
@@ -28,6 +28,7 @@ public class Holdable : MonoBehaviour, IHoldable
 
     // PLACEMENT VALIDITY CHECKING
     [SerializeField] private List<Transform> objectBoundaries = new List<Transform>();
+    [SerializeField] private GameObject boundariesParent;
     [SerializeField] private LayerMask placementValidityMask;
     private GameObject lowestValidObject;
     private GameObject highestDocument;
@@ -78,16 +79,17 @@ public class Holdable : MonoBehaviour, IHoldable
             Vector3 heightAdjustedPos = new Vector3(transform.position.x, holdHeight, transform.position.z);
 
             // raise object to hold height
-            LerpObjectTransform(heightAdjustedPos, 0.1f, false); // using StartCoroutine(LerpObjectTransform(heightAdjustedPos)); makes the object flicker when picked up
+            LerpObjectTransform(heightAdjustedPos, heldOrientation, 0.05f, false); // using StartCoroutine(LerpObjectTransform(heightAdjustedPos)); makes the object flicker when picked up
 
-            if (isRotatedWhenHeld)
-            {
-                RotateObject(heldOrientation);
-            }
+            // rotate object to held orientation
+            RotateObject(heldOrientation);
+
+            // rotate boundary points parent gameObject to compensate for tilt of held object
+            boundariesParent.transform.localRotation = Quaternion.Euler(-heldOrientation.x, -heldOrientation.y, -heldOrientation.z);
         }
     }
 
-    public IEnumerator LerpObjectTransform(Vector3 targetPosition, float transformTime, bool isItemBeingReleased)
+    public IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime, bool isItemBeingReleased)
     {
         Debug.Log($"Lerping object to position = {targetPosition}");
 
@@ -103,7 +105,6 @@ public class Holdable : MonoBehaviour, IHoldable
             float lerpTime = elapsedTime / transformTime;
 
             transform.position = Vector3.Lerp(startPosition, targetPosition, lerpTime);
-            
 
             yield return null;
         }
@@ -125,7 +126,7 @@ public class Holdable : MonoBehaviour, IHoldable
 
     private void RotateObject(Vector3 targetRotation)
     {
-        this.gameObject.transform.rotation = Quaternion.Euler(targetRotation);
+        gameObject.transform.rotation = Quaternion.Euler(targetRotation);
     }
 
     public void Release()
@@ -134,11 +135,15 @@ public class Holdable : MonoBehaviour, IHoldable
         {
             CheckPlacementValidity();
 
+            Debug.Log($"PlacementPos is {placementPos}");
             if (placementPos != Vector3.zero)
             {
-                //Debug.Log($"PlacementPos is {placementPos}");
+                if (isLerping)
+                {
+                    StopAllCoroutines();
+                }
 
-                StartCoroutine(LerpObjectTransform(placementPos, 0.1f, true));
+                StartCoroutine(LerpObjectTransform(placementPos, defaultOrientation, 0.1f, true));
 
                 RotateObject(defaultOrientation);
 
@@ -217,22 +222,22 @@ public class Holdable : MonoBehaviour, IHoldable
                             }                            
                         }
 
-                        if (hit.collider.gameObject.CompareTag("Stationery"))
-                        {
-                            validPoints++;
+                        //if (hit.collider.gameObject.CompareTag("Stationery") | hit.collider.gameObject.CompareTag("Key") | hit.collider.gameObject.CompareTag("Equipment"))
+                        //{
+                        //    validPoints++;
 
-                            if (lowestValidObject != null)
-                            {
-                                if (hit.collider.transform.position.y < lowestValidObject.transform.position.y)
-                                {
-                                    lowestValidObject = hit.collider.gameObject;
-                                }
-                            }
-                            else
-                            {
-                                lowestValidObject = hit.collider.gameObject;
-                            }  
-                        }
+                        //    if (lowestValidObject != null)
+                        //    {
+                        //        if (hit.collider.transform.position.y < lowestValidObject.transform.position.y)
+                        //        {
+                        //            lowestValidObject = hit.collider.gameObject;
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        lowestValidObject = hit.collider.gameObject;
+                        //    }  
+                        //}
                     }
                 }
             }
@@ -242,12 +247,12 @@ public class Holdable : MonoBehaviour, IHoldable
             {
                 if (lowestValidObject != null)
                 {
-                    Debug.Log($"Lowest Valid Point: {lowestValidObject.transform.position.y}");
+                    Debug.Log($"Lowest Valid Object: {lowestValidObject.name} (y = {lowestValidObject.GetComponent<Collider>().ClosestPoint(transform.position).y})");
                 }
 
                 if (highestDocument != null)
                 {
-                    Debug.Log($"Highest Document Level: {highestDocument.transform.position.y}");
+                    Debug.Log($"Highest Document: {highestDocument.name} (y = {highestDocument.transform.position.y})");
                 }
                 
                 Debug.Log("All points are valid, object being placed");
@@ -258,19 +263,20 @@ public class Holdable : MonoBehaviour, IHoldable
                 if (documentPoints > 0)
                 {
                     // raise the y level of this placement
-                    placementPos = new Vector3(transform.position.x, highestDocument.transform.position.y + 0.005f, this.transform.position.z);
+                    placementPos = new Vector3(transform.position.x, highestDocument.transform.position.y + 0.005f, transform.position.z);
                 }
-
-                //Debug.Log($"PlacementPos: {placementPos}");
             }
+            // if placement invalid
             else
             {
                 Debug.Log($"{this.gameObject.name} only has {validPoints}/{objectBoundaries.Count} valid boundary checks, it cannot be placed here");
 
+                // if using hold click controls, send object back to where it was picked up from
                 if (InputManager.GetInstance().GetClickControlsStatus())
                 {
                     ReturnHeldObject();
                 }
+                // if using toggle click controls, signal a red flash for incorrect placement
                 else
                 {
                     Flash();

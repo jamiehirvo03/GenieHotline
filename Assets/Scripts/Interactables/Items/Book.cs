@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
@@ -5,8 +6,8 @@ using UnityEngine;
 
 public class Book : MonoBehaviour, IInteractable
 {
-    private string primaryAction = "";
-    private string secondaryAction = "Pick Up";
+    private string primaryAction = "Pick Up";
+    private string secondaryAction = "";
 
     [SerializeField] private GameObject coverPage;
     [SerializeField] private GameObject leftPage;
@@ -23,16 +24,14 @@ public class Book : MonoBehaviour, IInteractable
     [SerializeField] private Vector3 bookClosedColliderSize;
     [SerializeField] private Vector3 bookOpenColliderSize;
 
-    [SerializeField] private Vector3 restingPosition;
-    [SerializeField] private Vector3 restingRotation;
-    [SerializeField] private Vector3 activePosition;
-    [SerializeField] private Vector3 activeRotation;
-    
+    [SerializeField] private bool isActive = false;
+    [SerializeField] private Transform restingTransform;
+    [SerializeField] private Transform activeTransform;
+    private bool isLerping = false;
 
     [SerializeField] private List<Texture> pages = new List<Texture>();
-
     private int currentPage;
-
+    
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider>();
@@ -55,33 +54,77 @@ public class Book : MonoBehaviour, IInteractable
 
     public void PrimaryInteract()
     {
-        // if held, bring book closer to camera
+        // if book is currently out of resting place
+        if (isActive)
+        {
+            if (isLerping)
+            {
+                StopAllCoroutines();
+            }
+
+            CloseBook();
+
+            StartCoroutine(LerpObjectTransform(restingTransform.position, restingTransform.rotation.eulerAngles, 0.2f));
+
+            isActive = false;
+
+            primaryAction = "Pick Up";
+        }
+        else
+        {
+            if (isLerping)
+            {
+                StopAllCoroutines();
+            }
+
+            StartCoroutine(LerpObjectTransform(activeTransform.position, activeTransform.rotation.eulerAngles, 0.2f));
+
+            isActive = true;
+
+            primaryAction = "Put Back";
+        }
     }
 
     public void SecondaryInteract()
     {
         // pick up book
-        if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
-        {
-            gameObject.GetComponent<IHoldable>().Release();
+        //if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
+        //{
+        //    gameObject.GetComponent<IHoldable>().Release();
 
-            secondaryAction = "Pick Up";
-        }
-        else
-        {
-            gameObject.GetComponent<IHoldable>().Grab();
+        //    secondaryAction = "Pick Up";
+        //}
+        //else
+        //{
+        //    gameObject.GetComponent<IHoldable>().Grab();
 
-            secondaryAction = "PutDown";
-        }
+        //    secondaryAction = "PutDown";
+        //}
+    }
+
+    public void OpenBook()
+    {
+        bookClosed.SetActive(false);
+        bookOpen.SetActive(true);
+        //boxCollider.size = bookOpenColliderSize;
+        boxCollider.enabled = false;
+    }
+
+    public void CloseBook()
+    {
+        bookOpen.SetActive(false);
+        bookClosed.SetActive(true);
+        //boxCollider.size = bookClosedColliderSize;
+        boxCollider.enabled = true;
+
+        currentPage = 0;
     }
 
     public void NextPage()
     {
         if (currentPage == 0)
         {
-            bookClosed.SetActive(false);
-            bookOpen.SetActive(true);
-            boxCollider.size = bookOpenColliderSize;
+            OpenBook();
 
             currentPage++;
         }
@@ -102,11 +145,7 @@ public class Book : MonoBehaviour, IInteractable
     {
         if (currentPage == 1)
         {
-            bookOpen.SetActive(false);
-            bookClosed.SetActive(true);
-            boxCollider.size = bookClosedColliderSize;
-
-            currentPage--;
+            CloseBook();
         }
         else if (1 < currentPage)
         {
@@ -115,5 +154,35 @@ public class Book : MonoBehaviour, IInteractable
             leftPageMat.mainTexture = pages[currentPage];
             rightPageMat.mainTexture = pages[currentPage + 1];
         }
+    }
+
+    private IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime)
+    {
+        Debug.Log($"Lerping object to position = {targetPosition}");
+
+        isLerping = true;
+
+        Vector3 startPosition = transform.localPosition;
+        Quaternion startRotation = transform.localRotation;
+        Quaternion targetQuaternion = Quaternion.Euler(targetRotation);
+
+        float elapsedTime = 0f;
+
+        while (elapsedTime < transformTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float lerpTime = elapsedTime / transformTime;
+
+            transform.localPosition = Vector3.Lerp(startPosition, targetPosition, lerpTime);
+
+            transform.localRotation = Quaternion.Lerp(startRotation, targetQuaternion, lerpTime);
+
+            yield return null;
+        }
+        // everything below this will happen once lerp is complete
+
+        transform.localPosition = targetPosition; // snap position to target to fix weird numbers
+
+        isLerping = false;
     }
 }

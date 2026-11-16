@@ -56,8 +56,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Phone")]
     [SerializeField] private List<GameObject> phoneIndicators = new List<GameObject>();
-    [SerializeField] private Material indicatorOff;
-    [SerializeField] private Material indicatorOn;
+    [SerializeField] private Material indicatorMat;
 
     [Header("Documents")]
     [SerializeField] private GameObject documentPrefab;
@@ -213,12 +212,12 @@ public class GameManager : MonoBehaviour
             if (callerQueue[i].hasHungUp)
             {
                 // if queue position empty set the respective indicator to off
-                phoneIndicators[i].GetComponent<Renderer>().material = indicatorOff;
+                phoneIndicators[i].GetComponent<MeshRenderer>().materials[0].DisableKeyword("_EMISSION");
             }
             else
             {
                 // if queue position filled set the respective indicator to on
-                phoneIndicators[i].GetComponent<Renderer>().material = indicatorOn;
+                phoneIndicators[i].GetComponent<MeshRenderer>().materials[0].EnableKeyword("_EMISSION");
             }
         }
     }
@@ -311,78 +310,64 @@ public class GameManager : MonoBehaviour
             // find right form GameObject to check
             Document formToCheck = currentDayCallers[i].callerForm.GetComponent<Document>();
 
-            // go through 'answer' bools to check if checkboxes are correct (only need to check and award points for the correct answers)
-            if (currentDayCallers[i].material)
+            if (formToCheck.material == currentDayCallers[i].material)
             {
-                if (formToCheck.material == currentDayCallers[i].material)
-                {
-                    score =  + correctDetail;
-                }
-                else
-                {
-                    GiveStrike();
-                    mistakesMade++;
-                }
+                score = +correctDetail;
             }
-            if (currentDayCallers[i].knowledge)
+            else
             {
-                if (formToCheck.knowledge == currentDayCallers[i].knowledge)
-                {
-                    score = score + correctDetail;
-                }
-                else
-                {
-                    GiveStrike();
-                    mistakesMade++;
-                }
+                GiveStrike();
+                mistakesMade++;
             }
-            if (currentDayCallers[i].heart)
+
+            if (formToCheck.knowledge == currentDayCallers[i].knowledge)
             {
-                if (formToCheck.heart == currentDayCallers[i].heart)
-                {
-                    score = score + correctDetail;
-                }
-                else
-                {
-                    GiveStrike();
-                    mistakesMade++;
-                }
+                score = score + correctDetail;
             }
-            if (currentDayCallers[i].harm)
+            else
             {
-                if (formToCheck.harm == currentDayCallers[i].harm)
-                {
-                    score = score + correctDetail;
-                }
-                else
-                {
-                    GiveStrike();
-                    mistakesMade++;
-                }
+                GiveStrike();
+                mistakesMade++;
             }
-            if (currentDayCallers[i].enhancement)
+
+            if (formToCheck.heart == currentDayCallers[i].heart)
             {
-                if (formToCheck.enhancement == currentDayCallers[i].enhancement)
-                {
-                    score = score + correctDetail;
-                }
-                else
-                {
-                    GiveStrike();
-                    mistakesMade++;
-                }
+                score = score + correctDetail;
             }
-            if (currentDayCallers[i].fate)
+            else
             {
-                if (formToCheck.fate == currentDayCallers[i].fate)
-                {
-                    score = score + correctDetail;
-                }
-                else
-                {
-                    GiveStrike();
-                    mistakesMade++;
-                }
+                GiveStrike();
+                mistakesMade++;
+            }
+
+            if (formToCheck.harm == currentDayCallers[i].harm)
+            {
+                score = score + correctDetail;
+            }
+            else
+            {
+                GiveStrike();
+                mistakesMade++;
+            }
+
+            if (formToCheck.enhancement == currentDayCallers[i].enhancement)
+            {
+                score = score + correctDetail;
+            }
+            else
+            {
+                GiveStrike();
+                mistakesMade++;
+            }
+
+            if (formToCheck.fate == currentDayCallers[i].fate)
+            {
+                score = score + correctDetail;
+            }
+            else
+            {
+                GiveStrike();
+                mistakesMade++;
             }
 
             // check form approval status
@@ -414,6 +399,32 @@ public class GameManager : MonoBehaviour
                     wishesDenied++;
                 }
             }
+
+            // go through 'answer' bools to check if checkboxes are correct (only need to check and award points for the correct answers)
+            if (currentDayCallers[i].material)
+            {
+                
+            }
+            if (currentDayCallers[i].knowledge)
+            {
+                
+            }
+            if (currentDayCallers[i].heart)
+            {
+                
+            }
+            if (currentDayCallers[i].harm)
+            {
+                
+            }
+            if (currentDayCallers[i].enhancement)
+            {
+                
+            }
+            if (currentDayCallers[i].fate)
+            {
+                
+            }
         }
     }
 
@@ -442,9 +453,6 @@ public class GameManager : MonoBehaviour
     private void EndDay()
     {
         Debug.Log($"Day {currentDay} has ended");
-
-        // show end-of-day screen
-        CameraManager.GetInstance().MoveCamera(endOfDayCamTransform);
 
         UIManager.GetInstance().SetEndOfDayScreen(true, currentDay, wishesApproved, wishesDenied, wasQuotaMet, mistakesMade, strikesCount, geneBucksEarnt, geneBucksBalance);
     }

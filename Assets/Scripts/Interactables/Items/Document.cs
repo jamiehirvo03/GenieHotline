@@ -38,7 +38,7 @@ public class Document : MonoBehaviour, IInteractable
     // Verdict
     public bool isApproved;
     public bool isDenied;
-    [SerializeField] private bool isLocked;
+    [SerializeField] private bool isLocked; // no longer using document locking but will leave in code just in case
  
     public string GetPrimaryAction()
     {
@@ -154,16 +154,18 @@ public class Document : MonoBehaviour, IInteractable
 
     public void ApproveDocument()
     {
+        isDenied = false;
         isApproved = true;
-        isLocked = true;
+        //isLocked = true;
 
         Debug.Log($"{gameObject.name} locked");
     }
 
     public void DenyDocument()
     {
+        isApproved = false;
         isDenied = true;
-        isLocked = true;
+        //isLocked = true;
 
         Debug.Log($"{gameObject.name} locked");
     }
