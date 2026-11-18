@@ -17,6 +17,8 @@ public class Capsule : MonoBehaviour, IInteractable
     private CapsuleCollider capsuleCollider;
     [SerializeField] private GameObject documentTrigger;
 
+    public bool isLidOn;
+
     public string GetPrimaryAction()
     {
         return primaryAction;
@@ -64,20 +66,26 @@ public class Capsule : MonoBehaviour, IInteractable
         {
             capsuleDocs[i].SetActive(false);
         }
+
+        isLidOn = true;
+        documentTrigger.SetActive(false);
     }
 
     public void ColliderSwitcher(bool enableTrigger)
     {
-        if (enableTrigger)
+        if (!isLidOn)
         {
-            capsuleCollider.enabled = false;
-            documentTrigger.SetActive(true);
-        }
-        else
-        {
-            documentTrigger.SetActive(false);
-            capsuleCollider.enabled = true;
-        }
+            if (enableTrigger)
+            {
+                capsuleCollider.enabled = false;
+                documentTrigger.SetActive(true);
+            }
+            else
+            {
+                documentTrigger.SetActive(false);
+                capsuleCollider.enabled = true;
+            }
+        } 
     }
 
    public void DocumentDetection(GameObject detectedDocument, bool isEntry)
