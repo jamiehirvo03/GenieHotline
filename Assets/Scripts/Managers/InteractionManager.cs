@@ -15,6 +15,7 @@ public interface IInteractable
 public interface IHoldable
 {
     public bool GetHeldStatus();
+    public void SetHeldStatus(bool status);
     public void Grab();
     public void Release();
     public void ReturnHeldObject();
@@ -32,6 +33,10 @@ public class InteractionManager : MonoBehaviour
 
     private bool isItemHeld = false;
     [SerializeField] private GameObject heldItem;
+
+    // (*) - specific references for document and capsule detection (only used for driving collider/trigger switching
+    [SerializeField] private GameObject pneumaticTube;
+    public GameObject pneumaticCapsule;
 
     private void Awake()
     {
@@ -59,11 +64,23 @@ public class InteractionManager : MonoBehaviour
         heldItem = item;
 
         isItemHeld = true;
+
+        // (*)
+        if (item.CompareTag("Document"))
+        {
+            pneumaticCapsule.GetComponent<Capsule>().ColliderSwitcher(true);
+        }
     }
 
     public void PutDownItem()
     {
         isItemHeld = false;
+
+        // (*)
+        if (heldItem.CompareTag("Document"))
+        {
+            pneumaticCapsule.GetComponent<Capsule>().ColliderSwitcher(false);
+        }
 
         // clear held item
         heldItem = null;
@@ -111,7 +128,7 @@ public class InteractionManager : MonoBehaviour
                                 // enable new object outline
                                 hoveredObj.GetComponent<Outline>().enabled = true;
 
-                                Debug.Log("Outline enabled");
+                                //Debug.Log("Outline enabled");
 
                                 // show control labels
                                 UIManager.GetInstance().EnableControlLabels(true);
@@ -160,7 +177,12 @@ public class InteractionManager : MonoBehaviour
         {
             if (heldItem != null)
             {
-                Debug.Log("Regardless of mouse hover, current held object is ready for inputs");
+                //Debug.Log("Regardless of mouse hover, current held object is ready for inputs");
+
+                if (UIManager.GetInstance().GetPrimaryLabel() != heldItem.GetComponent<IInteractable>().GetPrimaryAction() | UIManager.GetInstance().GetSecondaryLabel() != heldItem.GetComponent<IInteractable>().GetSecondaryAction())
+                {
+                    UIManager.GetInstance().ChangeLabelText(heldItem);
+                }
 
                 if (InputManager.GetInstance().GetPrimaryInteractPressed())
                 {
@@ -170,11 +192,6 @@ public class InteractionManager : MonoBehaviour
                 if (InputManager.GetInstance().GetSecondaryInteractPressed())
                 {
                     heldItem.GetComponent<IInteractable>().SecondaryInteract();
-                }
-
-                if (UIManager.GetInstance().GetPrimaryLabel() != heldItem.GetComponent<IInteractable>().GetPrimaryAction() | UIManager.GetInstance().GetSecondaryLabel() != heldItem.GetComponent<IInteractable>().GetSecondaryAction())
-                {
-                    UIManager.GetInstance().ChangeLabelText(heldItem);
                 }
             } 
         }

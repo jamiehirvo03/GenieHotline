@@ -31,6 +31,41 @@ public class Pencil : MonoBehaviour, IInteractable
 
     public void PrimaryInteract()
     {
+        // HOLDING CONTROLS
+
+        if (GetComponent<IHoldable>().GetHeldStatus())
+        {
+            StopDrawing();
+            GetComponent<Holdable>().holdHeight = 1;
+
+            GetComponent<IHoldable>().Release();
+
+            primaryAction = "Pick Up";
+            secondaryAction = "";
+        }
+        else
+        {
+            GetComponent<IHoldable>().Grab();
+
+            primaryAction = "Put Down";
+
+            if (isStamp)
+            {
+                secondaryAction = "Stamp";
+            }
+            else
+            {
+                secondaryAction = "Start Drawing";
+            }
+
+            holdHeight = transform.position.y;
+        }
+    }
+
+    public void SecondaryInteract()
+    {
+        // DRAWING CONTROLS 
+
         if (GetComponent<IHoldable>().GetHeldStatus())
         {
             // check if pencil is a stamp
@@ -47,50 +82,16 @@ public class Pencil : MonoBehaviour, IInteractable
                     GetComponent<Holdable>().holdHeight = drawingHeight;
                     StartDrawing();
 
-                    primaryAction = "Stop Drawing";
+                    secondaryAction = "Stop Drawing";
                 }
                 else
                 {
                     GetComponent<Holdable>().holdHeight = 1;
                     StopDrawing();
 
-                    primaryAction = "Start Drawing";
+                    secondaryAction = "Start Drawing";
                 }
             }
-        }
-    }
-
-    public void SecondaryInteract()
-    {
-        //Debug.Log($"{primaryAction} was pressed");
-
-        if (GetComponent<IHoldable>().GetHeldStatus())
-        {
-            StopDrawing();
-            GetComponent<Holdable>().holdHeight = 1;
-
-            GetComponent<IHoldable>().Release();
-
-            primaryAction = "";
-            secondaryAction = "Pick Up";
-        }
-        else
-        {
-            GetComponent<IHoldable>().Grab();
-
-            
-            if (isStamp)
-            {
-                primaryAction = "Stamp";
-            }
-            else
-            {
-                primaryAction = "Start Drawing";
-            }
-            
-            secondaryAction = "Put Down";
-
-            holdHeight = transform.position.y;
         }
     }
 
@@ -103,7 +104,7 @@ public class Pencil : MonoBehaviour, IInteractable
         {
             Vector3 adjustedPos = new Vector3(transform.position.x, hit.point.y + tipOffset, transform.position.z);
 
-            Debug.Log($"Current Drawing Height: {adjustedPos.y}");
+            //Debug.Log($"Current Drawing Height: {adjustedPos.y}");
 
             StartCoroutine(LerpPosition(adjustedPos, 0.1f, true));
 
@@ -148,7 +149,7 @@ public class Pencil : MonoBehaviour, IInteractable
 
         Vector3 startPosition = transform.position;
 
-        Debug.Log($"Lerp start pos: {startPosition}, target pos: {targetPosition}");
+        //Debug.Log($"Lerp start pos: {startPosition}, target pos: {targetPosition}");
 
         while (elapsedTime < time)
         {
@@ -158,7 +159,7 @@ public class Pencil : MonoBehaviour, IInteractable
 
             yield return null;
         }
-        Debug.Log($"Lerp end pos: {transform.position}");
+        //Debug.Log($"Lerp end pos: {transform.position}");
 
         transform.position = targetPosition;
 

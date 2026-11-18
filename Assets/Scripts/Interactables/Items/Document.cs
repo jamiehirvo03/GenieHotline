@@ -7,8 +7,8 @@ using System.Runtime.CompilerServices;
 
 public class Document : MonoBehaviour, IInteractable
 {
-    private string primaryAction = "";
-    private string secondaryAction = "Pick Up";
+    public string primaryAction = "Pick Up";
+    public string secondaryAction = "";
 
     // Caller details
     [SerializeField] private string callerName;
@@ -39,7 +39,11 @@ public class Document : MonoBehaviour, IInteractable
     public bool isApproved;
     public bool isDenied;
     [SerializeField] private bool isLocked; // no longer using document locking but will leave in code just in case
- 
+
+    // Capsule
+    private GameObject capsule;
+    private bool isCapsulePlacementWaiting = false;
+
     public string GetPrimaryAction()
     {
         return primaryAction;
@@ -57,32 +61,46 @@ public class Document : MonoBehaviour, IInteractable
 
     public void PrimaryInteract()
     {
-        if (secondaryAction == "")
-        {
-            //Debug.Log("SecondaryInteract was pressed but there is no action assigned");
-        }
-        else
-        {
-            //Debug.Log($"{secondaryAction} pressed");
-        }
-    }
-
-    public void SecondaryInteract()
-    {
-        //Debug.Log($"{primaryAction} was pressed");
-
         if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
         {
-            gameObject.GetComponent<IHoldable>().Release();
+            if (isCapsulePlacementWaiting)
+            {
+                capsule.GetComponent<Capsule>().InsertDocument(gameObject);
+                
+                InteractionManager.GetInstance().PutDownItem();
 
-            secondaryAction = "Pick Up";
+                isCapsulePlacementWaiting = false;
+            }
+            else
+            {
+                gameObject.GetComponent<IHoldable>().Release();
+
+                primaryAction = "Pick Up";
+            }
         }
         else
         {
             gameObject.GetComponent<IHoldable>().Grab();
 
-            secondaryAction = "Put Down";
+            primaryAction = "Put Down";
         }
+    }
+
+    public void SecondaryInteract()
+    {     
+        // add code that brings document to 'inspection' position and change movement for more fine control
+    }
+
+    private void Awake()
+    {
+        capsule = InteractionManager.GetInstance().pneumaticCapsule;
+    }
+
+    public void CapsuleDetection(string labelText, bool isHovered)
+    {
+        primaryAction = labelText;
+
+        isCapsulePlacementWaiting = isHovered;
     }
 
     public void SetCallerDetails(string name, int age, string occupation)

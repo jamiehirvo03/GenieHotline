@@ -46,6 +46,11 @@ public class Holdable : MonoBehaviour, IHoldable
         return isHeld;
     }
 
+    public void SetHeldStatus(bool status)
+    {
+        isHeld = status;
+    }
+
     private void Awake()
     {
         objectRenderer = meshObject.GetComponent<MeshRenderer>();
@@ -91,7 +96,7 @@ public class Holdable : MonoBehaviour, IHoldable
 
     public IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime, bool isItemBeingReleased)
     {
-        Debug.Log($"Lerping object to position = {targetPosition}");
+        //Debug.Log($"Lerping object to position = {targetPosition}");
 
         isLerping = true;
 
@@ -135,7 +140,7 @@ public class Holdable : MonoBehaviour, IHoldable
         {
             CheckPlacementValidity();
 
-            Debug.Log($"PlacementPos is {placementPos}");
+            //Debug.Log($"PlacementPos is {placementPos}");
             if (placementPos != Vector3.zero)
             {
                 if (isLerping)
@@ -247,15 +252,15 @@ public class Holdable : MonoBehaviour, IHoldable
             {
                 if (lowestValidObject != null)
                 {
-                    Debug.Log($"Lowest Valid Object: {lowestValidObject.name} (y = {lowestValidObject.GetComponent<Collider>().ClosestPoint(transform.position).y})");
+                    //Debug.Log($"Lowest Valid Object: {lowestValidObject.name} (y = {lowestValidObject.GetComponent<Collider>().ClosestPoint(transform.position).y})");
                 }
 
                 if (highestDocument != null)
                 {
-                    Debug.Log($"Highest Document: {highestDocument.name} (y = {highestDocument.transform.position.y})");
+                    //Debug.Log($"Highest Document: {highestDocument.name} (y = {highestDocument.transform.position.y})");
                 }
                 
-                Debug.Log("All points are valid, object being placed");
+                //Debug.Log("All points are valid, object being placed");
 
                 placementPos = new Vector3(transform.position.x, 5, this.transform.position.z);
 
@@ -269,7 +274,7 @@ public class Holdable : MonoBehaviour, IHoldable
             // if placement invalid
             else
             {
-                Debug.Log($"{this.gameObject.name} only has {validPoints}/{objectBoundaries.Count} valid boundary checks, it cannot be placed here");
+                //Debug.Log($"{this.gameObject.name} only has {validPoints}/{objectBoundaries.Count} valid boundary checks, it cannot be placed here");
 
                 // if using hold click controls, send object back to where it was picked up from
                 if (InputManager.GetInstance().GetClickControlsStatus())
@@ -285,7 +290,7 @@ public class Holdable : MonoBehaviour, IHoldable
         }
         else
         {
-            Debug.Log($"{this.gameObject.name} has no assigned boundaries");
+            //Debug.Log($"{this.gameObject.name} has no assigned boundaries");
         }
     }
 

@@ -174,17 +174,21 @@ public class GameManager : MonoBehaviour
 
     public void SelectCallers()
     {
+        string callersLog = "Today's callers: ";
 
         for (int i = 0; i < callers.Count; i++)
         {
             if (callers[i].dayNumber == currentDay)
             {
-                Debug.Log($"{callers[i].callerName}");
+                callersLog += $"{callers[i].callerName}, ";
                 callerQueue.Add(callers[i]);
 
                 currentDayCallers.Add(callers[i]);
             }
         }
+
+        Debug.Log(callersLog);
+
         RandomizeQueue();
     }
 
