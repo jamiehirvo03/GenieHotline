@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEngine.Rendering;
 
 public class Capsule : MonoBehaviour, IInteractable
 {
@@ -9,7 +10,7 @@ public class Capsule : MonoBehaviour, IInteractable
     private string secondaryAction = "";
 
     [SerializeField] private List<GameObject> capsuleDocs = new List<GameObject>();
-    private int docsInserted = 0;
+    public int docsInserted = 0;
 
     [SerializeField] private Transform pileLocation;
     [SerializeField] private Transform hiddenPileLocation;
@@ -17,7 +18,12 @@ public class Capsule : MonoBehaviour, IInteractable
     private CapsuleCollider capsuleCollider;
     [SerializeField] private GameObject documentTrigger;
 
+    public GameObject capsuleLid;
     public bool isLidOn;
+
+    [SerializeField] private GameObject pneumaticTube;
+    [SerializeField] private bool isWaitingInsertion = false;
+    [SerializeField] private bool isInserted = false;
 
     public string GetPrimaryAction()
     {
@@ -31,25 +37,56 @@ public class Capsule : MonoBehaviour, IInteractable
 
     public void PrimaryInteract()
     {
-        // Put Down
-        if (GetComponent<IHoldable>().GetHeldStatus())
+        if (isInserted)
         {
-            GetComponent<IHoldable>().Release();
+            pneumaticTube.GetComponent<PneumaticTube>().RemoveCapsule();
 
-            primaryAction = "Pick Up";
+            CapsuleInserted(false);
+
+            //primaryAction = "Pick Up";
+
+            GetComponent<IHoldable>().Grab();
+            GetComponent<IHoldable>().SetFollowStatus(true);
+            primaryAction = "Put Down";
         }
-        // Pick Up
         else
         {
-            GetComponent<IHoldable>().Grab();
+            if (isWaitingInsertion)
+            {
+                GetComponent<IHoldable>().SetHeldStatus(false);
+                GetComponent<IHoldable>().SetFollowStatus(false);
 
-            primaryAction = "Put Down";
+                pneumaticTube.GetComponent<PneumaticTube>().InsertCapsule();
+
+                InteractionManager.GetInstance().PutDownItem();
+
+                CapsuleInserted(true);
+
+                primaryAction = "Remove Capsule";
+            }
+            else
+            {
+                // Put Down
+                if (GetComponent<IHoldable>().GetHeldStatus())
+                {
+                    GetComponent<IHoldable>().Release();
+
+                    primaryAction = "Pick Up";
+                }
+                // Pick Up
+                else
+                {
+                    GetComponent<IHoldable>().Grab();
+
+                    primaryAction = "Put Down";
+                }
+            }
         }
     }
 
     public void SecondaryInteract()
     {
-        if (docsInserted > 0)
+        if (docsInserted > 0 && !isLidOn)
         {
             EmptyCapsule();
         }
@@ -69,6 +106,59 @@ public class Capsule : MonoBehaviour, IInteractable
 
         isLidOn = true;
         documentTrigger.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (isInserted)
+        {
+            if (primaryAction != "Remove Capsule")
+            {
+                primaryAction = "Remove Capsule";
+            }
+        }
+        else
+        {
+            if (isWaitingInsertion)
+            {
+                if (primaryAction != "Insert Capsule")
+                {
+                    primaryAction = "Insert Capsule";
+                }
+            }
+            else
+            {
+                if (GetComponent<IHoldable>().GetHeldStatus())
+                {
+                    if (primaryAction != "Put Down")
+                    {
+                        primaryAction = "Put Down";
+                    }
+                }
+                else
+                {
+                    if (primaryAction != "Pick Up")
+                    {
+                        primaryAction = "Pick Up";
+                    }
+
+                    if (docsInserted > 0 && !isLidOn)
+                    {
+                        if (secondaryAction != "Empty Capsule")
+                        {
+                            secondaryAction = "Empty Capsule";
+                        }
+                    }
+                    else
+                    {
+                        if (secondaryAction != "")
+                        {
+                            secondaryAction = "";
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void ColliderSwitcher(bool enableTrigger)
@@ -121,11 +211,6 @@ public class Capsule : MonoBehaviour, IInteractable
 
     public void InsertDocument(GameObject heldDocument)
     {
-        if (docsInserted == 0)
-        {
-            secondaryAction = "Empty Capsule";
-        }
-
         heldDocument.GetComponent<IHoldable>().SetFollowStatus(false);
 
         // move actual document gameObject to designated area off-screen
@@ -141,7 +226,7 @@ public class Capsule : MonoBehaviour, IInteractable
         capsuleDocs[docsInserted].SetActive(true);
 
         // store document gameObject reference in dummy document
-        capsuleDocs[docsInserted].GetComponent<CapsuleDoc>().storedDocument = heldDocument;
+        capsuleDocs[docsInserted].GetComponent<CapsuleDoc>().AssignStoredDocument(heldDocument);
 
         // - RESET VALUES FOR REAL DOCUMENT OBJECT
 
@@ -177,8 +262,11 @@ public class Capsule : MonoBehaviour, IInteractable
 
         // move actual document back to middle of desk
         capsuleDocument.GetComponent<CapsuleDoc>().storedDocument.transform.position = placementPos;
+        
+        // clear document stored in dummy
+        capsuleDocument.GetComponent<CapsuleDoc>().ClearStoredDocument();
 
-        // hide dummy document gameObject (also clears its stored document reference via onDisable())
+        // hide dummy document gameObject
         capsuleDocument.SetActive(false);
 
         docsInserted--;
@@ -209,11 +297,53 @@ public class Capsule : MonoBehaviour, IInteractable
             // move documents to pile location
             activeDummyDocs[i].GetComponent<CapsuleDoc>().storedDocument.transform.position = spawnPosition;
 
-            // hide dummy document gameObject (also clears its stored document reference via onDisable())
+            // clear document stored in dummy
+            activeDummyDocs[i].GetComponent<CapsuleDoc>().ClearStoredDocument();
+
+            // hide dummy document gameObject
             activeDummyDocs[i].SetActive(false);
 
         }
 
         docsInserted = 0;
+    }
+
+    public void InTubeRange(bool status)
+    {
+        if (status)
+        {
+            isWaitingInsertion = true;
+        }
+        else
+        {
+            isWaitingInsertion = false;
+        }   
+    }
+
+    public void CapsuleInserted(bool status)
+    {
+        if (status)
+        {
+            isInserted = true;
+            isWaitingInsertion = false;
+
+            capsuleLid.GetComponent<BoxCollider>().enabled = false;
+
+            for (int i = 0; i < capsuleDocs.Count; i++)
+            {
+                capsuleDocs[i].GetComponent<CapsuleCollider>().enabled = false;
+            }
+        }
+        else
+        {
+            isInserted = false;
+
+            capsuleLid.GetComponent<BoxCollider>().enabled = true;
+
+            for (int i = 0; i < capsuleDocs.Count; i++)
+            {
+                capsuleDocs[i].GetComponent<CapsuleCollider>().enabled = true;
+            }
+        }
     }
 }

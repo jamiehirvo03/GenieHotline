@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         // verditc
         public bool canBeGranted;
 
-        public GameObject callerForm;
+        [HideInInspector] public GameObject callerForm;
 
         public Document GetCallerDocument()
         {
@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Phone")]
     [SerializeField] private List<GameObject> phoneIndicators = new List<GameObject>();
-    [SerializeField] private Material indicatorMat;
 
     [Header("Documents")]
     [SerializeField] private GameObject documentPrefab;
@@ -65,40 +64,71 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<GameObject> currentDocuments = new List<GameObject>();
     [SerializeField] private List<Callers> currentCallers = new List<Callers>();
 
-    [Header("Progression/Scoring")]
-    // persistive 
-    private int strikesCount;
-    private int chaosIndex;
-    private int geneBucksBalance;
+    [Header("Chaos Values (Parameters)")]
+    [SerializeField] private int materialCost = -2;
+    [SerializeField] private int knowledgeCost = -3;
+    [SerializeField] private int heartCost = -5;
+    [SerializeField] private int harmCost = -6;
+    [SerializeField] private int enhancementCost = -8;
+    [SerializeField] private int fateCost = -10;
 
-    // quotas
+    [Header("Chaos Values (Consequences)")]
+    [SerializeField] private int inconvenienceValue = 2;
+    [SerializeField] private int dayRuinerValue = 3;
+    [SerializeField] private int familyConflictValue = 5;
+    [SerializeField] private int legalRepercussionsValue = 7;
+    [SerializeField] private int hexedValue = 8;
+    [SerializeField] private int deathValue = 10;
+
+    [Header("Chaos")]
+    [SerializeField] private int minChaos = -3;
+    [SerializeField] private int maxChaos = 3;
+    [Space]
+    [SerializeField] private int chaosIndex;
+    [SerializeField] private int changePerChaosIndex;
+
+    [Header("Employee Performance")]
+    [SerializeField] private int strikesCount;
+    [SerializeField] private int geneBucksBalance;
+
+    [Header("Quotas")]
     [SerializeField] private int dayOneQuota = 1;
     [SerializeField] private int dayTwoQuota = 2;
     [SerializeField] private int dayThreeQuota = 2;
     [SerializeField] private int dayFourQuota = 3;
     [SerializeField] private int dayFiveQuota = 4;
 
-    // point awards
+    [Header("Point Awards")]
     [SerializeField] private int correctDetail = 5;
     [SerializeField] private int quotaBonus = 50;
-    [SerializeField] private float flawlessBonus = 2f;
-    
+    [SerializeField] private float flawlessMultiplier = 2f;
+    [Space]
+    [Tooltip("Score per point OVER balance")][SerializeField] private int surplusAward = 5;
+    [Tooltip("Score per point UNDER balance")][SerializeField] private int defecitAward = -5;
+    [Space]
+    [SerializeField] private int pointsPerGeneBuck = 10;
 
     // daily resets
     private int currentDayQuota;
     private int wishesApproved;
     private int wishesDenied;
     private int mistakesMade;
+
     private bool wasQuotaMet;
     private bool strikeGivenToday;
-    private int score;
+
+    private int inconveniencesGiven;
+    private int dayRuinersGiven;
+    private int familyConflictsGiven;
+    private int legalRepercussionsGiven;
+    private int hexesGiven;
+    private int deathsGiven;
+
+    private int chaosChange;
+
+    private int grossScore; // before awards/multipliers are applied
+    private int netScore;   // final score that gets converted into geneBucks
     private int geneBucksEarnt;
-
-    [Header("Camera")]
-    [SerializeField] private Transform defaultCamTransform;
-    [SerializeField] private Transform endOfDayCamTransform;
-
-    [SerializeField] private GameObject submitButton;
 
     private void Awake()
     {
@@ -119,27 +149,30 @@ public class GameManager : MonoBehaviour
     {
         // before starting day, do a check on the persistent data script for last saved day number.
 
+
         // start day
         StartDay(1);
     }
 
     public void StartDay(int dayNumber)
     {
+        UIManager.GetInstance().ToggleEndOfDayScreen(false);
+
         currentDay = dayNumber;
 
         // reset day-dependant variables
         queuePosition = 0;
         callersInQueue = true;
         currentDayCallers.Clear();
-        
-        submitButton.SetActive(false);
 
         wishesApproved = 0;
         wishesDenied = 0;
         mistakesMade = 0;
         wasQuotaMet = false;
         strikeGivenToday = false;
-        score = 0;
+        chaosChange = 0;
+        grossScore = 0;
+        netScore = 0;
         geneBucksEarnt = 0;
 
         if (currentDay == 1)
@@ -163,7 +196,6 @@ public class GameManager : MonoBehaviour
             currentDayQuota = dayFiveQuota;
         }
 
-
         // setup new day
         SelectCallers();
         UpdateIndicators();
@@ -185,6 +217,11 @@ public class GameManager : MonoBehaviour
 
                 currentDayCallers.Add(callers[i]);
             }
+        }
+
+        if (currentDayCallers.Count == 0)
+        {
+            Debug.LogError($"Day {currentDay} is missing callers! Add more or double-check total callers list for incorrect setup");
         }
 
         Debug.Log(callersLog);
@@ -234,7 +271,7 @@ public class GameManager : MonoBehaviour
             Vector3 spawnPosition = new Vector3(pileLocation.position.x, (pileLocation.position.y + (0.05f * i)), pileLocation.position.z);
 
             GameObject newInstance = Instantiate(documentPrefab, spawnPosition, Quaternion.identity);
-            newInstance.name = $"Document({callerQueue[i].callerName})";
+            newInstance.name = $"Document ({callerQueue[i].callerName})";
 
             currentDocuments.Add(newInstance);
 
@@ -282,17 +319,24 @@ public class GameManager : MonoBehaviour
             Debug.Log("Caller queue is cleared for the day!");
 
             callersInQueue = false;
-
-            submitButton.SetActive(true);
         }
     }
+
+    private void BuyItem(string itemName)
+    {
+
+    }
+
+    private void PlayCinematic(string cinematicName)
+    {
+        // code for playing cinematic when triggered (when memory trinket acquired or ending reached)
+    }
+
 
     public void SubmitDocuments()
     {
         CheckFormAnswers();
-
         CalculateScore();
-        CalculateBucks();
 
         EndDay();
     }
@@ -316,7 +360,7 @@ public class GameManager : MonoBehaviour
 
             if (formToCheck.material == currentDayCallers[i].material)
             {
-                score = +correctDetail;
+                grossScore += correctDetail;
             }
             else
             {
@@ -326,7 +370,7 @@ public class GameManager : MonoBehaviour
 
             if (formToCheck.knowledge == currentDayCallers[i].knowledge)
             {
-                score = score + correctDetail;
+                grossScore += correctDetail;
             }
             else
             {
@@ -336,7 +380,7 @@ public class GameManager : MonoBehaviour
 
             if (formToCheck.heart == currentDayCallers[i].heart)
             {
-                score = score + correctDetail;
+                grossScore += correctDetail;
             }
             else
             {
@@ -346,7 +390,7 @@ public class GameManager : MonoBehaviour
 
             if (formToCheck.harm == currentDayCallers[i].harm)
             {
-                score = score + correctDetail;
+                grossScore += correctDetail;
             }
             else
             {
@@ -356,7 +400,7 @@ public class GameManager : MonoBehaviour
 
             if (formToCheck.enhancement == currentDayCallers[i].enhancement)
             {
-                score = score + correctDetail;
+                grossScore += correctDetail;
             }
             else
             {
@@ -366,7 +410,7 @@ public class GameManager : MonoBehaviour
 
             if (formToCheck.fate == currentDayCallers[i].fate)
             {
-                score = score + correctDetail;
+                grossScore += correctDetail;
             }
             else
             {
@@ -404,70 +448,216 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            // go through 'answer' bools to check if checkboxes are correct (only need to check and award points for the correct answers)
-            if (currentDayCallers[i].material)
+            // only calculate the chaos of wishes that will actually be granted (can be granted and approved by player)
+            if (currentDayCallers[i].canBeGranted && formToCheck.isApproved)
             {
-                
+                CalculateChaos(formToCheck);
             }
-            if (currentDayCallers[i].knowledge)
+        }
+
+        // once all submitted documents are checked, take the final consequences (highest one selected for each caller) and add them to the daily chaos change 
+        chaosChange += (inconveniencesGiven * inconvenienceValue) + (dayRuinersGiven * dayRuinerValue) + (familyConflictsGiven * familyConflictValue) + (legalRepercussionsGiven * legalRepercussionsValue) + (hexesGiven * hexedValue) + (deathsGiven * deathValue);
+
+        // calculate chaos index change based on chaos change
+        if (chaosChange > changePerChaosIndex)
+        {
+            int indexChange;
+
+            indexChange = chaosChange / changePerChaosIndex;
+
+            chaosIndex += indexChange;
+
+            if (chaosIndex > maxChaos)
             {
-                
+                Debug.Log($"Chaos Index has gone over the allowed range! ({chaosIndex}), it has been lowered to the maximum ({maxChaos}");
+
+                chaosIndex = maxChaos;
             }
-            if (currentDayCallers[i].heart)
+        }
+        else if (chaosChange < (-changePerChaosIndex))
+        {
+            int indexChange;
+
+            indexChange = chaosChange / changePerChaosIndex;
+
+            chaosIndex -= indexChange;
+
+            if (chaosIndex < minChaos)
             {
-                
+                Debug.Log($"Chaos Index has gone under the allowed range! ({chaosIndex}), it has been raised to the minimum ({minChaos}");
+
+                chaosIndex = minChaos;
             }
-            if (currentDayCallers[i].harm)
-            {
-                
-            }
-            if (currentDayCallers[i].enhancement)
-            {
-                
-            }
-            if (currentDayCallers[i].fate)
-            {
-                
-            }
+        }
+        else
+        {
+            Debug.Log("Today's chaosChange was within balance threshold, no change to chaosIndex!");
+        }
+    }
+
+    private void CalculateChaos(Document formToCheck)
+    {
+        SelectLowestParameter(formToCheck);
+        SelectHighestConsequence(formToCheck);
+    }   
+
+    private void SelectLowestParameter(Document formToCheck)
+    {
+        // PARAMETERS      // for the sake of balance (to prevent all/multiple parameters being chosen at once) only accept the LOWEST COST
+        
+        // go through the parameters in ASCENDING order of COST, the first one that is selected will be the LOWEST COST
+        if (formToCheck.material)
+        {
+            chaosChange += materialCost;
+            return;
+        }
+        if (formToCheck.knowledge)
+        {
+            chaosChange += knowledgeCost;
+            return;
+        }
+        if (formToCheck.heart)
+        {
+            chaosChange += heartCost;
+            return;
+        }
+        if (formToCheck.harm)
+        {
+            chaosChange += harmCost;
+            return;
+        }
+        if (formToCheck.enhancement)
+        {
+            chaosChange += enhancementCost;
+            return;
+        }
+        if (formToCheck.fate)
+        {
+            chaosChange += fateCost;
+            return;
+        }
+    }
+
+    private void SelectHighestConsequence(Document formToCheck)
+    {
+        // CONSEQUENCES     // only the HIGHEST VALUE consequence will be given, when checking a selected consequence make previous ones invalid
+
+        // go through the consequences in DESCENDING order of VALUE, the first one that is selected will be the HIGHEST VALUE
+        if (formToCheck.death)
+        {
+            deathsGiven++;
+            return;
+        }
+        if (formToCheck.hexed)
+        {
+            hexesGiven++;
+            return;
+        }
+        if (formToCheck.legalRepercussions)
+        {
+            legalRepercussionsGiven++;
+            return;
+        }
+        if (formToCheck.familyConflict)
+        {
+            familyConflictsGiven++;
+            return;
+        }
+        if (formToCheck.dayRuiner)
+        {
+            dayRuinersGiven++;
+            return;
+        }
+        if (formToCheck.inconvenience)
+        {
+            inconveniencesGiven++;
+            return;
         }
     }
 
     private void CalculateScore()
     {
+        // make temporary float which will later be turned back into an int once calculated
+        float modifiedScore = grossScore;
+
+        // check if quota bonus should be awarded
         if (wishesApproved >= currentDayQuota)
         {
             wasQuotaMet = true;
-            score = score + quotaBonus;
+            modifiedScore += quotaBonus;
         }
+
+        // add chaos defecit/surplus based on chaosChange
+        if (chaosChange > 0)
+        {
+            Debug.Log("Player is in a Chaos Surplus!");
+
+            modifiedScore += chaosChange * surplusAward;
+        }
+        else if (chaosChange < 0)
+        {
+            Debug.Log("Player is in a Chaos Defecit!");
+
+            modifiedScore -= chaosChange * defecitAward;
+        }
+
+        // apply a bonus multiplier to final score if day was flawless
+        if (!strikeGivenToday)
+        {
+            modifiedScore *= flawlessMultiplier;
+        }
+
+        // turn modified float score back into int (save to netScore to preserve grossScore for reference of before awards/multipliers were applied)
+        netScore = (int)modifiedScore;
+        CalculateBucks();
     }
 
     private void CalculateBucks()
     {
-        // if day was flawless
-        if (!strikeGivenToday)
-        {
-            float adjustedScore = score;
-            adjustedScore *= flawlessBonus;
+        geneBucksEarnt = netScore / pointsPerGeneBuck;
 
-            geneBucksEarnt = (int)adjustedScore;
-            geneBucksBalance += geneBucksEarnt;
-        }
+        geneBucksBalance += geneBucksEarnt;
     }
 
     private void EndDay()
     {
         Debug.Log($"Day {currentDay} has ended");
 
-        UIManager.GetInstance().SetEndOfDayScreen(true, currentDay, wishesApproved, wishesDenied, wasQuotaMet, mistakesMade, strikesCount, geneBucksEarnt, geneBucksBalance);
+        UIManager.GetInstance().ToggleEndOfDayScreen(true);
+        UIManager.GetInstance().SetEndOfDayDetails(currentDay, wishesApproved, wishesDenied, wasQuotaMet, mistakesMade, strikesCount, chaosChange, chaosIndex, geneBucksEarnt, geneBucksBalance);
     }
 
-    private void BuyItem()
+    public void ContinueToNextDay()
     {
-
+        // do a check before starting new day to see if the player has 3 strikes, if so end their run (fire their ass)
+        if (strikesCount > 3)
+        {
+            Debug.LogError("Something is wrong! player somehow has more than 3 strikes");
+        }
+        if (strikesCount == 3)
+        {
+            Fired();
+        }
+        else if (strikesCount <= 3)
+        {
+            if (currentDay < 5)
+            {
+                StartDay(currentDay + 1);
+            }
+            else if (currentDay == 5)
+            {
+                EndOfWeek();
+            }
+        }
     }
 
-    private void PlayCinematic(string cinematicName)
+    private void Fired()
     {
-        // code for playing cinematic when triggered (when memory trinket acquired or ending reached)
+        // stuff that happens when player is fired
+    }
+
+    private void EndOfWeek()
+    {
+
     }
 }

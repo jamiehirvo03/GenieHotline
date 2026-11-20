@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CapsuleDoc : MonoBehaviour, IInteractable
@@ -23,12 +24,6 @@ public class CapsuleDoc : MonoBehaviour, IInteractable
         capsule = GetComponentInParent<Capsule>();
     }
 
-    private void OnDisable()
-    {
-        // when dummy object is disabled clear its stored document
-        storedDocument = null;
-    }
-
     public void PrimaryInteract()
     {
         capsule.RemoveDocument(gameObject);
@@ -43,6 +38,13 @@ public class CapsuleDoc : MonoBehaviour, IInteractable
     {
         storedDocument = assignedDocument;
 
-        primaryAction = $"Remove {storedDocument.name}";
+        primaryAction = $"Remove Document";
+
+        gameObject.name = assignedDocument.name;
+    }
+
+    public void ClearStoredDocument()
+    {
+        storedDocument = null;
     }
 }

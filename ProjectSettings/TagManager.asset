@@ -13,6 +13,7 @@ TagManager:
   - PencilTip
   - Page
   - Equipment
+  - Capsule
   layers:
   - Default
   - TransparentFX

@@ -28,12 +28,12 @@ public class Document : MonoBehaviour, IInteractable
     public bool fate;
 
     // Consequences
-    [SerializeField] private bool inconvenience;
-    [SerializeField] private bool dayRuiner;
-    [SerializeField] private bool familyConflict;
-    [SerializeField] private bool legalRepercussions;
-    [SerializeField] private bool hexed;
-    [SerializeField] private bool death;
+    public bool inconvenience;
+    public bool dayRuiner;
+    public bool familyConflict;
+    public bool legalRepercussions;
+    public bool hexed;
+    public bool death;
 
     // Verdict
     public bool isApproved;

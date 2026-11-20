@@ -22,14 +22,20 @@ public class UIManager : MonoBehaviour
  
     [Header("End-Of-Day Report UI")]
     [SerializeField] private GameObject endOfDayReportPanel;
-
     [SerializeField] private TextMeshProUGUI dayReportHeader;
+
     [SerializeField] private TextMeshProUGUI wishesApproved;
     [SerializeField] private TextMeshProUGUI wishesDenied;
+
     [SerializeField] private TextMeshProUGUI mistakesMade;
     [SerializeField] private Image strikesCounter;
+
+    [SerializeField] private TextMeshProUGUI chaosChange;
+    [SerializeField] private TextMeshProUGUI currentChaosIndex;
+
     [SerializeField] private TextMeshProUGUI geneBucksEarned;
     [SerializeField] private TextMeshProUGUI geneBucksBalance;
+    
 
     [SerializeField] private Image quotaBox;
     [SerializeField] private Sprite quotaMetTick;
@@ -53,17 +59,12 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        debugMenuToggle.SetActive(false);
+        debugMenuToggle.SetActive(GameManager.GetInstance().debugMode);
         debugPanel.SetActive(false);
-        endOfDayReportPanel.SetActive(false);
         gameplayUI.SetActive(true);
+        ToggleEndOfDayScreen(false);
 
         EnableControlLabels(false);
-
-        if (GameManager.GetInstance().debugMode)
-        {
-            debugMenuToggle.SetActive(true);
-        }
     }
 
     public static UIManager GetInstance()
@@ -86,63 +87,61 @@ public class UIManager : MonoBehaviour
         barHUD.SetActive(status);
     }
 
-    public void SetEndOfDayScreen(bool status, int dayNumber, int approved, int denied, bool quotaMet, int mistakes, int strikes, int newBucks, int totalBucks)
+    public void ToggleEndOfDayScreen(bool status)
     {
-        // if end-of-day screen enabled
-        if (status)
+        endOfDayReportPanel.SetActive(status);
+    }
+
+    public void SetEndOfDayDetails(int dayNumber, int approved, int denied, bool quotaMet, int mistakes, int strikes, int chaosDifference, int chaosIndex, int newBucks, int totalBucks)
+    {
+        // enable end-of-day report screen
+        endOfDayReportPanel.SetActive(true);
+
+        // disable gameplay UI
+        gameplayUI.SetActive(false);
+        // disable dialogue UI (dialogue UI is kept in DialogueManager)
+        DialogueManager.GetInstance().ExitDialogueMode();
+
+        // set new report variables
+        dayReportHeader.text = $"Day {dayNumber} Complete!";
+        wishesApproved.text = $"{approved}";
+        wishesDenied.text = $"{denied}";
+        mistakesMade.text = $"{mistakes}";
+
+        if (strikes < 0)
         {
-            // enable end-of-day report screen
-            endOfDayReportPanel.SetActive(true);
-
-            // disable gameplay UI
-            gameplayUI.SetActive(false);
-            // disable dialogue UI (dialogue UI is kept in DialogueManager)
-            DialogueManager.GetInstance().ExitDialogueMode();
-
-            // set new report variables
-            dayReportHeader.text = $"Day {dayNumber} Complete!";
-            wishesApproved.text = $"{approved}";
-            wishesDenied.text = $"{denied}";
-            mistakesMade.text = $"{mistakes}";
-
-            if (strikes < 0)
-            {
-                Debug.LogError("Strikes count is in the negative!");
-            }
-            if (strikes == 0)
-            {
-                strikesCounter.sprite = zeroStrikes;
-            }
-            if (strikes == 1)
-            {
-                strikesCounter.sprite = oneStrike;
-            }
-            if (strikes == 2)
-            {
-                strikesCounter.sprite = twoStrikes;
-            }
-            if (strikes == 3)
-            {
-                strikesCounter.sprite = threeStrikes;
-            }
-            if (quotaMet)
-            {
-                quotaBox.sprite = quotaMetTick;
-            }
-            else
-            {
-                quotaBox.sprite = quotaNoTick;
-            }
-
-            geneBucksEarned.text = $"{newBucks}";
-            geneBucksBalance.text = $"{totalBucks}";
+            Debug.LogError("Strikes count is in the negative!");
         }
-        // if end-of-day screen disabled
+        if (strikes == 0)
+        {
+            strikesCounter.sprite = zeroStrikes;
+        }
+        if (strikes == 1)
+        {
+            strikesCounter.sprite = oneStrike;
+        }
+        if (strikes == 2)
+        {
+            strikesCounter.sprite = twoStrikes;
+        }
+        if (strikes == 3)
+        {
+            strikesCounter.sprite = threeStrikes;
+        }
+        if (quotaMet)
+        {
+            quotaBox.sprite = quotaMetTick;
+        }
         else
         {
-            // disable end-of-day report screen
-            endOfDayReportPanel.SetActive(false);
+            quotaBox.sprite = quotaNoTick;
         }
+
+        chaosChange.text = $"{chaosDifference}";
+        currentChaosIndex.text = $"{chaosIndex}";
+
+        geneBucksEarned.text = $"{newBucks}";
+        geneBucksBalance.text = $"{totalBucks}";
     }
 
     public void EnableDebugPanel(bool status)

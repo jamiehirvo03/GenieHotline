@@ -5,8 +5,8 @@ using UnityEngine.UIElements;
 
 public class Pencil : MonoBehaviour, IInteractable
 {
-    private string primaryAction = "";
-    private string secondaryAction = "Pick Up";
+    private string primaryAction = "Pick Up";
+    private string secondaryAction = "";
 
     [SerializeField] private GameObject tipOrigin;
     [SerializeField] private float tipOffset;
