@@ -17,6 +17,8 @@ public class Book : MonoBehaviour, IInteractable
 
     [SerializeField] private TextMeshProUGUI leftPageNumber;
     [SerializeField] private TextMeshProUGUI rightPageNumber;
+    [SerializeField] private GameObject leftPageCurl;
+    [SerializeField] private GameObject rightPageCurl;
 
     [SerializeField] private Material coverPageMat;
     [SerializeField] private Material leftPageMat;
@@ -34,7 +36,7 @@ public class Book : MonoBehaviour, IInteractable
     [SerializeField] private Transform activeTransform;
     private bool isLerping = false;
 
-    [SerializeField] private List<GameObject> tmpPages = new List<GameObject>();
+    [SerializeField] private List<GameObject> pages = new List<GameObject>();
 
     private int currentPage;
     
@@ -45,10 +47,10 @@ public class Book : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        for (int i = 0; i < tmpPages.Count; i++)
+        for (int i = 0; i < pages.Count; i++)
         {
             // disable all pages just in case any were left enabled from editing
-            tmpPages[i].gameObject.SetActive(false);
+            pages[i].gameObject.SetActive(false);
         }
 
         CloseBook();
@@ -148,7 +150,7 @@ public class Book : MonoBehaviour, IInteractable
             SetPage(true);
             SetPage(false);
         }
-        else if (0 < currentPage && currentPage < (tmpPages.Count - 2))
+        else if (0 < currentPage && currentPage < (pages.Count - 2))
         {
             ClearPage(true);
             ClearPage(false);
@@ -189,17 +191,16 @@ public class Book : MonoBehaviour, IInteractable
         {
             // LEFT PAGE
             // enable gameObject for page that is to go on left side
-            tmpPages[currentPage].SetActive(true);
+            pages[currentPage].SetActive(true);
 
             // set page's parent to the left side panel
-            tmpPages[currentPage].transform.SetParent(leftPage.transform);
+            pages[currentPage].transform.SetParent(leftPage.transform);
 
             // make sure newly added page is above the pageNumber gameObject in the hierarchy
-            tmpPages[currentPage].transform.SetAsFirstSibling();
+            pages[currentPage].transform.SetAsFirstSibling();
             
             // fix the stretch of page's RectTransform to ensure fit
-            tmpPages[currentPage].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-
+            pages[currentPage].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
             // set new page number
             leftPageNumber.text = $"{currentPage}";
@@ -208,20 +209,31 @@ public class Book : MonoBehaviour, IInteractable
         else
         {
             // RIGHT PAGE
+            int currentRightPage = currentPage + 1;
+
             // enable gameObject for page that is to go on right side
-            tmpPages[currentPage + 1].SetActive(true);
+            pages[currentRightPage].SetActive(true);
 
             // set page's parent to the right side panel
-            tmpPages[currentPage + 1].transform.SetParent(rightPage.transform);
+            pages[currentRightPage].transform.SetParent(rightPage.transform);
 
             // make sure newly added page is above the pageNumber gameObject in the hierarchy
-            tmpPages[currentPage + 1].transform.SetAsFirstSibling();
+            pages[currentRightPage].transform.SetAsFirstSibling();
 
             // fix the stretch of page's RectTransform to ensure fit
-            tmpPages[currentPage + 1].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            pages[currentRightPage].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
             // set new page number
             rightPageNumber.text = $"{currentPage + 1}";
+
+            if (currentRightPage == pages.Count - 1)
+            {
+                rightPageCurl.SetActive(false);
+            }
+            else
+            {
+                rightPageCurl.SetActive(true);
+            }
         }
     }
 
@@ -232,25 +244,25 @@ public class Book : MonoBehaviour, IInteractable
         if (isLeftPage)
         {
             // reset unneeded page's parent to storedPages
-            tmpPages[currentPage].transform.SetParent(storedPages.transform);
+            pages[currentPage].transform.SetParent(storedPages.transform);
 
             // fix the stretch of page's RectTransform to ensure fit
-            tmpPages[currentPage].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            pages[currentPage].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
             // disable old page gameObject
-            tmpPages[currentPage].SetActive(false);
+            pages[currentPage].SetActive(false);
         }
         // clear old right page
         else
         {
             // reset unneeded page's parent to storedPages
-            tmpPages[currentPage + 1].transform.SetParent(storedPages.transform);
+            pages[currentPage + 1].transform.SetParent(storedPages.transform);
 
             // fix the stretch of page's RectTransform to ensure fit
-            tmpPages[currentPage + 1].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            pages[currentPage + 1].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
             // disable old page gameObject
-            tmpPages[currentPage + 1].SetActive(false);
+            pages[currentPage + 1].SetActive(false);
         }
     }
 
