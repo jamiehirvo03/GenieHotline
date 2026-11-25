@@ -4,11 +4,13 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
+using NUnit.Framework;
+using Mono.Cecil;
 
 public class Book : MonoBehaviour, IInteractable
 {
-    private string primaryAction = "Pick Up";
-    private string secondaryAction = "";
+    private string primaryAction;
+    private string secondaryAction;
 
     [SerializeField] private GameObject coverPage;
     [SerializeField] private GameObject leftPage;
@@ -19,10 +21,6 @@ public class Book : MonoBehaviour, IInteractable
     [SerializeField] private TextMeshProUGUI rightPageNumber;
     [SerializeField] private GameObject leftPageCurl;
     [SerializeField] private GameObject rightPageCurl;
-
-    [SerializeField] private Material coverPageMat;
-    [SerializeField] private Material leftPageMat;
-    [SerializeField] private Material rightPageMat;
 
     [SerializeField] private GameObject bookClosed;
     [SerializeField] private GameObject bookOpen;
@@ -37,9 +35,22 @@ public class Book : MonoBehaviour, IInteractable
     private bool isLerping = false;
 
     [SerializeField] private List<GameObject> pages = new List<GameObject>();
-
     private int currentPage;
-    
+
+    [SerializeField] private bool isMovableBook = false;
+
+    [Header("Newspaper Stuff")]
+    private bool isNewspaper = false;
+    [Space]
+    [SerializeField] private List<string> inconvenienceStories = new List<string>();
+    [SerializeField] private List<string> dayRuinerStories = new List<string>();
+    [SerializeField] private List<string> familyConflictStories = new List<string>();
+    [SerializeField] private List<string> legalRepercussionStories = new List<string>();
+    [SerializeField] private List<string> hexStories = new List<string>();
+    [SerializeField] private List<string> deathStories = new List<string>();
+    [Space]
+    [SerializeField] private List<string> fillerStories = new List<string>();
+
     private void Awake()
     {
         boxCollider = GetComponent<BoxCollider>();
@@ -56,6 +67,22 @@ public class Book : MonoBehaviour, IInteractable
         CloseBook();
 
         coverPage.GetComponent<BoxCollider>().enabled = false;
+
+        if (isMovableBook)
+        {
+            primaryAction = "Pick Up";
+            secondaryAction = "Read";
+        }
+        else
+        {
+            primaryAction = "Read";
+            secondaryAction = "";
+        }
+
+        if (isNewspaper)
+        {
+            SetNewspaperPages();
+        }
     }
 
     public string GetPrimaryAction()
@@ -69,56 +96,120 @@ public class Book : MonoBehaviour, IInteractable
 
     public void PrimaryInteract()
     {
-        // if book is currently out of resting place
-        if (isActive)
+        if (isMovableBook)
         {
-            if (isLerping)
+            // if book isn't already being read
+            if (!isActive)
             {
-                StopAllCoroutines();
+                // if book is currently being held
+                if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
+                {
+                    // put book down
+                    gameObject.GetComponent<IHoldable>().Release();
+
+                    primaryAction = "Pick Up";
+                    secondaryAction = "Read";
+                }
+                else
+                {
+                    // hold book
+                    gameObject.GetComponent<IHoldable>().Grab();
+
+                    primaryAction = "Put Down";
+                    secondaryAction = "";
+                }
             }
-
-            CloseBook();
-
-            StartCoroutine(LerpObjectTransform(restingTransform.position, restingTransform.rotation.eulerAngles, 0.2f));
-
-            isActive = false;
-
-            coverPage.GetComponent<BoxCollider>().enabled = false;
-
-            primaryAction = "Pick Up";
         }
+        // if the book is setup to sit in dedicated resting place when not being read
         else
         {
+            // if book isn't already being read
+            if (!isActive)
+            {
+                ToggleRead(true);
+            }
+            // if book is already being read
+            else
+            {
+                ToggleRead(false);
+            }
+        }
+    }
+
+    public void SecondaryInteract()
+    {
+        // secondary action only needed if book can also be picked up and moved around
+        if (isMovableBook)
+        {
+            // if book isn't already being read
+            if (!isActive)
+            {
+                // only need secondary action for movable book if it's not already being held
+                if (!gameObject.GetComponent<IHoldable>().GetHeldStatus())
+                {
+                    ToggleRead(true);
+                }
+            }
+            // if book is already being read
+            else
+            {
+                ToggleRead(false);
+            }
+        }
+    }
+
+    public void ToggleRead(bool status)
+    {
+        // start reading
+        if (status)
+        {
             if (isLerping)
             {
                 StopAllCoroutines();
             }
-
             StartCoroutine(LerpObjectTransform(activeTransform.position, activeTransform.rotation.eulerAngles, 0.2f));
 
             isActive = true;
 
             coverPage.GetComponent<BoxCollider>().enabled = true;
 
-            primaryAction = "Put Back";
+            if (isMovableBook)
+            {
+                primaryAction = "";
+                secondaryAction = "Stop Reading";
+            }
+            else
+            {
+                primaryAction = "Stop Reading";
+                secondaryAction = "";
+            }
         }
-    }
+        // stop reading
+        else
+        {
+            CloseBook();
 
-    public void SecondaryInteract()
-    {
-        // pick up book
-        //if (gameObject.GetComponent<IHoldable>().GetHeldStatus())
-        //{
-        //    gameObject.GetComponent<IHoldable>().Release();
+            if (isLerping)
+            {
+                StopAllCoroutines();
+            }
+            StartCoroutine(LerpObjectTransform(restingTransform.position, restingTransform.rotation.eulerAngles, 0.2f));
 
-        //    secondaryAction = "Pick Up";
-        //}
-        //else
-        //{
-        //    gameObject.GetComponent<IHoldable>().Grab();
+            isActive = false;
 
-        //    secondaryAction = "PutDown";
-        //}
+            coverPage.GetComponent<BoxCollider>().enabled = false;
+
+            if (isMovableBook)
+            {
+                primaryAction = "Pick Up";
+                secondaryAction = "Read";
+            }
+            else
+            {
+                primaryAction = "Read";
+                secondaryAction = "";
+            }
+        }
     }
 
     public void OpenBook()
@@ -189,7 +280,6 @@ public class Book : MonoBehaviour, IInteractable
         // set new left page
         if (isLeftPage)
         {
-            // LEFT PAGE
             // enable gameObject for page that is to go on left side
             pages[currentPage].SetActive(true);
 
@@ -198,7 +288,7 @@ public class Book : MonoBehaviour, IInteractable
 
             // make sure newly added page is above the pageNumber gameObject in the hierarchy
             pages[currentPage].transform.SetAsFirstSibling();
-            
+
             // fix the stretch of page's RectTransform to ensure fit
             pages[currentPage].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
 
@@ -208,7 +298,6 @@ public class Book : MonoBehaviour, IInteractable
         // set new right page
         else
         {
-            // RIGHT PAGE
             int currentRightPage = currentPage + 1;
 
             // enable gameObject for page that is to go on right side
@@ -264,6 +353,39 @@ public class Book : MonoBehaviour, IInteractable
             // disable old page gameObject
             pages[currentPage + 1].SetActive(false);
         }
+    }
+
+    public void SetNewspaperPages()
+    {
+        int randomIndexOne = Random.Range(0, pages.Count - 1);  // random index for left page
+        int randomIndexTwo = Random.Range(0, pages.Count - 1);  // random index for right page
+
+        //SET LEFT PAGE
+        // enable gameObject for randomly selected left page
+        pages[randomIndexOne].SetActive(true);
+
+        // set page's parent to the left side panel
+        pages[randomIndexOne].transform.SetParent(leftPage.transform);
+
+        // make sure newly added page is above the pageNumber gameObject in the hierarchy
+        pages[randomIndexOne].transform.SetAsFirstSibling();
+
+        // fix the stretch of page's rectTransform to ensure fit
+        pages[randomIndexOne].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
+
+        //SET RIGHT PAGE
+        // enable gameObject for randomly selected right page
+        pages[randomIndexTwo].SetActive(true);
+
+        // set page's parent to the right side panel
+        pages[randomIndexTwo].transform.SetParent(rightPage.transform);
+
+        // make sure newly added page is above the pageNumber gameObject in the hierarchy
+        pages[randomIndexTwo].transform.SetAsFirstSibling();
+
+        // fix the stretch of page's rectTransform to ensure fit
+        pages[randomIndexTwo].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
     }
 
     private IEnumerator LerpObjectTransform(Vector3 targetPosition, Vector3 targetRotation, float transformTime)
