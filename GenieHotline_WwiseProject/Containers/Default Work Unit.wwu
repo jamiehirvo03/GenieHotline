@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{D5A1410A-40AD-4BE2-9FDB-41EF7B1BF757}" SchemaVersion="139">
+	<Containers>
+		<WorkUnit Name="Default Work Unit" ID="{D5A1410A-40AD-4BE2-9FDB-41EF7B1BF757}" PersistMode="Standalone">
+			<ChildrenList>
+				<PropertyContainer Name="Ambience_MainMixer" ID="{F8A5AB69-CECD-44FA-812D-15C0358DBB98}" ShortID="890934216">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="4"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Ambience_Master" ID="{6A77F80E-845B-4FAF-B129-B38F78AFBE81}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<SwitchContainer Name="Ambience_Switch" ID="{50A9CD54-FB3B-4B6A-A6C3-32B605706F5E}" ShortID="981721026">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+								<Reference Name="SwitchGroupOrStateGroup">
+									<ObjectRef Name="AmbienceTypes" ID="{9149812A-CCC2-4238-A055-2E81AE15B420}" WorkUnitID="{0660F65E-2987-492C-8469-0C885B5080D2}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="Ambience_Office" ID="{72DBAE3D-26BE-4315-A120-39AF4D00AD77}" ShortID="631386109">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Ambience_Menu" ID="{9F0612C4-E79F-4F4D-8E0E-22402960D118}" ShortID="366958615">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Ambience_Flashback" ID="{9985006F-D779-43ED-AB9D-165E1F625786}" ShortID="1008657771">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+							</ChildrenList>
+							<GroupingInfo>
+								<GroupingBehaviorList>
+									<GroupingBehavior>
+										<ItemRef Name="Ambience_Office" ID="{72DBAE3D-26BE-4315-A120-39AF4D00AD77}"/>
+									</GroupingBehavior>
+									<GroupingBehavior>
+										<ItemRef Name="Ambience_Flashback" ID="{9985006F-D779-43ED-AB9D-165E1F625786}"/>
+									</GroupingBehavior>
+									<GroupingBehavior>
+										<ItemRef Name="Ambience_Menu" ID="{9F0612C4-E79F-4F4D-8E0E-22402960D118}"/>
+									</GroupingBehavior>
+								</GroupingBehaviorList>
+								<GroupingList>
+									<Grouping>
+										<SwitchRef Name="Office" ID="{23DB4F01-A515-416E-B35A-BB238BE3B934}"/>
+										<ItemList>
+											<ItemRef Name="Ambience_Office" ID="{72DBAE3D-26BE-4315-A120-39AF4D00AD77}"/>
+										</ItemList>
+									</Grouping>
+									<Grouping>
+										<SwitchRef Name="Menu" ID="{508BC023-460B-458A-87F2-B80419AA5B49}"/>
+										<ItemList>
+											<ItemRef Name="Ambience_Menu" ID="{9F0612C4-E79F-4F4D-8E0E-22402960D118}"/>
+										</ItemList>
+									</Grouping>
+									<Grouping>
+										<SwitchRef Name="Flashback" ID="{41E257FC-72B2-43AE-B646-F209A5B53BCE}"/>
+										<ItemList>
+											<ItemRef Name="Ambience_Flashback" ID="{9985006F-D779-43ED-AB9D-165E1F625786}"/>
+										</ItemList>
+									</Grouping>
+								</GroupingList>
+							</GroupingInfo>
+						</SwitchContainer>
+					</ChildrenList>
+				</PropertyContainer>
+				<PropertyContainer Name="SFX_MainMixer" ID="{F306D470-5C2F-4211-9065-F8E6D74B55B8}" ShortID="240788369">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="2"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="SFX_Master" ID="{F1E6B5AE-79B1-4F84-9A9E-B4DBA3D99995}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<PropertyContainer Name="SFX_OneShot" ID="{8847E05C-B26A-4683-98B7-778AE503EE1F}" ShortID="537091889">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="Object_InvalidPlacement" ID="{F94C2E7E-DC87-44BB-9633-225329E54CB3}" ShortID="1004567108">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Phone_KeyPress" ID="{F20BCE8B-E903-4A11-BC08-AB84151E7D3A}" ShortID="839636113">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Object_PickUp" ID="{57154938-7B51-44F0-9359-8ECC907D2F48}" ShortID="628382379">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Object_PutDown" ID="{730783D4-16D1-427C-8C39-FCE6DCBD6D97}" ShortID="128926616">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Phone_Answer" ID="{CCF6A43C-E012-4B4C-BD79-15DBF999150C}" ShortID="539739514">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Phone_HangUp" ID="{FCB26525-A76D-44FC-93D4-F6F267404887}" ShortID="44366182">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="StampPress" ID="{ABD62F7F-F56B-4C86-AC35-66A3979C52AF}" ShortID="54694910">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Book_FlipPage" ID="{ADFDD465-F0D0-4118-9573-B2423201DE8B}" ShortID="1013378830">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Capsule_Open" ID="{FD9DA8A2-F6B7-4E8F-A7C0-8514037C4479}" ShortID="200118345">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Capsule_Close" ID="{BA25DA9C-E306-499E-9758-363004B932DD}" ShortID="139266716">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Capsule_InsertDocument" ID="{C02DC96E-B16A-4729-8874-63470EA2C099}" ShortID="911329342">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Capsule_Empty" ID="{80F87477-C1A1-47E8-A733-AB66E314DDED}" ShortID="497791398">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Capsule_RemoveDocument" ID="{37B3A0CD-1A04-42DB-A611-50589FB1D03D}" ShortID="745117527">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Tube_ButtonPress" ID="{ED90132B-553E-4954-AC8F-E06FFF8DECF0}" ShortID="209669122">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<RandomSequenceContainer Name="Tube_Activation" ID="{B65F31AF-2BD0-4CD3-A176-936331B6C521}" ShortID="353579084">
+									<PropertyList>
+										<Property Name="RandomOrSequence" Type="int16" Value="0"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<Sound Name="Activation_Suction" ID="{363E7738-5B09-45EE-A598-507617EBEEDE}" ShortID="918771512">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+												</Reference>
+											</ReferenceList>
+										</Sound>
+										<Sound Name="Activation_HollowThunk" ID="{9F86333F-1C56-4265-A67F-E1144375843D}" ShortID="536295918">
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+												</Reference>
+											</ReferenceList>
+										</Sound>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Playlist">
+											<PluginInnerObject Name="" ID="{F528FBCE-2180-45AA-8BAD-B985A8755DA7}" PluginName="PlaylistSlot" CompanyID="0" PluginID="86">
+												<ReferenceList>
+													<Reference Name="PlaylistObject">
+														<ObjectRef Name="Activation_Suction" ID="{363E7738-5B09-45EE-A598-507617EBEEDE}" WorkUnitID="{D5A1410A-40AD-4BE2-9FDB-41EF7B1BF757}"/>
+													</Reference>
+												</ReferenceList>
+											</PluginInnerObject>
+										</ObjectList>
+									</ObjectLists>
+								</RandomSequenceContainer>
+								<Sound Name="UI_ButtonClick" ID="{A27F5562-526B-465D-810E-A8E4C2EBDBF4}" ShortID="442294512">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="UI_Dialogue_ChoiceSelect" ID="{AE0E5334-0F64-4A7D-832B-34185D9B95FC}" ShortID="731909093">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="UI_Dialogue_Continue" ID="{7694B1E9-5822-4CCB-BEC9-A7461768B9EC}" ShortID="165602654">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Flashback_Start" ID="{E7AB9822-5CE8-4523-B9FE-971160674CE0}" ShortID="547514665">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Flashback_End" ID="{E5D58AFA-F0A4-410E-9573-AB0213FAE801}" ShortID="791959635">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Book_CloseBook" ID="{8DC8A238-1B8A-4719-8751-C0633C168665}" ShortID="269018180">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+							</ChildrenList>
+						</PropertyContainer>
+						<PropertyContainer Name="SFX_Looping" ID="{E645D03D-FF83-4969-BB83-0A01A9168ECC}" ShortID="530929010">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<Sound Name="Phone_DialTone" ID="{D484983D-BC98-4A8A-832F-E331EC03F06A}" ShortID="16888416">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Drawing" ID="{1E8506A6-EE1E-4668-A938-576C12AC3863}" ShortID="826105756">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+								<Sound Name="Erasing" ID="{2959DE53-05E4-4570-BA66-6E1F1CD696F3}" ShortID="653875443">
+									<PropertyList>
+										<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+										</Reference>
+									</ReferenceList>
+								</Sound>
+							</ChildrenList>
+						</PropertyContainer>
+					</ChildrenList>
+				</PropertyContainer>
+				<PropertyContainer Name="Dialogue_MainMixer" ID="{22A23084-F319-4582-8AD6-A2AAD9A7928C}" ShortID="345668133">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="9"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Dialogue_Master" ID="{9124FD9D-85A3-49A3-BCBB-60F6F7FA2CF9}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<PropertyContainer Name="Speech_Gene" ID="{3B8AC191-5518-47A7-A268-34EE3D8E5E62}" ShortID="147224308">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</PropertyContainer>
+						<PropertyContainer Name="Speech_Masc_A" ID="{D8A9E150-6FCB-475C-9240-56A3BF897968}" ShortID="1066939393">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</PropertyContainer>
+						<PropertyContainer Name="Speech_Fem_B" ID="{899C1505-5946-4F88-ACE9-90B3F783AAD4}" ShortID="287305178">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</PropertyContainer>
+						<PropertyContainer Name="Speech_Masc_B" ID="{010E3DFD-7E50-4DA0-A0A4-8F398064F3CB}" ShortID="389075225">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</PropertyContainer>
+						<PropertyContainer Name="Speech_Fem_A" ID="{51776302-2DEB-4D6A-98C8-76DF3EDCD3AD}" ShortID="426453831">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</PropertyContainer>
+					</ChildrenList>
+				</PropertyContainer>
+				<PropertyContainer Name="Music_MainMixer" ID="{411CB7AD-1E84-4A4E-B5ED-DC774A443B09}" ShortID="1069821814">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="11"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Music_Master" ID="{580022DE-3BF4-44C5-AC79-86A85B11BAD9}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="Music_EndOfDayScreen" ID="{3C067D61-6DD0-449E-993C-BE327CB53D40}" ShortID="81466703">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</Sound>
+						<Sound Name="Music_EndOfWeekScreen" ID="{CE74A9F2-424A-42B8-B3C8-685C3C153A32}" ShortID="249703631">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</Sound>
+						<Sound Name="Music_PauseMenu" ID="{7CCA6137-0ECE-48D4-A5AE-0354B3F90730}" ShortID="598082476">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</Sound>
+						<Sound Name="Music_MainMenu" ID="{0268B701-4981-4D82-929A-A825B0D96B27}" ShortID="396216570">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</Sound>
+						<Sound Name="Music_FiredScreen" ID="{6D877590-1433-46E8-9783-98FDE97A6602}" ShortID="461629633">
+							<PropertyList>
+								<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{C22D6CDF-C709-48AF-9E59-73F8225F4CAA}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{35F25C63-9ECE-4354-B30B-D132734A3879}"/>
+								</Reference>
+							</ReferenceList>
+						</Sound>
+					</ChildrenList>
+				</PropertyContainer>
+			</ChildrenList>
+		</WorkUnit>
+	</Containers>
+</WwiseDocument>

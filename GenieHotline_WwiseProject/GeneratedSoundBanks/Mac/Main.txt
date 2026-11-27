@@ -1,0 +1,47 @@
+Event	ID	Name			Wwise Object Path	Notes
+	2988253	Play_UI_Dialogue_ChoiceSelect			\Default Work Unit\PlayOnce\Play_UI_Dialogue_ChoiceSelect	
+	128549500	Strop_Ambience_Menu			\Default Work Unit\Loop\Ambience_Menu\Strop_Ambience_Menu	
+	181601357	Play_Object_PutDown			\Default Work Unit\PlayOnce\Play_Object_PutDown	
+	323364298	Start_Music_FiredScreen			\Default Work Unit\Loop\Music_FiredScreen\Start_Music_FiredScreen	
+	454216788	Play_Flashback_Start			\Default Work Unit\PlayOnce\Play_Flashback_Start	
+	499186551	Play_Book_CloseBook			\Default Work Unit\PlayOnce\Play_Book_CloseBook	
+	720949252	Play_Book_FlipPage			\Default Work Unit\PlayOnce\Play_Book_FlipPage	
+	842017663	Play_UI_Dialogue_Continue			\Default Work Unit\PlayOnce\Play_UI_Dialogue_Continue	
+	854908225	Play_Capsule_RemoveDocument			\Default Work Unit\PlayOnce\Play_Capsule_RemoveDocument	
+	996302017	Play_UI_ButtonClick			\Default Work Unit\PlayOnce\Play_UI_ButtonClick	
+	1072749503	Play_Phone_Answer			\Default Work Unit\PlayOnce\Play_Phone_Answer	
+	1109124989	Strop_Ambience_Office			\Default Work Unit\Loop\Ambience_Office\Strop_Ambience_Office	
+	1360147972	Strop_Music_MainMenu			\Default Work Unit\Loop\Music_MainMenu\Strop_Music_MainMenu	
+	1459890156	Play_StampPress			\Default Work Unit\PlayOnce\Play_StampPress	
+	1552213880	Start_Music_EndOfDayScreen			\Default Work Unit\Loop\Music_EndOfDayScreen\Start_Music_EndOfDayScreen	
+	1564491801	Start_Ambience_Office			\Default Work Unit\Loop\Ambience_Office\Start_Ambience_Office	
+	1621279685	Play_Capsule_Empty			\Default Work Unit\PlayOnce\Play_Capsule_Empty	
+	1631940956	Strop_Music_EndOfDayScreen			\Default Work Unit\Loop\Music_EndOfDayScreen\Strop_Music_EndOfDayScreen	
+	1726739174	Strop_Music_EndOfWeekScreen			\Default Work Unit\Loop\Music_EndOfWeekScreen\Strop_Music_EndOfWeekScreen	
+	2016572795	Play_Phone_KeyPress			\Default Work Unit\PlayOnce\Play_Phone_KeyPress	
+	2021182656	Start_Ambience_Flashback			\Default Work Unit\Loop\Ambience_Flashback\Start_Ambience_Flashback	
+	2151063913	Strop_Music_PauseMenu			\Default Work Unit\Loop\Music_PauseMenu\Strop_Music_PauseMenu	
+	2283850852	Play_Tube_ButtonPress			\Default Work Unit\PlayOnce\Play_Tube_ButtonPress	
+	2462203239	Play_Flashback_End			\Default Work Unit\PlayOnce\Play_Flashback_End	
+	2666298890	Start_Music_EndOfWeekScreen			\Default Work Unit\Loop\Music_EndOfWeekScreen\Start_Music_EndOfWeekScreen	
+	2689728968	Start_Music_MainMenu			\Default Work Unit\Loop\Music_MainMenu\Start_Music_MainMenu	
+	2818358958	Play_Object_PickUp			\Default Work Unit\PlayOnce\Play_Object_PickUp	
+	2885020430	Strop_Music_FiredScreen			\Default Work Unit\Loop\Music_FiredScreen\Strop_Music_FiredScreen	
+	3007762542	Play_Phone_HangUp			\Default Work Unit\PlayOnce\Play_Phone_HangUp	
+	3040620466	Play_Capsule_Close			\Default Work Unit\PlayOnce\Play_Capsule_Close	
+	3116824821	Start_Music_PauseMenu			\Default Work Unit\Loop\Music_PauseMenu\Start_Music_PauseMenu	
+	3245561372	Strop_Ambience_Flashback			\Default Work Unit\Loop\Ambience_Flashback\Strop_Ambience_Flashback	
+	3273304499	Play_Tube_Activation			\Default Work Unit\PlayOnce\Play_Tube_Activation	
+	3595363302	Play_Capsule_Open			\Default Work Unit\PlayOnce\Play_Capsule_Open	
+	3614299096	Start_Ambience_Menu			\Default Work Unit\Loop\Ambience_Menu\Start_Ambience_Menu	
+	3650260216	Play_Object_InvalidPlacement			\Default Work Unit\PlayOnce\Play_Object_InvalidPlacement	
+	3935454546	Play_Capsule_InsertDocument			\Default Work Unit\PlayOnce\Play_Capsule_InsertDocument	
+
+Switch Group	ID	Name			Wwise Object Path	Notes
+	4022883280	AmbienceTypes			\Default Work Unit\AmbienceTypes	
+
+Switch	ID	Name	Switch Group			Notes
+	359747000	Flashback	AmbienceTypes			
+	1547173777	Office	AmbienceTypes			
+	2607556080	Menu	AmbienceTypes			
+

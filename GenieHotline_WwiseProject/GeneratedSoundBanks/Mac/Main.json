@@ -1,0 +1,413 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Mac",
+  "BasePlatform": "Mac",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "176",
+  "SoundBanks": [
+   {
+    "Id": "3161908922",
+    "Type": "User",
+    "GUID": "{5DAA337E-41F6-4ED6-92E2-3C9E8AC5DDF0}",
+    "Language": "SFX",
+    "Hash": "{796D42D9-180A-7010-0DB1-554A9E04AC79}",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main",
+    "ShortName": "Main",
+    "Path": "Main.bnk",
+    "Events": [
+     {
+      "Id": "499186551",
+      "Name": "Play_Book_CloseBook",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Book_CloseBook",
+      "GUID": "{1EDBA230-111E-471D-92B5-A2BDB5A4BC92}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "720949252",
+      "Name": "Play_Book_FlipPage",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Book_FlipPage",
+      "GUID": "{6B755281-D1D0-4FED-8584-1E39F53D1E1F}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "3040620466",
+      "Name": "Play_Capsule_Close",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Capsule_Close",
+      "GUID": "{A10B7923-42CA-410A-AA71-F0F8CA647C77}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "1621279685",
+      "Name": "Play_Capsule_Empty",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Capsule_Empty",
+      "GUID": "{70F5F9C0-7173-4BBE-9AEA-BBB4132FFB0E}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "3935454546",
+      "Name": "Play_Capsule_InsertDocument",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Capsule_InsertDocument",
+      "GUID": "{47402614-A5EF-4DD0-87BF-05173B0DADE7}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "3595363302",
+      "Name": "Play_Capsule_Open",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Capsule_Open",
+      "GUID": "{E373ECBE-E848-42D6-9840-6429CF539D8D}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "854908225",
+      "Name": "Play_Capsule_RemoveDocument",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Capsule_RemoveDocument",
+      "GUID": "{0F52A9FB-D146-4E6D-B01C-141BC6022F6F}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "2462203239",
+      "Name": "Play_Flashback_End",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Flashback_End",
+      "GUID": "{206E351C-E726-433B-B988-C81E3B9F74AE}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "454216788",
+      "Name": "Play_Flashback_Start",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Flashback_Start",
+      "GUID": "{BFBFCA90-3AFD-4194-A535-16A5D880B324}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "3650260216",
+      "Name": "Play_Object_InvalidPlacement",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Object_InvalidPlacement",
+      "GUID": "{1ABCFCB7-5C72-4E3F-B436-43C96D09A243}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "2818358958",
+      "Name": "Play_Object_PickUp",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Object_PickUp",
+      "GUID": "{34015FFC-F48B-4248-BC68-F4DFD12CF4B7}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "181601357",
+      "Name": "Play_Object_PutDown",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Object_PutDown",
+      "GUID": "{1DEA431B-5F5C-4189-9434-DF55FCC864E7}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "1072749503",
+      "Name": "Play_Phone_Answer",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Phone_Answer",
+      "GUID": "{FFF66E13-4B10-47B9-A769-045F421E5903}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "3007762542",
+      "Name": "Play_Phone_HangUp",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Phone_HangUp",
+      "GUID": "{63AEF643-9F8F-4C42-9EE3-854A432C78FF}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "2016572795",
+      "Name": "Play_Phone_KeyPress",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Phone_KeyPress",
+      "GUID": "{4A977ABF-32BF-41D9-8510-DD6B486617F8}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "1459890156",
+      "Name": "Play_StampPress",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_StampPress",
+      "GUID": "{91EAC67F-2FFB-451E-AA3D-A0284626B2A4}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "3273304499",
+      "Name": "Play_Tube_Activation",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Tube_Activation",
+      "GUID": "{7FF7C618-8F40-4F1E-9B11-CF4A7F493D38}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "2283850852",
+      "Name": "Play_Tube_ButtonPress",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_Tube_ButtonPress",
+      "GUID": "{C69AE2C6-73BB-4A6F-BB10-45C0696468AB}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "996302017",
+      "Name": "Play_UI_ButtonClick",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_UI_ButtonClick",
+      "GUID": "{E2CD7DBF-1F0E-48CF-B5EA-E01B73E862BB}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "2988253",
+      "Name": "Play_UI_Dialogue_ChoiceSelect",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_UI_Dialogue_ChoiceSelect",
+      "GUID": "{98B03A17-94CF-4FE1-ADEA-CA442AF0FDFF}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "842017663",
+      "Name": "Play_UI_Dialogue_Continue",
+      "ObjectPath": "\\Events\\Default Work Unit\\PlayOnce\\Play_UI_Dialogue_Continue",
+      "GUID": "{5A49C3D3-54BC-4019-AE20-B3D1F4B56DA2}",
+      "Color": "2",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "2021182656",
+      "Name": "Start_Ambience_Flashback",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Ambience_Flashback\\Start_Ambience_Flashback",
+      "GUID": "{E45D9ABD-75FF-4CE7-8625-C615AB70BE64}",
+      "Color": "4",
+      "DurationType": "Infinite"
+     },
+     {
+      "Id": "3614299096",
+      "Name": "Start_Ambience_Menu",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Ambience_Menu\\Start_Ambience_Menu",
+      "GUID": "{FB896350-49F3-4F21-BD68-73C9D3BDDFFC}",
+      "Color": "4",
+      "DurationType": "Infinite"
+     },
+     {
+      "Id": "1564491801",
+      "Name": "Start_Ambience_Office",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Ambience_Office\\Start_Ambience_Office",
+      "GUID": "{B79B9801-927B-4B36-97DB-C8470D1B1B28}",
+      "Color": "4",
+      "DurationType": "Infinite"
+     },
+     {
+      "Id": "1552213880",
+      "Name": "Start_Music_EndOfDayScreen",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_EndOfDayScreen\\Start_Music_EndOfDayScreen",
+      "GUID": "{895262F5-5DB2-43F7-ACFE-AED63F97EB84}",
+      "Color": "11",
+      "DurationType": "Infinite"
+     },
+     {
+      "Id": "2666298890",
+      "Name": "Start_Music_EndOfWeekScreen",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_EndOfWeekScreen\\Start_Music_EndOfWeekScreen",
+      "GUID": "{FFDA043A-75FA-4551-BDF6-07786342FFED}",
+      "Color": "11",
+      "DurationType": "Infinite"
+     },
+     {
+      "Id": "323364298",
+      "Name": "Start_Music_FiredScreen",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_FiredScreen\\Start_Music_FiredScreen",
+      "GUID": "{C9C85943-9443-43DE-BED5-C74C1A69A313}",
+      "Color": "11",
+      "DurationType": "Infinite"
+     },
+     {
+      "Id": "2689728968",
+      "Name": "Start_Music_MainMenu",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_MainMenu\\Start_Music_MainMenu",
+      "GUID": "{7ADBCCAA-63A7-4EB4-8C6F-B768B9369715}",
+      "Color": "11",
+      "DurationType": "Infinite"
+     },
+     {
+      "Id": "3116824821",
+      "Name": "Start_Music_PauseMenu",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_PauseMenu\\Start_Music_PauseMenu",
+      "GUID": "{95C6EEBD-9768-467B-8CCC-7E1715AB1570}",
+      "Color": "11",
+      "DurationType": "Infinite"
+     },
+     {
+      "Id": "3245561372",
+      "Name": "Strop_Ambience_Flashback",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Ambience_Flashback\\Strop_Ambience_Flashback",
+      "GUID": "{FA3653D1-74A7-4832-8011-1212A5ACCFC4}",
+      "Color": "4",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "128549500",
+      "Name": "Strop_Ambience_Menu",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Ambience_Menu\\Strop_Ambience_Menu",
+      "GUID": "{C66FB48B-CB5B-43AD-81DF-FC4FE843BE07}",
+      "Color": "4",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "1109124989",
+      "Name": "Strop_Ambience_Office",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Ambience_Office\\Strop_Ambience_Office",
+      "GUID": "{B610158E-5047-48C1-B2CD-4C03CC699CB1}",
+      "Color": "4",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "1631940956",
+      "Name": "Strop_Music_EndOfDayScreen",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_EndOfDayScreen\\Strop_Music_EndOfDayScreen",
+      "GUID": "{8E228FA3-B8C8-49D5-8580-D7EC2C7E38E5}",
+      "Color": "11",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "1726739174",
+      "Name": "Strop_Music_EndOfWeekScreen",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_EndOfWeekScreen\\Strop_Music_EndOfWeekScreen",
+      "GUID": "{F05A0CE2-4BF0-4CE8-AFFD-ECD285DB660F}",
+      "Color": "11",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "2885020430",
+      "Name": "Strop_Music_FiredScreen",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_FiredScreen\\Strop_Music_FiredScreen",
+      "GUID": "{A384050C-A5D6-4791-939A-E30CAC5C077F}",
+      "Color": "11",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "1360147972",
+      "Name": "Strop_Music_MainMenu",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_MainMenu\\Strop_Music_MainMenu",
+      "GUID": "{E7F01009-228A-47B1-94CC-8F7BB64E8F3D}",
+      "Color": "11",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     },
+     {
+      "Id": "2151063913",
+      "Name": "Strop_Music_PauseMenu",
+      "ObjectPath": "\\Events\\Default Work Unit\\Loop\\Music_PauseMenu\\Strop_Music_PauseMenu",
+      "GUID": "{4DD8C63C-61FE-4EA2-82EC-90EDA9F917ED}",
+      "Color": "11",
+      "MaxAttenuation": "0",
+      "DurationType": "OneShot",
+      "DurationMin": "0",
+      "DurationMax": "0"
+     }
+    ],
+    "SwitchGroups": [
+     {
+      "Id": "4022883280",
+      "Name": "AmbienceTypes",
+      "ObjectPath": "\\Switches\\Default Work Unit\\AmbienceTypes",
+      "GUID": "{9149812A-CCC2-4238-A055-2E81AE15B420}",
+      "Switches": [
+       {
+        "Id": "359747000",
+        "Name": "Flashback",
+        "ObjectPath": "\\Switches\\Default Work Unit\\AmbienceTypes\\Flashback",
+        "GUID": "{41E257FC-72B2-43AE-B646-F209A5B53BCE}"
+       },
+       {
+        "Id": "1547173777",
+        "Name": "Office",
+        "ObjectPath": "\\Switches\\Default Work Unit\\AmbienceTypes\\Office",
+        "GUID": "{23DB4F01-A515-416E-B35A-BB238BE3B934}"
+       },
+       {
+        "Id": "2607556080",
+        "Name": "Menu",
+        "ObjectPath": "\\Switches\\Default Work Unit\\AmbienceTypes\\Menu",
+        "GUID": "{508BC023-460B-458A-87F2-B80419AA5B49}"
+       }
+      ]
+     }
+    ]
+   }
+  ],
+  "FileHash": "{76C3182B-6692-80D9-8BFA-31C0A9DC1B2D}"
+ }
+}

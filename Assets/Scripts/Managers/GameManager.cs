@@ -17,12 +17,14 @@ public class GameManager : MonoBehaviour
     [System.Serializable]
     public class Callers
     {
+        public string name;
+        [Space]
         public int dayNumber;
         public TextAsset callerJSON;
         public string callerName;
         public int callerAge;
         public string callerOccupation;
-
+        [Space]
         // answers
         public bool material;
         public bool knowledge;
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour
         public bool harm;
         public bool enhancement;
         public bool fate;
-
+        [Space]
         // verditc
         public bool canBeGranted;
 
@@ -41,7 +43,7 @@ public class GameManager : MonoBehaviour
             return callerForm.GetComponent<Document>();
         }
 
-        public bool hasHungUp = false;
+        [HideInInspector] public bool hasHungUp = false;
     }
     [Header("Add Callers")] public List<Callers> callers = new List<Callers>();
 
@@ -84,12 +86,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int minChaos = -3;
     [SerializeField] private int maxChaos = 3;
     [Space]
-    [SerializeField] private int chaosIndex;
+    public int chaosIndex;
+    public string chaosLevel;
     [SerializeField] private int changePerChaosIndex;
 
     [Header("Employee Performance")]
     [SerializeField] private int strikesCount;
-    [SerializeField] private int geneBucksBalance;
+    public int geneBucksBalance;
 
     [Header("Quotas")]
     [SerializeField] private int dayOneQuota = 1;
@@ -108,7 +111,7 @@ public class GameManager : MonoBehaviour
     [Space]
     [SerializeField] private int pointsPerGeneBuck = 10;
 
-    // daily resets
+    [Header("Daily Resets")]
     private int currentDayQuota;
     private int wishesApproved;
     private int wishesDenied;
@@ -117,18 +120,65 @@ public class GameManager : MonoBehaviour
     private bool wasQuotaMet;
     private bool strikeGivenToday;
 
-    private int inconveniencesGiven;
-    private int dayRuinersGiven;
-    private int familyConflictsGiven;
-    private int legalRepercussionsGiven;
-    private int hexesGiven;
-    private int deathsGiven;
-
     private int chaosChange;
 
     private int grossScore; // before awards/multipliers are applied
     private int netScore;   // final score that gets converted into geneBucks
     private int geneBucksEarnt;
+
+    [SerializeField] private int inconveniencesGiven;
+    [SerializeField] private int dayRuinersGiven;
+    [SerializeField] private int familyConflictsGiven;
+    [SerializeField] private int legalRepercussionsGiven;
+    [SerializeField] private int hexesGiven;
+    [SerializeField] private int deathsGiven;
+
+    [HideInInspector] public int yesterdaysInconveniencesGiven;
+    [HideInInspector] public int yesterdaysDayRuinersGiven;
+    [HideInInspector] public int yesterdaysFamilyConflictsGiven;
+    [HideInInspector] public int yesterdaysLegalRepercussionsGiven;
+    [HideInInspector] public int yesterdaysHexesGiven;
+    [HideInInspector] public int yesterdaysDeathsGiven;
+
+    [Header("Consequence Stats for each day")]
+    // day one
+    [HideInInspector] public int dayOneInconveniencesGiven;
+    [HideInInspector] public int dayOneDayRuinersGiven;
+    [HideInInspector] public int dayOneFamilyConflictsGiven;
+    [HideInInspector] public int dayOneLegalRepercussionsGiven;
+    [HideInInspector] public int dayOneHexesGiven;
+    [HideInInspector] public int dayOneDeathsGiven;
+    // day two
+    [HideInInspector] public int dayTwoInconveniencesGiven;
+    [HideInInspector] public int dayTwoDayRuinersGiven;
+    [HideInInspector] public int dayTwoFamilyConflictsGiven;
+    [HideInInspector] public int dayTwoLegalRepercussionsGiven;
+    [HideInInspector] public int dayTwoHexesGiven;
+    [HideInInspector] public int dayTwoDeathsGiven;
+    // day three
+    [HideInInspector] public int dayThreeInconveniencesGiven;
+    [HideInInspector] public int dayThreeDayRuinersGiven;
+    [HideInInspector] public int dayThreeFamilyConflictsGiven;
+    [HideInInspector] public int dayThreeLegalRepercussionsGiven;
+    [HideInInspector] public int dayThreeHexesGiven;
+    [HideInInspector] public int dayThreeDeathsGiven;
+    // day four
+    [HideInInspector] public int dayFourInconveniencesGiven;
+    [HideInInspector] public int dayFourDayRuinersGiven;
+    [HideInInspector] public int dayFourFamilyConflictsGiven;
+    [HideInInspector] public int dayFourLegalRepercussionsGiven;
+    [HideInInspector] public int dayFourHexesGiven;
+    [HideInInspector] public int dayFourDeathsGiven;
+    // day five
+    [HideInInspector] public int dayFiveInconveniencesGiven;
+    [HideInInspector] public int dayFiveDayRuinersGiven;
+    [HideInInspector] public int dayFiveFamilyConflictsGiven;
+    [HideInInspector] public int dayFiveLegalRepercussionsGiven;
+    [HideInInspector] public int dayFiveHexesGiven;
+    [HideInInspector] public int dayFiveDeathsGiven;
+
+    // item purchase
+    [SerializeField] private List<Transform> deliveryPoints = new List<Transform>();
 
     private void Awake()
     {
@@ -619,12 +669,96 @@ public class GameManager : MonoBehaviour
         geneBucksBalance += geneBucksEarnt;
     }
 
+    public void DeliverPurchasedItem(GameObject purchasedItem)
+    {
+
+    }
+
     private void EndDay()
     {
         Debug.Log($"Day {currentDay} has ended");
 
         UIManager.GetInstance().ToggleEndOfDayScreen(true);
         UIManager.GetInstance().SetEndOfDayDetails(currentDay, wishesApproved, wishesDenied, wasQuotaMet, mistakesMade, strikesCount, chaosChange, chaosIndex, geneBucksEarnt, geneBucksBalance);
+
+        // at the end of each day, store the consequences given on that day in each appropriate variable
+        if (currentDay == 1)
+        {
+            dayOneInconveniencesGiven = inconveniencesGiven;
+            dayOneDayRuinersGiven = dayRuinersGiven;
+            dayOneFamilyConflictsGiven = familyConflictsGiven;
+            dayOneLegalRepercussionsGiven = legalRepercussionsGiven;
+            dayOneHexesGiven = hexesGiven;
+            dayOneDeathsGiven = deathsGiven;
+        }
+        if (currentDay == 2)
+        {
+            dayTwoInconveniencesGiven = inconveniencesGiven;
+            dayTwoDayRuinersGiven = dayRuinersGiven;
+            dayTwoFamilyConflictsGiven = familyConflictsGiven;
+            dayTwoLegalRepercussionsGiven = legalRepercussionsGiven;
+            dayTwoHexesGiven = hexesGiven;
+            dayTwoDeathsGiven = deathsGiven;
+
+                // store these for newspaper
+                yesterdaysInconveniencesGiven = dayOneInconveniencesGiven;
+                yesterdaysDayRuinersGiven = dayOneDayRuinersGiven;
+                yesterdaysFamilyConflictsGiven = dayOneFamilyConflictsGiven;
+                yesterdaysLegalRepercussionsGiven = dayOneLegalRepercussionsGiven;
+                yesterdaysHexesGiven = dayOneHexesGiven;
+                yesterdaysDeathsGiven = dayOneDeathsGiven;
+        }
+        if (currentDay == 3)
+        {
+            dayThreeInconveniencesGiven = inconveniencesGiven;
+            dayThreeDayRuinersGiven = dayRuinersGiven;
+            dayThreeFamilyConflictsGiven = familyConflictsGiven;
+            dayThreeLegalRepercussionsGiven = legalRepercussionsGiven;
+            dayThreeHexesGiven = hexesGiven;
+            dayThreeDeathsGiven = deathsGiven;
+
+                // store these for newspaper
+                yesterdaysInconveniencesGiven = dayTwoInconveniencesGiven;
+                yesterdaysDayRuinersGiven = dayTwoDayRuinersGiven;
+                yesterdaysFamilyConflictsGiven = dayTwoFamilyConflictsGiven;
+                yesterdaysLegalRepercussionsGiven = dayTwoLegalRepercussionsGiven;
+                yesterdaysHexesGiven = dayTwoHexesGiven;
+                yesterdaysDeathsGiven = dayTwoDeathsGiven;
+        }
+        if (currentDay == 4)
+        {
+            dayFourInconveniencesGiven = inconveniencesGiven;
+            dayFourDayRuinersGiven = dayRuinersGiven;
+            dayFourFamilyConflictsGiven = familyConflictsGiven;
+            dayFourLegalRepercussionsGiven = legalRepercussionsGiven;
+            dayFourHexesGiven = hexesGiven;
+            dayFourDeathsGiven = deathsGiven;
+
+                // store these for newspaper
+                yesterdaysInconveniencesGiven = dayThreeInconveniencesGiven;
+                yesterdaysDayRuinersGiven = dayThreeDayRuinersGiven;
+                yesterdaysFamilyConflictsGiven = dayThreeFamilyConflictsGiven;
+                yesterdaysLegalRepercussionsGiven = dayThreeLegalRepercussionsGiven;
+                yesterdaysHexesGiven = dayThreeHexesGiven;
+                yesterdaysDeathsGiven = dayThreeDeathsGiven;
+        }
+        if (currentDay == 5)
+        {
+            dayFiveInconveniencesGiven = inconveniencesGiven;
+            dayFiveDayRuinersGiven = dayRuinersGiven;
+            dayFiveFamilyConflictsGiven = familyConflictsGiven;
+            dayFiveLegalRepercussionsGiven = legalRepercussionsGiven;
+            dayFiveHexesGiven = hexesGiven;
+            dayFiveDeathsGiven = deathsGiven;
+
+                // store these for newspaper
+                yesterdaysInconveniencesGiven = dayFourInconveniencesGiven;
+                yesterdaysDayRuinersGiven = dayFourDayRuinersGiven;
+                yesterdaysFamilyConflictsGiven = dayFourFamilyConflictsGiven;
+                yesterdaysLegalRepercussionsGiven = dayFourLegalRepercussionsGiven;
+                yesterdaysHexesGiven = dayFourHexesGiven;
+                yesterdaysDeathsGiven = dayFourDeathsGiven;
+        }
     }
 
     public void ContinueToNextDay()

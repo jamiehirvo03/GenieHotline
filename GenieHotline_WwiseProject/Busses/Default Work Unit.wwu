@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{35F25C63-9ECE-4354-B30B-D132734A3879}" SchemaVersion="139">
+	<Busses>
+		<WorkUnit Name="Default Work Unit" ID="{35F25C63-9ECE-4354-B30B-D132734A3879}" PersistMode="Standalone">
+			<ChildrenList>
+				<Bus Name="MasterAudio" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}">
+					<ReferenceList>
+						<Reference Name="AudioDevice" PluginName="System" CompanyID="0" PluginID="174" PluginType="7">
+							<ObjectRef Name="System" ID="{E1CA13DC-A033-4F6A-ACB1-75A7189B3554}" WorkUnitID="{EDAD8E50-E046-4F2C-8A16-1D3CBD1F58A5}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Bus Name="Ambience_Master" ID="{6A77F80E-845B-4FAF-B129-B38F78AFBE81}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="4"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+							<ChildrenList>
+								<Bus Name="Ambience_2D" ID="{102D497E-FDBF-4976-9026-9FDE7AC5D8C6}"/>
+							</ChildrenList>
+						</Bus>
+						<Bus Name="SFX_Master" ID="{F1E6B5AE-79B1-4F84-9A9E-B4DBA3D99995}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="2"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Bus>
+						<Bus Name="Music_Master" ID="{580022DE-3BF4-44C5-AC79-86A85B11BAD9}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="11"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Bus>
+						<Bus Name="Dialogue_Master" ID="{9124FD9D-85A3-49A3-BCBB-60F6F7FA2CF9}">
+							<PropertyList>
+								<Property Name="Color" Type="int16" Value="9"/>
+								<Property Name="OverrideColor" Type="bool" Value="True"/>
+							</PropertyList>
+						</Bus>
+					</ChildrenList>
+				</Bus>
+			</ChildrenList>
+		</WorkUnit>
+	</Busses>
+</WwiseDocument>

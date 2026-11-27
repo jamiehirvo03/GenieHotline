@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{0660F65E-2987-492C-8469-0C885B5080D2}" SchemaVersion="139">
+	<Switches>
+		<WorkUnit Name="Default Work Unit" ID="{0660F65E-2987-492C-8469-0C885B5080D2}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="AmbienceTypes" ID="{9149812A-CCC2-4238-A055-2E81AE15B420}">
+					<ChildrenList>
+						<Switch Name="Office" ID="{23DB4F01-A515-416E-B35A-BB238BE3B934}"/>
+						<Switch Name="Menu" ID="{508BC023-460B-458A-87F2-B80419AA5B49}"/>
+						<Switch Name="Flashback" ID="{41E257FC-72B2-43AE-B646-F209A5B53BCE}"/>
+					</ChildrenList>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</Switches>
+</WwiseDocument>

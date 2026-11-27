@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{C9314DEB-1262-43F1-8EC2-681B38B4AF7A}" SchemaVersion="139">
+	<States>
+		<WorkUnit Name="Default Work Unit" ID="{C9314DEB-1262-43F1-8EC2-681B38B4AF7A}" PersistMode="Standalone">
+			<ChildrenList>
+				<StateGroup Name="GameState" ID="{DC1D1E82-4B51-47A5-8D2B-61104E5D0077}">
+					<ChildrenList>
+						<State Name="None" ID="{02999885-5215-4D30-BA62-1435DEB77EB5}"/>
+						<State Name="InGame" ID="{AA11496A-7854-48D3-A617-9EEC705C3975}"/>
+						<State Name="InMenu" ID="{A27D5BD4-C38C-4C25-8F60-E7602C55805C}"/>
+					</ChildrenList>
+				</StateGroup>
+				<StateGroup Name="AreaState" ID="{E250A73A-61C1-4D30-82AE-DD967B22345D}">
+					<ChildrenList>
+						<State Name="None" ID="{0B7ADED8-2A48-4C7D-B4CE-A5E0F46D3208}"/>
+						<State Name="EXT_Village" ID="{FBE0A896-261F-45F5-A05E-5C852ADDD04F}"/>
+						<State Name="INT_TownHall_G" ID="{62E1B8B6-F993-4433-A574-6ABB12156D2E}"/>
+						<State Name="INT_TownHall_1" ID="{67330843-2DF6-4502-96CF-C25F02AA596C}"/>
+					</ChildrenList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
+	</States>
+</WwiseDocument>

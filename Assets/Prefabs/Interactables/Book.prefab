@@ -1007,9 +1007,6 @@ MonoBehaviour:
   rightPageNumber: {fileID: 2944712805190322726}
   leftPageCurl: {fileID: 4705606721955594512}
   rightPageCurl: {fileID: 7329470819833946064}
-  coverPageMat: {fileID: 2100000, guid: d37cec1ac20d9584e819c6a0db1295ea, type: 2}
-  leftPageMat: {fileID: 2100000, guid: 9ba41c417f26197498b94245efeadbbb, type: 2}
-  rightPageMat: {fileID: 2100000, guid: 09ea5d885fe5fd6488a817995f12fab7, type: 2}
   bookClosed: {fileID: 6046369416743874334}
   bookOpen: {fileID: 78834927684519137}
   bookClosedColliderSize: {x: 2.5, y: 0.1, z: 3.536}
@@ -1037,6 +1034,41 @@ MonoBehaviour:
   - {fileID: 6884735064740904552}
   - {fileID: 6873161747696455440}
   - {fileID: 295892986093359526}
+  isMovableBook: 0
+  headlineImage: {fileID: 0}
+  headlineHeading: {fileID: 0}
+  headlineBody: {fileID: 0}
+  coverBannerImage: {fileID: 0}
+  coverBannerHeading: {fileID: 0}
+  coverBannerBody: {fileID: 0}
+  totalSectionsInNewspaper: 8
+  inconvenienceHeaders: []
+  inconvenienceBodies: []
+  inconvenienceImages: []
+  dayRuinerHeaders: []
+  dayRuinerBodies: []
+  dayRuinerImages: []
+  familyConflictHeaders: []
+  familyConflictBodies: []
+  familyConflictImages: []
+  legalRepercussionsHeaders: []
+  legalRepercussionsBodies: []
+  legalRepercussionsImages: []
+  hexHeaders: []
+  hexBodies: []
+  hexImages: []
+  deathHeaders: []
+  deathBodies: []
+  deathImages: []
+  lowChaosFillerHeaders: []
+  lowChaosFillerBodies: []
+  lowChaosFillerImages: []
+  neutralChaosFillerHeaders: []
+  neutralChaosFillerBodies: []
+  neutralChaosFillerImages: []
+  highChaosFillerHeaders: []
+  highChaosFillerBodies: []
+  highChaosFillerImages: []
 --- !u!1 &2933346742008066154
 GameObject:
   m_ObjectHideFlags: 0
@@ -4206,6 +4238,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: fc6f1de9b6979a94a847bea7d5a69b07, type: 3}
+    - target: {fileID: 6169010966856413256, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7432306246890955059, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
       propertyPath: m_Name
       value: Page_FrontCover
@@ -6858,12 +6894,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 28c44647025ef9f4497936426052a807, type: 2}
     - target: {fileID: 1098175577230488677, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2323470058542094641, guid: 28c44647025ef9f4497936426052a807, type: 2}
+    - target: {fileID: 1098175577230488677, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
       propertyPath: m_VerticalAlignment
       value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 1098175577230488677, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
       propertyPath: m_hasFontAssetChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3028610719133294064, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6906,12 +6946,16 @@ PrefabInstance:
       value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 6827236520903665188, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 8174395281188801794, guid: 61064fa2516a0e944933044735159339, type: 2}
+    - target: {fileID: 6827236520903665188, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
       propertyPath: m_enableAutoSizing
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6827236520903665188, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
       propertyPath: m_hasFontAssetChanged
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7432306246890955059, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
       propertyPath: m_Name
@@ -6919,7 +6963,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7432306246890955059, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8397809429716044481, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
       propertyPath: m_fontSize
@@ -7032,13 +7076,104 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7432306246890955059, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5665042780684750957}
   m_SourcePrefab: {fileID: 100100000, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
 --- !u!1 &295892986093359526 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7432306246890955059, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
   m_PrefabInstance: {fileID: 7151683485651300501}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5665042780684750957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295892986093359526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61699621371aa974eb5102ac4ab69f2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Catalogue
+  items:
+  - name: Newspaper
+    description: Allows player to read current earthly events.
+    image: {fileID: 0}
+    price: 20
+    maxStock: 4
+    itemTile: {fileID: 0}
+    numberInStock: 0
+    purchasedToday: 0
+  - name: Lucky Star Stamp
+    description: Stamping a consequence box with this will allow it to be selected
+      with no chaos cost. (One time use)
+    image: {fileID: 0}
+    price: 40
+    maxStock: 3
+    itemTile: {fileID: 0}
+    numberInStock: 0
+    purchasedToday: 0
+  - name: Mystical Lamp
+    description: Rubbing it will lock in the correct parameter for a random callers
+      wish. (3 uses)
+    image: {fileID: 0}
+    price: 60
+    maxStock: 1
+    itemTile: {fileID: 0}
+    numberInStock: 0
+    purchasedToday: 0
+  - name: Noodle Box
+    description: An empty noodle box.
+    image: {fileID: 0}
+    price: 100
+    maxStock: 1
+    itemTile: {fileID: 0}
+    numberInStock: 0
+    purchasedToday: 0
+  - name: Beer Bottle
+    description: An empty beer bottle.
+    image: {fileID: 0}
+    price: 100
+    maxStock: 1
+    itemTile: {fileID: 0}
+    numberInStock: 0
+    purchasedToday: 0
+  - name: 'Sock Puppet '
+    description: A ragged sock puppet.
+    image: {fileID: 0}
+    price: 100
+    maxStock: 1
+    itemTile: {fileID: 0}
+    numberInStock: 0
+    purchasedToday: 0
+  - name: Gene Bobblehead
+    description: 'Can be placed anywhere on desk, head can be bobbled. '
+    image: {fileID: 0}
+    price: 50
+    maxStock: 1
+    itemTile: {fileID: 0}
+    numberInStock: 0
+    purchasedToday: 0
+  - name: Rubiks Cube
+    description: Can be placed anywhere on desk.
+    image: {fileID: 0}
+    price: 50
+    maxStock: 1
+    itemTile: {fileID: 0}
+    numberInStock: 0
+    purchasedToday: 0
+  - name: Fidget Spinner
+    description: Can be placed anywhwre on desk, can be spun.
+    image: {fileID: 0}
+    price: 50
+    maxStock: 1
+    itemTile: {fileID: 0}
+    numberInStock: 0
+    purchasedToday: 0
+  flashColour: {r: 0, g: 0, b: 0, a: 0}
 --- !u!224 &2136559893552557577 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9122454298751278748, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
@@ -7887,6 +8022,7 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 6191550896317832640, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
     - {fileID: 458435608068516820, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
+    - {fileID: 5386315146742684315, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c00d21ee0b9eeb443a0c4c56255d92a2, type: 3}

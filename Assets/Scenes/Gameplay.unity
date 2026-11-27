@@ -2896,6 +2896,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1360216131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &237303963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 237303965}
+  - component: {fileID: 237303964}
+  m_Layer: 0
+  m_Name: WwiseGlobal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &237303964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237303963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d30e1dfccbe79044abba7222d1a92c5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AK.Wwise.Unity.MonoBehaviour::AkInitializer
+  InitializationSettings: {fileID: 0}
+  basePath: 
+  language: 
+  defaultPoolSize: 0
+  lowerPoolSize: 0
+  streamingPoolSize: 0
+  memoryCutoffThreshold: 0
+  monitorPoolSize: 0
+  monitorQueuePoolSize: 0
+  callbackManagerBufferSize: 0
+  spatialAudioPoolSize: 0
+  maxSoundPropagationDepth: 0
+  engineLogging: 0
+--- !u!4 &237303965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 237303963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &245132171
 GameObject:
   m_ObjectHideFlags: 0
@@ -3918,8 +3975,9 @@ GameObject:
   m_Component:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
-  - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585549}
+  - component: {fileID: 330585548}
   m_Layer: 3
   m_Name: '- Main Camera'
   m_TagString: MainCamera
@@ -3927,14 +3985,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &330585544
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
 --- !u!20 &330585545
 Camera:
   m_ObjectHideFlags: 0
@@ -4045,6 +4095,46 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c22f2815c3e64d942b6ae54bcc8ca682, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AK.Wwise.Unity.MonoBehaviour::AkAudioListener
+  isDefaultListener: 1
+  bOverrideScalingFactor: 0
+  scalingFactor: -1
+  listenerId: 0
+--- !u!114 &330585549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5265b42fee31b564abab9ce85b625182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AK.Wwise.Unity.MonoBehaviour::AkGameObj
+  m_listeners:
+    initialListenerList: []
+    useDefaultListeners: 1
+  isEnvironmentAware: 0
+  isStaticObject: 0
+  usePositionOffsetData: 0
+  m_positionOffsetData:
+    KeepMe: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+  scalingFactor: 1
+  m_posOffsetData: {fileID: 0}
+  listenerMask: 1
 --- !u!1 &359190998
 GameObject:
   m_ObjectHideFlags: 0
@@ -8916,25 +9006,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   debugMode: 0
   callers:
-  - dayNumber: 1
-    callerJSON: {fileID: 4900000, guid: 6d6566abadf059844bf27a0d1540d942, type: 3}
-    callerName: Bethany
-    callerAge: 22
-    callerOccupation: Accountant
-    material: 0
+  - name: 1 - Marcus, 34,  Bricklayer
+    dayNumber: 1
+    callerJSON: {fileID: 4900000, guid: 32e510a1f8b17e346b644487999c09d3, type: 3}
+    callerName: Marcus
+    callerAge: 34
+    callerOccupation: Bricklayer
+    material: 1
     knowledge: 0
-    heart: 1
+    heart: 0
     harm: 0
     enhancement: 0
     fate: 0
     canBeGranted: 1
     callerForm: {fileID: 0}
     hasHungUp: 0
-  - dayNumber: 1
-    callerJSON: {fileID: 4900000, guid: 034fb7ed4e3765a4cb917c347d988951, type: 3}
-    callerName: Carlos
-    callerAge: 66
-    callerOccupation: Retired
+  - name: 1 - Jerry, 46, Unemployed
+    dayNumber: 1
+    callerJSON: {fileID: 4900000, guid: f86e82568fdc32e46b37f7f76486f610, type: 3}
+    callerName: Jerry
+    callerAge: 46
+    callerOccupation: Unemployed
     material: 1
     knowledge: 0
     heart: 0
@@ -8944,18 +9036,49 @@ MonoBehaviour:
     canBeGranted: 0
     callerForm: {fileID: 0}
     hasHungUp: 0
-  - dayNumber: 1
-    callerJSON: {fileID: 4900000, guid: 32e510a1f8b17e346b644487999c09d3, type: 3}
-    callerName: Marcus
-    callerAge: 34
-    callerOccupation: Bricklayer
+  - name: 2 - David, 41, Retail Manager
+    dayNumber: 2
+    callerJSON: {fileID: 4900000, guid: c6322fc8b44ec0f4eb478cb5e9c176e8, type: 3}
+    callerName: David
+    callerAge: 41
+    callerOccupation: Retail Manager
+    material: 0
+    knowledge: 0
+    heart: 1
+    harm: 0
+    enhancement: 0
+    fate: 0
+    canBeGranted: 1
+    callerForm: {fileID: 0}
+    hasHungUp: 0
+  - name: 2 - Michelle, 37, Mechanic
+    dayNumber: 2
+    callerJSON: {fileID: 4900000, guid: 599fc37ee511a344480d36b609c6df9d, type: 3}
+    callerName: Michelle
+    callerAge: 37
+    callerOccupation: Mechanic
+    material: 0
+    knowledge: 1
+    heart: 0
+    harm: 0
+    enhancement: 0
+    fate: 0
+    canBeGranted: 1
+    callerForm: {fileID: 0}
+    hasHungUp: 0
+  - name: 2 - Rachel, 17, Student
+    dayNumber: 2
+    callerJSON: {fileID: 4900000, guid: 8a48ce19cd297db4b98834db1dfc0bc5, type: 3}
+    callerName: Rachel
+    callerAge: 17
+    callerOccupation: Student
     material: 0
     knowledge: 0
     heart: 0
-    harm: 0
-    enhancement: 1
+    harm: 1
+    enhancement: 0
     fate: 0
-    canBeGranted: 1
+    canBeGranted: 0
     callerForm: {fileID: 0}
     hasHungUp: 0
   callersInQueue: 0
@@ -8984,6 +9107,7 @@ MonoBehaviour:
   minChaos: -3
   maxChaos: 3
   chaosIndex: 0
+  chaosLevel: 
   changePerChaosIndex: 10
   strikesCount: 0
   geneBucksBalance: 0
@@ -8998,6 +9122,48 @@ MonoBehaviour:
   surplusAward: 5
   defecitAward: -5
   pointsPerGeneBuck: 20
+  inconveniencesGiven: 0
+  dayRuinersGiven: 0
+  familyConflictsGiven: 0
+  legalRepercussionsGiven: 0
+  hexesGiven: 0
+  deathsGiven: 0
+  yesterdaysInconveniencesGiven: 0
+  yesterdaysDayRuinersGiven: 0
+  yesterdaysFamilyConflictsGiven: 0
+  yesterdaysLegalRepercussionsGiven: 0
+  yesterdaysHexesGiven: 0
+  yesterdaysDeathsGiven: 0
+  dayOneInconveniencesGiven: 0
+  dayOneDayRuinersGiven: 0
+  dayOneFamilyConflictsGiven: 0
+  dayOneLegalRepercussionsGiven: 0
+  dayOneHexesGiven: 0
+  dayOneDeathsGiven: 0
+  dayTwoInconveniencesGiven: 0
+  dayTwoDayRuinersGiven: 0
+  dayTwoFamilyConflictsGiven: 0
+  dayTwoLegalRepercussionsGiven: 0
+  dayTwoHexesGiven: 0
+  dayTwoDeathsGiven: 0
+  dayThreeInconveniencesGiven: 0
+  dayThreeDayRuinersGiven: 0
+  dayThreeFamilyConflictsGiven: 0
+  dayThreeLegalRepercussionsGiven: 0
+  dayThreeHexesGiven: 0
+  dayThreeDeathsGiven: 0
+  dayFourInconveniencesGiven: 0
+  dayFourDayRuinersGiven: 0
+  dayFourFamilyConflictsGiven: 0
+  dayFourLegalRepercussionsGiven: 0
+  dayFourHexesGiven: 0
+  dayFourDeathsGiven: 0
+  dayFiveInconveniencesGiven: 0
+  dayFiveDayRuinersGiven: 0
+  dayFiveFamilyConflictsGiven: 0
+  dayFiveLegalRepercussionsGiven: 0
+  dayFiveHexesGiven: 0
+  dayFiveDeathsGiven: 0
 --- !u!1 &1045465250
 GameObject:
   m_ObjectHideFlags: 0
@@ -26811,83 +26977,6 @@ RectTransform:
   m_AnchoredPosition: {x: 25, y: -25}
   m_SizeDelta: {x: 1500, y: 200}
   m_Pivot: {x: 0, y: 1}
---- !u!1001 &1230576011398786025
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 321964112004435575, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.14178467
-      objectReference: {fileID: 0}
-    - target: {fileID: 321964112004435575, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.000038146973
-      objectReference: {fileID: 0}
-    - target: {fileID: 1637768131380793120, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_Name
-      value: Newspaper
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.0000014603138
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2406973424651697077, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5641776421918725472, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: activeTransform
-      value: 
-      objectReference: {fileID: 1439583481}
-    - target: {fileID: 5641776421918725472, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: restingTransform
-      value: 
-      objectReference: {fileID: 132953118}
-    - target: {fileID: 8845393663742685744, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0.00020599365
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b9b1a1ea131bed244a8cb14abce3195a, type: 3}
 --- !u!224 &1456655390561790692
 RectTransform:
   m_ObjectHideFlags: 0
@@ -27910,5 +27999,5 @@ SceneRoots:
   - {fileID: 206579400}
   - {fileID: 1120188393}
   - {fileID: 2109862410}
-  - {fileID: 1230576011398786025}
   - {fileID: 2136660222}
+  - {fileID: 237303965}
